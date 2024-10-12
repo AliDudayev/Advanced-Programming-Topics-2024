@@ -1,11 +1,15 @@
 package fact.it.workoutservice.service;
 
+
 import fact.it.workoutservice.dto.HealthResponse;
 import fact.it.workoutservice.dto.WorkoutRequest;
 import fact.it.workoutservice.dto.WorkoutResponse;
 import fact.it.workoutservice.model.Workout;
 import fact.it.workoutservice.repository.WorkoutRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;

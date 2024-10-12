@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Builder
@@ -13,8 +13,11 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class RecordResponse {
     private String id;
-    private String skuCode;
-    private String name;
-    private String description;
-    private BigDecimal price;
+    private String userCode;
+    private Double fastestTime; // optional
+    private Double longestDistance; // optional
+    private Double maxWeightLifted; // optional
+    private Double longestWorkoutDuration; // optional
+    private Double mostCaloriesBurned; // optional
+
 }

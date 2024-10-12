@@ -1,5 +1,6 @@
 package fact.it.workoutservice.controller;
 
+
 import fact.it.workoutservice.dto.HealthResponse;
 import fact.it.workoutservice.dto.WorkoutRequest;
 import fact.it.workoutservice.dto.WorkoutResponse;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+
 @RequestMapping("/api/product")
 @RequiredArgsConstructor
 public class WorkoutController {

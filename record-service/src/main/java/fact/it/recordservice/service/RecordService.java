@@ -4,8 +4,10 @@ import fact.it.recordservice.dto.RecordRequest;
 import fact.it.recordservice.dto.RecordResponse;
 import fact.it.recordservice.model.Record;
 import fact.it.recordservice.repository.RecordRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,6 +16,22 @@ import java.util.List;
 public class RecordService {
 
     private final RecordRepository recordRepository;
+
+    @PostConstruct
+    public void loadData() {
+        if(recordRepository.count() <= 0){
+            Record record = Record.builder()
+                    .userCode("user1")
+                    .fastestTime(1.5)
+                    .longestDistance(1.0)
+                    .maxWeightLifted(100.0)
+                    .longestWorkoutDuration(60.0)
+                    .mostCaloriesBurned(150.0)
+                    .build();
+
+            recordRepository.save(record);
+        }
+    }
 
     public void createRecord(RecordRequest recordRequest){
         Record record = Record.builder()
@@ -33,11 +51,18 @@ public class RecordService {
         return records.stream().map(this::mapToRecordResponse).toList();
     }
 
+//    @Transactional(readOnly = true)
+//    // get record by id
+//    public RecordResponse getRecordByCode(String code) {
+//        Record record = recordRepository.findByUserCode(code);
+//        return mapToRecordResponse(record);
+//    }
+    @Transactional(readOnly = true)
     // get record by id
-    public RecordResponse getRecordById(String id) {
-        Record record = recordRepository.findById(id).orElseThrow();
+    public List<RecordResponse> getAllRecordsByCode(List<String> codes) {
+        List<Record> records = recordRepository.findByUserCode(codes);
 
-        return mapToRecordResponse(record);
+        return records.stream().map(this::mapToRecordResponse).toList();
     }
 
     // Save the updated record

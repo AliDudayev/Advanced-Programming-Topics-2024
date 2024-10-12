@@ -35,6 +35,7 @@ public class Workout {
     @Column(nullable = true)  // Optional 'reps' field
     private String reps;
 
+
     @Column(nullable = false)
     private String workoutCode;
 
