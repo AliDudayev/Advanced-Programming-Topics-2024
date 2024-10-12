@@ -16,6 +16,7 @@ import java.time.Duration;
 @Data
 public class Record {
     private String id;
+    private String userCode;
     private Double fastestTime; // optional
     private Double longestDistance; // optional
     private Double maxWeightLifted; // optional

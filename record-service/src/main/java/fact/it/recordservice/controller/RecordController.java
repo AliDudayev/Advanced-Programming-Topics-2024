@@ -23,11 +23,13 @@ public class RecordController {
         recordService.createRecord(recordRequest);
     }
 
+    // http://localhost:8082/api/record?code=user1
     @GetMapping // Het ophalen van een record op basis van een id
     @ResponseStatus(HttpStatus.OK)
-    public RecordResponse getRecordById
-            (@RequestParam String id) {
-        return recordService.getRecordById(id);
+    public List<RecordResponse> getRecordByCode
+            (@RequestParam List<String> codes) {
+        //return recordService.getRecordByCode(code);
+        return recordService.getAllRecordsByCode(codes);
     }
 
     @GetMapping("/all")

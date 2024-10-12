@@ -1,24 +1,22 @@
 package fact.it.userservice.model;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.math.BigDecimal;
-
-@Entity
-@Table(name = "orderlineitem")
-@Getter
-@Setter
+@Document(value = "RecordLineItem")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Data
 public class UserLineItem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String skuCode;
-    private BigDecimal price;
-    private Integer quantity;
+    private String id;
+    private String userCode;
+    private Double fastestTime; // optional
+    private Double longestDistance; // optional
+    private Double maxWeightLifted; // optional
+    private Double longestWorkoutDuration; // optional
+    private Double mostCaloriesBurned; // optional
 }

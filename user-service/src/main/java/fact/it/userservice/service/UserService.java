@@ -1,109 +1,126 @@
 package fact.it.userservice.service;
 
-import fact.it.userservice.dto.*;
-import fact.it.userservice.model.Order;
+import fact.it.userservice.dto.RecordResponse;
+import fact.it.userservice.dto.UserLineItemDto;
+import fact.it.userservice.dto.UserRequest;
+import fact.it.userservice.dto.UserResponse;
 import fact.it.userservice.model.UserLineItem;
+import fact.it.userservice.model.User;
 import fact.it.userservice.repository.UserRepository;
-import jakarta.transaction.Transactional;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class UserService {
 
     private final UserRepository userRepository;
     private final WebClient webClient;
 
-    public boolean placeOrder(UserRequest userRequest) {
-        Order order = new Order();
-        order.setOrderNumber(UUID.randomUUID().toString());
-
-        List<UserLineItem> userLineItems = userRequest.getOrderLineItemsDtoList()
-                .stream()
-                .map(this::mapToOrderLineItem)
-                .toList();
-
-        order.setUserLineItemsList(userLineItems);
-
-        List<String> skuCodes = order.getUserLineItemsList().stream()
-                .map(UserLineItem::getSkuCode)
-                .toList();
-
-        WorkoutResponse[] workoutResponseArray = webClient.get()
-                .uri("http://localhost:8082/api/inventory",
-                        uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
-                .retrieve()
-                .bodyToMono(WorkoutResponse[].class)
-                .block();
-
-        boolean allProductsInStock = Arrays.stream(workoutResponseArray)
-                .allMatch(WorkoutResponse::isInStock);
-
-        if(allProductsInStock){
-            RecordResponse[] recordResponseArray = webClient.get()
-                    .uri("http://localhost:8080/api/product",
-                            uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
-                    .retrieve()
-                    .bodyToMono(RecordResponse[].class)
-                    .block();
-
-            order.getUserLineItemsList().stream()
-                    .map(orderItem -> {
-                        RecordResponse product = Arrays.stream(recordResponseArray)
-                                .filter(p -> p.getSkuCode().equals(orderItem.getSkuCode()))
-                                .findFirst()
-                                .orElse(null);
-                        if (product != null) {
-                            orderItem.setPrice(product.getPrice());
-                        }
-                        return orderItem;
-                    })
-                    .collect(Collectors.toList());
-
-            userRepository.save(order);
-            return true;
-        } else {
-            return false;
+    @PostConstruct
+    public void loadData() {
+        if(userRepository.count() <= 0){
+            User record = User.builder()
+                    .userCode("user1")
+                    .name("John Doe")
+                    .age(25)
+                    .height(1.80)
+                    .weight(80)
+                    .email("test")
+                    .phoneNr("test")
+                    .build();
+            userRepository.save(record);
         }
     }
 
-    public List<UserResponse> getAllOrders() {
-        List<Order> orders = userRepository.findAll();
 
-        return orders.stream()
-                .map(order -> new UserResponse(
-                        order.getOrderNumber(),
-                        mapToOrderLineItemsDto(order.getUserLineItemsList())
-                ))
-                .collect(Collectors.toList());
+    // get records
+    public RecordResponse[] getAllRecords( ) {
+        List<User> users = userRepository.findAll();
+
+        // I want to get all the userCodes from the users and put them in a list
+        List<String> userCodes = users.stream()
+                .map(User::getUserCode)
+                .toList();
+
+        RecordResponse[] recordResponseArray = webClient.get()
+                .uri("http://localhost:8082/api/record",
+                        uriBuilder -> uriBuilder.queryParam("codes", userCodes).build())
+                .retrieve()
+                .bodyToMono(RecordResponse[].class)
+                .block();
+
+
+        /*
+
+                */
+
+//        return recordResponseArray
+//                .stream()
+//                .collect(Collectors.toList());
+
+//        return mapToRecordResponse(records);
+
+        return recordResponseArray;
     }
 
-    private UserLineItem mapToOrderLineItem(UserLineItemDto userLineItemDto) {
-        UserLineItem userLineItem = new UserLineItem();
-        userLineItem.setPrice(userLineItemDto.getPrice());
-        userLineItem.setQuantity(userLineItemDto.getQuantity());
-        userLineItem.setSkuCode(userLineItemDto.getSkuCode());
-        return userLineItem;
-    }
-
-    private List<UserLineItemDto> mapToOrderLineItemsDto(List<UserLineItem> userLineItems) {
+    private List<UserLineItemDto> MapToUserLineItemsDto(List<UserLineItem> userLineItems) {
         return userLineItems.stream()
                 .map(userLineItem -> new UserLineItemDto(
                         userLineItem.getId(),
-                        userLineItem.getSkuCode(),
-                        userLineItem.getPrice(),
-                        userLineItem.getQuantity()
+                        userLineItem.getUserCode(),
+                        userLineItem.getFastestTime(),
+                        userLineItem.getLongestDistance(),
+                        userLineItem.getMaxWeightLifted(),
+                        userLineItem.getLongestWorkoutDuration(),
+                        userLineItem.getMostCaloriesBurned()
                 ))
                 .collect(Collectors.toList());
     }
 
+
+    // get user by id
+    public UserResponse getUserById(String id) {
+        User user = userRepository.findById(id).orElseThrow();
+
+        return mapToRecordResponse(user);
+    }
+
+    // Save the updated user
+    public void updateUser(String userCode, UserRequest userRequest) {
+        User user = userRepository.findByUserCode(userCode);
+
+        user.setName(userRequest.getName());
+        user.setAge(userRequest.getAge());
+        user.setHeight(userRequest.getHeight());
+        user.setWeight(userRequest.getWeight());
+        user.setEmail(userRequest.getEmail());
+        user.setPhoneNr(userRequest.getPhoneNr());
+        user.setGender(userRequest.isGender());
+        user.setFitnessGoals(userRequest.getFitnessGoals());
+
+
+        userRepository.save(user);
+    }
+
+    // Delete record by id
+
+    private UserResponse mapToRecordResponse(User user) {
+        return UserResponse.builder()
+                .name(user.getName())
+                .userCode(user.getUserCode())
+                .height(user.getHeight())
+                .weight(user.getWeight())
+                .email(user.getEmail())
+                .fitnessGoals(user.getFitnessGoals())
+                .build();
+    }
 
 }

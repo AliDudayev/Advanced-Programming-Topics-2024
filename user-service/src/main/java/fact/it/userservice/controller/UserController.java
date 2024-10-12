@@ -1,5 +1,6 @@
 package fact.it.userservice.controller;
 
+import fact.it.userservice.dto.RecordResponse;
 import fact.it.userservice.dto.UserRequest;
 import fact.it.userservice.dto.UserResponse;
 import fact.it.userservice.service.UserService;
@@ -10,22 +11,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/order")
+@RequestMapping("/api/user")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
-    @PostMapping
+    @GetMapping // Het ophalen van een record op basis van een id
     @ResponseStatus(HttpStatus.OK)
-    public String placeOrder(@RequestBody UserRequest userRequest) {
-        boolean result = userService.placeOrder(userRequest);
-        return (result ? "Order placed successfully" : "Order placement failed");
+    public UserResponse getUserById
+            (@RequestParam String id) {
+        return userService.getUserById(id);
     }
 
-    @GetMapping
+    @PutMapping// Find the record by id and update it
     @ResponseStatus(HttpStatus.OK)
-    public List<UserResponse> getAllProducts() {
-        return userService.getAllOrders();
+    public void updateUser(@RequestParam String userCode, @RequestBody UserRequest userRequest) {
+        userService.updateUser(userCode, userRequest);
+    }
+
+    // add the getRecords
+    @GetMapping("/records/all")
+    @ResponseStatus(HttpStatus.OK)
+    public RecordResponse[] getAllRecords() {
+        return userService.getAllRecords();
     }
 }
+
