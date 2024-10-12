@@ -1,6 +1,6 @@
-package fact.it.productservice.repository;
+package fact.it.workoutservice.repository;
 
-import fact.it.productservice.model.Workout;
+import fact.it.workoutservice.model.Workout;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package fact.it.productservice.model;
+package fact.it.workoutservice.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity  // Specifies that this class is an entity mapped to a database table

@@ -1,8 +1,8 @@
-package fact.it.productservice.controller;
+package fact.it.workoutservice.controller;
 
-import fact.it.productservice.dto.WorkoutRequest;
-import fact.it.productservice.dto.WorkoutResponse;
-import fact.it.productservice.service.WorkoutService;
+import fact.it.workoutservice.dto.WorkoutRequest;
+import fact.it.workoutservice.dto.WorkoutResponse;
+import fact.it.workoutservice.service.WorkoutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping("/api/workout")
 @RequiredArgsConstructor
 public class WorkoutController {
 

@@ -1,4 +1,4 @@
-package fact.it.productservice.dto;
+package fact.it.workoutservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

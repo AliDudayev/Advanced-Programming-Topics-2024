@@ -1,4 +1,4 @@
-package fact.it.productservice;
+package fact.it.workoutservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

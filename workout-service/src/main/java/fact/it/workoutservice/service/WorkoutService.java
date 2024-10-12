@@ -1,9 +1,9 @@
-package fact.it.productservice.service;
+package fact.it.workoutservice.service;
 
-import fact.it.productservice.dto.WorkoutRequest;
-import fact.it.productservice.dto.WorkoutResponse;
-import fact.it.productservice.model.Workout;
-import fact.it.productservice.repository.WorkoutRepository;
+import fact.it.workoutservice.dto.WorkoutRequest;
+import fact.it.workoutservice.dto.WorkoutResponse;
+import fact.it.workoutservice.model.Workout;
+import fact.it.workoutservice.repository.WorkoutRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
