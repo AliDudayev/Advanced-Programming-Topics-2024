@@ -21,6 +21,7 @@ public class InventoryService {
 
     @PostConstruct
     public void loadData() {
+        System.out.println(inventoryRepository.count());
         if(inventoryRepository.count() <= 0){
             StockItem stockItem = new StockItem();
             stockItem.setSkuCode("tube6in");
