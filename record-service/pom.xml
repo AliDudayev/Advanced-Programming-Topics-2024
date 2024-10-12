@@ -11,8 +11,8 @@
     <groupId>fact.it</groupId>
     <artifactId>record-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>product-service</name>
-    <description>product-service</description>
+    <name>record-service</name>
+    <description>record-service</description>
     <properties>
         <java.version>17</java.version>
     </properties>

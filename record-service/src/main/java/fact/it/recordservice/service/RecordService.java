@@ -2,7 +2,7 @@ package fact.it.recordservice.service;
 
 import fact.it.recordservice.dto.RecordRequest;
 import fact.it.recordservice.dto.RecordResponse;
-import fact.it.recordservice.model.Product;
+import fact.it.recordservice.model.Record;
 import fact.it.recordservice.repository.RecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,36 +15,57 @@ public class RecordService {
 
     private final RecordRepository recordRepository;
 
-    public void createProduct(RecordRequest recordRequest){
-        Product product = Product.builder()
-                .skuCode(recordRequest.getSkuCode())
-                .name(recordRequest.getName())
-                .description(recordRequest.getDescription())
-                .price(recordRequest.getPrice())
+    public void createRecord(RecordRequest recordRequest){
+        Record record = Record.builder()
+                .fastestTime(recordRequest.getFastestTime())
+                .longestDistance(recordRequest.getLongestDistance())
+                .maxWeightLifted(recordRequest.getMaxWeightLifted())
+                .longestWorkoutDuration(recordRequest.getLongestWorkoutDuration())
+                .mostCaloriesBurned(recordRequest.getMostCaloriesBurned())
                 .build();
 
-        recordRepository.save(product);
+        recordRepository.save(record);
     }
 
-    public List<RecordResponse> getAllProducts() {
-        List<Product> products = recordRepository.findAll();
+    public List<RecordResponse> getAllRecords() {
+        List<Record> records = recordRepository.findAll();
 
-        return products.stream().map(this::mapToProductResponse).toList();
+        return records.stream().map(this::mapToRecordResponse).toList();
     }
 
-    public List<RecordResponse> getAllProductsBySkuCode(List<String> skuCode) {
-        List<Product> products = recordRepository.findBySkuCodeIn(skuCode);
+    // get record by id
+    public RecordResponse getRecordById(String id) {
+        Record record = recordRepository.findById(id).orElseThrow();
 
-        return products.stream().map(this::mapToProductResponse).toList();
+        return mapToRecordResponse(record);
     }
 
-    private RecordResponse mapToProductResponse(Product product) {
+    // Save the updated record
+    public void updateRecord(String id, RecordRequest recordRequest) {
+        Record record = recordRepository.findById(id).orElseThrow();
+
+        record.setFastestTime(recordRequest.getFastestTime());
+        record.setLongestDistance(recordRequest.getLongestDistance());
+        record.setMaxWeightLifted(recordRequest.getMaxWeightLifted());
+        record.setLongestWorkoutDuration(recordRequest.getLongestWorkoutDuration());
+        record.setMostCaloriesBurned(recordRequest.getMostCaloriesBurned());
+
+        recordRepository.save(record);
+    }
+
+    // Delete record by id
+    public void deleteRecord(String id) {
+        recordRepository.deleteById(id);
+    }
+
+    private RecordResponse mapToRecordResponse(Record record) {
         return RecordResponse.builder()
-                .id(product.getId())
-                .skuCode(product.getSkuCode())
-                .name(product.getName())
-                .description(product.getDescription())
-                .price(product.getPrice())
+                .id(record.getId())
+                .maxWeightLifted(record.getMaxWeightLifted())
+                .longestDistance(record.getLongestDistance())
+                .fastestTime(record.getFastestTime())
+                .longestWorkoutDuration(record.getLongestWorkoutDuration())
+                .mostCaloriesBurned(record.getMostCaloriesBurned())
                 .build();
     }
 
