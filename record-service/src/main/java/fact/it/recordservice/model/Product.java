@@ -1,4 +1,4 @@
-package fact.it.productservice.model;
+package fact.it.recordservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

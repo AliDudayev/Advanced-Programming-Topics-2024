@@ -1,10 +1,10 @@
-package fact.it.productservice;
+package fact.it.recordservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ProductServiceApplicationTests {
+class RecordServiceApplicationTests {
 
     @Test
     void contextLoads() {

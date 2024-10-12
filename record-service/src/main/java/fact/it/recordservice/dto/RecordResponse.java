@@ -1,4 +1,4 @@
-package fact.it.productservice.dto;
+package fact.it.recordservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductResponse {
+public class RecordResponse {
     private String id;
     private String skuCode;
     private String name;
