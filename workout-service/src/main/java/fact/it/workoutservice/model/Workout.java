@@ -35,6 +35,13 @@ public class Workout {
     @Column(nullable = true)  // Optional 'reps' field
     private String reps;
 
+
+    @Column(nullable = false)
+    private String workoutCode;
+
+    @Column(nullable = false)
+    private String userCode;
+
     @Column(nullable = true)  // Optional 'pauseBetweenReps' field
     private String pauseBetweenReps;
 
