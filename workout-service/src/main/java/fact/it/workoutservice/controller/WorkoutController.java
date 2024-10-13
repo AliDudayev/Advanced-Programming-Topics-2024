@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping("/api/workout")
 @RequiredArgsConstructor
 public class WorkoutController {
 
@@ -26,7 +26,7 @@ public class WorkoutController {
 
     @GetMapping("/health")
     @ResponseStatus(HttpStatus.OK)
-    public HealthResponse getHealthData(@RequestBody String workoutCode) {
+    public HealthResponse getHealthData(@RequestParam String workoutCode) {
         return workoutService.getHealthData(workoutCode);
     }
 

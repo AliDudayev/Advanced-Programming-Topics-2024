@@ -26,20 +26,31 @@ public class WorkoutService {
     private final WorkoutRepository workoutRepository;
     private final WebClient webClient;
 
+//    public HealthResponse getHealthData(String workoutCode) {
+//
+//                HealthResponse[] healthResponseArray = webClient.get()
+//                .uri("http://" + healthServiceBaseUrl + "/api/health",
+//                        uriBuilder -> uriBuilder.queryParam("workoutCode", workoutCode).build())
+//                .retrieve()
+//                .bodyToMono(HealthResponse[].class)
+//                .block();
+//                assert healthResponseArray != null;
+//                if (healthResponseArray.length == 0) {
+//                    return null;
+//                }
+//                return healthResponseArray[0];
+//    }
+
     public HealthResponse getHealthData(String workoutCode) {
 
-                HealthResponse[] healthResponseArray = webClient.get()
+        return webClient.get()
                 .uri("http://" + healthServiceBaseUrl + "/api/health",
                         uriBuilder -> uriBuilder.queryParam("workoutCode", workoutCode).build())
                 .retrieve()
-                .bodyToMono(HealthResponse[].class)
+                .bodyToMono(HealthResponse.class)
                 .block();
-                assert healthResponseArray != null;
-                if (healthResponseArray.length == 0) {
-                    return null;
-                }
-                return healthResponseArray[0];
     }
+
 
 
     public void createWorkout(WorkoutRequest workoutRequest){
