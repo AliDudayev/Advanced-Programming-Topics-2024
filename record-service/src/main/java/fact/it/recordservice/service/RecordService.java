@@ -17,22 +17,6 @@ public class RecordService {
 
     private final RecordRepository recordRepository;
 
-    @PostConstruct
-    public void loadData() {
-        if(recordRepository.count() <= 0){
-            Record record = Record.builder()
-                    .userCode("user1")
-                    .fastestTime(1.5)
-                    .longestDistance(1.0)
-                    .maxWeightLifted(100.0)
-                    .longestWorkoutDuration(60.0)
-                    .mostCaloriesBurned(150.0)
-                    .build();
-
-            recordRepository.save(record);
-        }
-    }
-
     public void createRecord(RecordRequest recordRequest){
         Record record = Record.builder()
                 .fastestTime(recordRequest.getFastestTime())
@@ -59,10 +43,10 @@ public class RecordService {
 //    }
     @Transactional(readOnly = true)
     // get record by id
-    public List<RecordResponse> getAllRecordsByCode(List<String> codes) {
-        List<Record> records = recordRepository.findByUserCode(codes);
+    public RecordResponse getRecordByCode(String code) {
+        Record record = recordRepository.findByUserCode(code);
 
-        return records.stream().map(this::mapToRecordResponse).toList();
+        return record != null ? mapToRecordResponse(record) : null;
     }
 
     // Save the updated record
@@ -86,6 +70,7 @@ public class RecordService {
     private RecordResponse mapToRecordResponse(Record record) {
         return RecordResponse.builder()
                 .id(record.getId())
+                .userCode(record.getUserCode())
                 .maxWeightLifted(record.getMaxWeightLifted())
                 .longestDistance(record.getLongestDistance())
                 .fastestTime(record.getFastestTime())

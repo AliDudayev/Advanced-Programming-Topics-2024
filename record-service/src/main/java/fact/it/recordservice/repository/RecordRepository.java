@@ -10,7 +10,6 @@ import java.util.List;
 @Repository
 @Transactional
 public interface RecordRepository extends MongoRepository<Record, String> {
-    //Record findByUserCode(String userCode);
-    List<Record> findByUserCode(List<String> userCode);
+    Record findByUserCode(String code);
 
 }

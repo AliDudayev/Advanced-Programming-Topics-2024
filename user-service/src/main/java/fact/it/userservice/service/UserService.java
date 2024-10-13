@@ -10,6 +10,7 @@ import fact.it.userservice.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -24,52 +25,64 @@ public class UserService {
     private final UserRepository userRepository;
     private final WebClient webClient;
 
-    @PostConstruct
-    public void loadData() {
-        if(userRepository.count() <= 0){
-            User record = User.builder()
-                    .userCode("user1")
-                    .name("John Doe")
-                    .age(25)
-                    .height(1.80)
-                    .weight(80)
-                    .email("test")
-                    .phoneNr("test")
+    @Value("${record.service.url}")
+    private String recordServiceUrl;
+
+    // create user
+    public void createUser(UserRequest userRequest) {
+        if(userRepository.findByUserCode(userRequest.getUserCode()) == null) {
+            User user = User.builder()
+                    .userCode(userRequest.getUserCode())
+                    .name(userRequest.getName())
+                    .age(userRequest.getAge())
+                    .height(userRequest.getHeight())
+                    .weight(userRequest.getWeight())
+                    .email(userRequest.getEmail())
+                    .phoneNr(userRequest.getPhoneNr())
+                    .gender(userRequest.isGender())
+                    .fitnessGoals(userRequest.getFitnessGoals())
                     .build();
-            userRepository.save(record);
+            userRepository.save(user);
+        }
+        else {
+            log.info("User with userCode: " + userRequest.getUserCode() + " already exists");
         }
     }
 
+    // Get all users
+    public List<UserResponse> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .map(this::mapToRecordResponse)
+                .collect(Collectors.toList());
+    }
 
     // get records
-    public RecordResponse[] getAllRecords( ) {
-        List<User> users = userRepository.findAll();
+    public RecordResponse getAllRecords(String userCode) {
+        User user = userRepository.findByUserCode(userCode);
 
-        // I want to get all the userCodes from the users and put them in a list
-        List<String> userCodes = users.stream()
-                .map(User::getUserCode)
-                .toList();
+//        // I want to get all the userCodes from the users and put them in a list
+//        List<String> userCodes = users.stream()
+//                .map(User::getUserCode)
+//                .toList();
 
-        RecordResponse[] recordResponseArray = webClient.get()
-                .uri("http://localhost:8082/api/record",
-                        uriBuilder -> uriBuilder.queryParam("codes", userCodes).build())
+
+        RecordResponse recordResponse = webClient.get()
+                .uri("http://" + recordServiceUrl + "/api/record",
+                        uriBuilder -> uriBuilder.queryParam("code", userCode).build())
                 .retrieve()
-                .bodyToMono(RecordResponse[].class)
+                .bodyToMono(RecordResponse.class)
                 .block();
 
-
-        /*
-
-                */
-
-//        return recordResponseArray
-//                .stream()
-//                .collect(Collectors.toList());
-
-//        return mapToRecordResponse(records);
-
-        return recordResponseArray;
+        return recordResponse;
     }
+
+
+
+
+
+
+
 
     private List<UserLineItemDto> MapToUserLineItemsDto(List<UserLineItem> userLineItems) {
         return userLineItems.stream()
@@ -114,6 +127,7 @@ public class UserService {
 
     private UserResponse mapToRecordResponse(User user) {
         return UserResponse.builder()
+                .id(user.getId())
                 .name(user.getName())
                 .userCode(user.getUserCode())
                 .height(user.getHeight())

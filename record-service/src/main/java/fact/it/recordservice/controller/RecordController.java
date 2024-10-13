@@ -16,7 +16,7 @@ public class RecordController {
 
     private final RecordService recordService;
 
-    @PostMapping // Het toevoegen van een record
+    @PostMapping // Het toevoegen van een record --> Klaar
     @ResponseStatus(HttpStatus.OK)
     public void createRecord
             (@RequestBody RecordRequest recordRequest) {
@@ -24,13 +24,21 @@ public class RecordController {
     }
 
     // http://localhost:8082/api/record?code=user1
-    @GetMapping // Het ophalen van een record op basis van een id
+    @GetMapping // Het ophalen van een record op basis van een code
     @ResponseStatus(HttpStatus.OK)
-    public List<RecordResponse> getRecordByCode
-            (@RequestParam List<String> codes) {
+    public RecordResponse getRecordByCode
+            (@RequestParam String code) {
         //return recordService.getRecordByCode(code);
-        return recordService.getAllRecordsByCode(codes);
+        return recordService.getRecordByCode(code);
     }
+
+
+
+
+
+
+
+
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
