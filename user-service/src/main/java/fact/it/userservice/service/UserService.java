@@ -7,7 +7,6 @@ import fact.it.userservice.dto.UserResponse;
 import fact.it.userservice.model.UserLineItem;
 import fact.it.userservice.model.User;
 import fact.it.userservice.repository.UserRepository;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
