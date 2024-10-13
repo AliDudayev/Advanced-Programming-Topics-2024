@@ -9,6 +9,7 @@ public class WebClientConfig {
 
     @Bean
     public WebClient webClient(){
+//        System.out.println("Creating WebClient bean");
         return WebClient.builder().build();
     }
 }

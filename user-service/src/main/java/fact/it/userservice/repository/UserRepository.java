@@ -1,7 +1,8 @@
 package fact.it.userservice.repository;
 
-import fact.it.userservice.model.Order;
-import org.springframework.data.jpa.repository.JpaRepository;
+import fact.it.userservice.model.User;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface UserRepository extends JpaRepository<Order, Long> {
+public interface UserRepository extends MongoRepository<User, String> {
+    User findByUserCode(String userCode);
 }

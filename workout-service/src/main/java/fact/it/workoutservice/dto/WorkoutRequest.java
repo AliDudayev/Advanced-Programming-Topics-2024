@@ -17,6 +17,7 @@ public class WorkoutRequest {
     private String duration;
     private String sets;
     private String reps;
+
     private String userCode;
     private String workoutCode;
     private String pauseBetweenReps;

@@ -4,8 +4,10 @@ import fact.it.recordservice.dto.RecordRequest;
 import fact.it.recordservice.dto.RecordResponse;
 import fact.it.recordservice.model.Record;
 import fact.it.recordservice.repository.RecordRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -33,11 +35,18 @@ public class RecordService {
         return records.stream().map(this::mapToRecordResponse).toList();
     }
 
+//    @Transactional(readOnly = true)
+//    // get record by id
+//    public RecordResponse getRecordByCode(String code) {
+//        Record record = recordRepository.findByUserCode(code);
+//        return mapToRecordResponse(record);
+//    }
+    @Transactional(readOnly = true)
     // get record by id
-    public RecordResponse getRecordById(String id) {
-        Record record = recordRepository.findById(id).orElseThrow();
+    public RecordResponse getRecordByCode(String code) {
+        Record record = recordRepository.findByUserCode(code);
 
-        return mapToRecordResponse(record);
+        return record != null ? mapToRecordResponse(record) : null;
     }
 
     // Save the updated record
@@ -61,6 +70,7 @@ public class RecordService {
     private RecordResponse mapToRecordResponse(Record record) {
         return RecordResponse.builder()
                 .id(record.getId())
+                .userCode(record.getUserCode())
                 .maxWeightLifted(record.getMaxWeightLifted())
                 .longestDistance(record.getLongestDistance())
                 .fastestTime(record.getFastestTime())

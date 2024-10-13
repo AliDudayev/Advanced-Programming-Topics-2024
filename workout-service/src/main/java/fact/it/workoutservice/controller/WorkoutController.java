@@ -1,5 +1,6 @@
 package fact.it.workoutservice.controller;
 
+
 import fact.it.workoutservice.dto.HealthResponse;
 import fact.it.workoutservice.dto.WorkoutRequest;
 import fact.it.workoutservice.dto.WorkoutResponse;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/workout")
+
 @RequiredArgsConstructor
 public class WorkoutController {
 

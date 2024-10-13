@@ -14,6 +14,7 @@ import java.time.Duration;
 @NoArgsConstructor
 public class RecordResponse {
     private String id;
+    private String userCode;
     private Double fastestTime; // optional
     private Double longestDistance; // optional
     private Double maxWeightLifted; // optional

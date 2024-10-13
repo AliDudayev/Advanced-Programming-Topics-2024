@@ -16,19 +16,29 @@ public class RecordController {
 
     private final RecordService recordService;
 
-    @PostMapping // Het toevoegen van een record
+    @PostMapping // Het toevoegen van een record --> Klaar
     @ResponseStatus(HttpStatus.OK)
     public void createRecord
             (@RequestBody RecordRequest recordRequest) {
         recordService.createRecord(recordRequest);
     }
 
-    @GetMapping // Het ophalen van een record op basis van een id
+    // http://localhost:8082/api/record?code=user1
+    @GetMapping // Het ophalen van een record op basis van een code
     @ResponseStatus(HttpStatus.OK)
-    public RecordResponse getRecordById
-            (@RequestParam String id) {
-        return recordService.getRecordById(id);
+    public RecordResponse getRecordByCode
+            (@RequestParam String code) {
+        //return recordService.getRecordByCode(code);
+        return recordService.getRecordByCode(code);
     }
+
+
+
+
+
+
+
+
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)

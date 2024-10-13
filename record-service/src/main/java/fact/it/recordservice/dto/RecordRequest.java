@@ -13,6 +13,7 @@ import java.time.Duration;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RecordRequest {
+    private String userCode;
     private Double fastestTime; // optional
     private Double longestDistance; // optional
     private Double maxWeightLifted; // optional
