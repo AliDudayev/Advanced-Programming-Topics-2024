@@ -25,10 +25,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final WebClient webClient;
 
-    @Value("${record.service.url}")
-    private String recordServiceUrl;
+//    @Value("${record.service.url}")
+//    private String recordServiceUrl;
 
-    // create user
+    // create user --> Klaar
     public void createUser(UserRequest userRequest) {
         if(userRepository.findByUserCode(userRequest.getUserCode()) == null) {
             User user = User.builder()
@@ -39,7 +39,7 @@ public class UserService {
                     .weight(userRequest.getWeight())
                     .email(userRequest.getEmail())
                     .phoneNr(userRequest.getPhoneNr())
-                    .gender(userRequest.isGender())
+                    .isMale(userRequest.isMale())
                     .fitnessGoals(userRequest.getFitnessGoals())
                     .build();
             userRepository.save(user);
@@ -49,7 +49,13 @@ public class UserService {
         }
     }
 
-    // Get all users
+    // Get user by code --> Klaar
+    public UserResponse getUserByCode(String userCode) {
+        User user = userRepository.findByUserCode(userCode);
+        return mapToRecordResponse(user);
+    }
+
+    // Get all users --> Klaar
     public List<UserResponse> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream()
@@ -57,56 +63,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    // get records
-    public RecordResponse getAllRecords(String userCode) {
-        User user = userRepository.findByUserCode(userCode);
-
-//        // I want to get all the userCodes from the users and put them in a list
-//        List<String> userCodes = users.stream()
-//                .map(User::getUserCode)
-//                .toList();
-
-
-        RecordResponse recordResponse = webClient.get()
-                .uri("http://" + recordServiceUrl + "/api/record",
-                        uriBuilder -> uriBuilder.queryParam("code", userCode).build())
-                .retrieve()
-                .bodyToMono(RecordResponse.class)
-                .block();
-
-        return recordResponse;
-    }
-
-
-
-
-
-
-
-
-    private List<UserLineItemDto> MapToUserLineItemsDto(List<UserLineItem> userLineItems) {
-        return userLineItems.stream()
-                .map(userLineItem -> new UserLineItemDto(
-                        userLineItem.getId(),
-                        userLineItem.getUserCode(),
-                        userLineItem.getFastestTime(),
-                        userLineItem.getLongestDistance(),
-                        userLineItem.getMaxWeightLifted(),
-                        userLineItem.getLongestWorkoutDuration(),
-                        userLineItem.getMostCaloriesBurned()
-                ))
-                .collect(Collectors.toList());
-    }
-
-
-    // get user by id
-    public UserResponse getUserById(String id) {
-        User user = userRepository.findById(id).orElseThrow();
-
-        return mapToRecordResponse(user);
-    }
-
-    // Save the updated user
+    // Save the updated user --> Klaar
     public void updateUser(String userCode, UserRequest userRequest) {
         User user = userRepository.findByUserCode(userCode);
 
@@ -116,14 +73,54 @@ public class UserService {
         user.setWeight(userRequest.getWeight());
         user.setEmail(userRequest.getEmail());
         user.setPhoneNr(userRequest.getPhoneNr());
-        user.setGender(userRequest.isGender());
+        user.setMale(userRequest.isMale());
         user.setFitnessGoals(userRequest.getFitnessGoals());
-
 
         userRepository.save(user);
     }
 
-    // Delete record by id
+    // Delete user by code --> Klaar
+    public UserResponse deleteUser(String code) {
+        User user = userRepository.findByUserCode(code);
+        userRepository.delete(user);
+
+        return mapToRecordResponse(user);
+    }
+
+//    // get records
+//    public RecordResponse getAllRecords(String userCode) {
+//        User user = userRepository.findByUserCode(userCode);
+//
+//        RecordResponse recordResponse = webClient.get()
+//                .uri("http://" + recordServiceUrl + "/api/record",
+//                        uriBuilder -> uriBuilder.queryParam("code", userCode).build())
+//                .retrieve()
+//                .bodyToMono(RecordResponse.class)
+//                .block();
+//
+//        return recordResponse;
+//    }
+
+
+
+
+
+
+
+
+//    private List<UserLineItemDto> MapToUserLineItemsDto(List<UserLineItem> userLineItems) {
+//        return userLineItems.stream()
+//                .map(userLineItem -> new UserLineItemDto(
+//                        userLineItem.getId(),
+//                        userLineItem.getUserCode(),
+//                        userLineItem.getFastestTime(),
+//                        userLineItem.getLongestDistance(),
+//                        userLineItem.getMaxWeightLifted(),
+//                        userLineItem.getLongestWorkoutDuration(),
+//                        userLineItem.getMostCaloriesBurned()
+//                ))
+//                .collect(Collectors.toList());
+//    }
 
     private UserResponse mapToRecordResponse(User user) {
         return UserResponse.builder()
