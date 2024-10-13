@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Constructor;
 import java.util.List;
 
 @RestController
@@ -34,7 +33,7 @@ public class UserController {
     }
 
     // add the getRecords
-    @GetMapping("/records/all")
+    @GetMapping("/record")
     @ResponseStatus(HttpStatus.OK)
     public RecordResponse getAllRecords(@RequestParam String userCode) {
         System.out.println("in Controller");
