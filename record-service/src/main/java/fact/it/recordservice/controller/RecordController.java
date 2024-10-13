@@ -32,14 +32,6 @@ public class RecordController {
         return recordService.getRecordByCode(code);
     }
 
-
-
-
-
-
-
-
-
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public List<RecordResponse> getAllRecords() {
