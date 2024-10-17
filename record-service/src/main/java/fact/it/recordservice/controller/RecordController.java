@@ -20,8 +20,13 @@ public class RecordController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public void createRecord
-            (@RequestBody RecordRequest recordRequest) {
-        recordService.createRecord(recordRequest);
+            (@RequestParam(required = false) String userCode, @RequestBody RecordRequest recordRequest) {
+        if(userCode == null) {
+            recordService.createRecord(recordRequest);
+        }
+        else {
+            recordService.createRecord(userCode, recordRequest);
+        }
     }
 
     // Het tonen van alle records --> Klaar

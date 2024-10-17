@@ -100,9 +100,8 @@ public class UserService {
                 .build();
     }
 
-        // get records
+    // get record of specific user --> Klaar
     public RecordResponse getRecordOfUser(String userCode) {
-        User user = userRepository.findByUserCode(userCode);
 
         RecordResponse recordResponse = webClient.get()
                 .uri(recordServiceUrl + "/api/record",
@@ -114,9 +113,50 @@ public class UserService {
         return recordResponse;
     }
 
+    // get all records --> Klaar
+    public List<RecordResponse> getAllRecords() {
+        return webClient.get()
+                .uri(recordServiceUrl + "/api/record/all")
+                .retrieve()
+                .bodyToFlux(RecordResponse.class)
+                .collectList()
+                .block();
+    }
 
+    // Change a record of a specific user --> Klaar
+    public void updateRecord(String userCode, RecordResponse recordResponse) {
 
+        webClient.put()
+                .uri(recordServiceUrl + "/api/record",
+                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
+                .bodyValue(recordResponse)
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
+    }
 
+    // create a record for a specific user
+    public void createRecord(String userCode, RecordResponse recordResponse) {
+
+        webClient.post()
+                .uri(recordServiceUrl + "/api/record",
+                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
+                .bodyValue(recordResponse)
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
+    }
+
+    // delete a record of a specific user
+    public void deleteRecord(String userCode) {
+
+        webClient.delete()
+                .uri(recordServiceUrl + "/api/record",
+                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
+    }
 
 
 

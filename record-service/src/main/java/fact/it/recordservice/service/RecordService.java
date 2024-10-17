@@ -18,19 +18,36 @@ public class RecordService {
     private final RecordRepository recordRepository;
 
     // Create a new record --> Klaar
-    @Transactional(readOnly = true)
     public void createRecord(RecordRequest recordRequest){
-        Record record = Record.builder()
-                .userCode(recordRequest.getUserCode())
-                .fastestTime(recordRequest.getFastestTime())
-                .longestDistance(recordRequest.getLongestDistance())
-                .maxWeightLifted(recordRequest.getMaxWeightLifted())
-                .longestWorkoutDuration(recordRequest.getLongestWorkoutDuration())
-                .mostCaloriesBurned(recordRequest.getMostCaloriesBurned())
-                .build();
-
-        recordRepository.save(record);
+        if (recordRepository.findByUserCode(recordRequest.getUserCode()) == null) {
+            Record record = Record.builder()
+                    .userCode(recordRequest.getUserCode())
+                    .fastestTime(recordRequest.getFastestTime())
+                    .longestDistance(recordRequest.getLongestDistance())
+                    .maxWeightLifted(recordRequest.getMaxWeightLifted())
+                    .longestWorkoutDuration(recordRequest.getLongestWorkoutDuration())
+                    .mostCaloriesBurned(recordRequest.getMostCaloriesBurned())
+                    .build();
+            recordRepository.save(record);
+        }
     }
+
+    // Create a new record with userCode (from the user) --> Klaar
+    @Transactional(readOnly = true)
+    public void createRecord(String userCode, RecordRequest recordRequest){
+        if(recordRepository.findByUserCode(userCode) == null) {
+            Record record = Record.builder()
+                    .userCode(userCode)
+                    .fastestTime(recordRequest.getFastestTime())
+                    .longestDistance(recordRequest.getLongestDistance())
+                    .maxWeightLifted(recordRequest.getMaxWeightLifted())
+                    .longestWorkoutDuration(recordRequest.getLongestWorkoutDuration())
+                    .mostCaloriesBurned(recordRequest.getMostCaloriesBurned())
+                    .build();
+            recordRepository.save(record);
+        }
+    }
+
 
     // Get all records --> Klaar
     @Transactional(readOnly = true)
@@ -44,6 +61,10 @@ public class RecordService {
     @Transactional(readOnly = true)
     public void updateRecord(String userCode, RecordRequest recordRequest) {
         Record record = recordRepository.findByUserCode(userCode);
+
+        if (record == null) {
+            return;
+        }
 
         record.setFastestTime(recordRequest.getFastestTime());
         record.setLongestDistance(recordRequest.getLongestDistance());
@@ -61,12 +82,13 @@ public class RecordService {
         return record != null ? mapToRecordResponse(record) : null;
     }
 
-    // Delete record by id --> Klaar
+    // Delete record by userCode --> Klaar
     @Transactional(readOnly = true)
     public void deleteRecord(String userCode) {
-        Record record = recordRepository.findByUserCode(userCode);
-
-        recordRepository.delete(record);
+        if (recordRepository.findByUserCode(userCode) != null) {
+            Record record = recordRepository.findByUserCode(userCode);
+            recordRepository.delete(record);
+        }
     }
 
     // Map record to record response --> Klaar

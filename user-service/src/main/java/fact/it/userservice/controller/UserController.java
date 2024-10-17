@@ -54,11 +54,40 @@ public class UserController {
         userService.deleteUser(userCode);
     }
 
-    // add the getRecords
+    // get record of specific user  --> Klaar
     @GetMapping("/record")
     @ResponseStatus(HttpStatus.OK)
-    public RecordResponse getAllRecords(@RequestParam String userCode) {
+    public RecordResponse getRecords(@RequestParam String userCode) {
         return userService.getRecordOfUser(userCode);
     }
+
+    // get all records  --> Klaar
+    @GetMapping("/record/all")
+    @ResponseStatus(HttpStatus.OK)
+    public List<RecordResponse> getAllRecords() {
+        return userService.getAllRecords();
+    }
+
+    // Change a record of a specific user --> Klaar
+    @PutMapping("/record")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateRecord(@RequestParam String userCode, @RequestBody RecordResponse recordResponse) {
+        userService.updateRecord(userCode, recordResponse);
+    }
+
+    // create a record for a specific user --> Klaar
+    @PostMapping("/record")
+    @ResponseStatus(HttpStatus.OK)
+    public void createRecord(@RequestParam String userCode, @RequestBody RecordResponse recordResponse) {
+        userService.createRecord(userCode, recordResponse);
+    }
+
+    // create a record for a specific user --> Klaar
+    @DeleteMapping("/record")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteRecord(@RequestParam String userCode) {
+        userService.deleteRecord(userCode);
+    }
+
 }
 
