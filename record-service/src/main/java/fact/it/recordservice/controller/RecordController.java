@@ -16,38 +16,43 @@ public class RecordController {
 
     private final RecordService recordService;
 
-    @PostMapping // Het toevoegen van een record --> Klaar
+    // Het toevoegen van een record --> Klaar
+    @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public void createRecord
             (@RequestBody RecordRequest recordRequest) {
         recordService.createRecord(recordRequest);
     }
 
-    // http://localhost:8082/api/record?code=user1
-    @GetMapping // Het ophalen van een record op basis van een code
-    @ResponseStatus(HttpStatus.OK)
-    public RecordResponse getRecordByCode
-            (@RequestParam String code) {
-        //return recordService.getRecordByCode(code);
-        return recordService.getRecordByCode(code);
-    }
-
+    // Het tonen van alle records --> Klaar
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public List<RecordResponse> getAllRecords() {
         return recordService.getAllRecords();
     }
 
-    @PutMapping// Find the record by id and update it
+    // Het updaten van een record --> Klaar
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public void updateRecord(@RequestParam String id, @RequestBody RecordRequest recordRequest) {
-        recordService.updateRecord(id, recordRequest);
+    public void updateRecord(@RequestParam String userCode, @RequestBody RecordRequest recordRequest) {
+        recordService.updateRecord(userCode, recordRequest);
     }
 
-    @DeleteMapping // Het verwijderen van een record op basis van een id
+
+    // Het ophalen van een record op basis van een code --> Klaar
+    // http://localhost:8082/api/record?code=user1
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public void deleteRecord(@RequestParam String id) {
-        recordService.deleteRecord(id);
+    public RecordResponse getRecordByCode
+            (@RequestParam String userCode) {
+        return recordService.getRecordByCode(userCode);
+    }
+
+    // Het verwijderen van een record --> Klaar
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteRecord(@RequestParam String userCode) {
+        recordService.deleteRecord(userCode);
     }
 }
 

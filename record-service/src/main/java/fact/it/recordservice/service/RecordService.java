@@ -17,8 +17,11 @@ public class RecordService {
 
     private final RecordRepository recordRepository;
 
+    // Create a new record --> Klaar
+    @Transactional(readOnly = true)
     public void createRecord(RecordRequest recordRequest){
         Record record = Record.builder()
+                .userCode(recordRequest.getUserCode())
                 .fastestTime(recordRequest.getFastestTime())
                 .longestDistance(recordRequest.getLongestDistance())
                 .maxWeightLifted(recordRequest.getMaxWeightLifted())
@@ -29,29 +32,18 @@ public class RecordService {
         recordRepository.save(record);
     }
 
+    // Get all records --> Klaar
+    @Transactional(readOnly = true)
     public List<RecordResponse> getAllRecords() {
         List<Record> records = recordRepository.findAll();
 
         return records.stream().map(this::mapToRecordResponse).toList();
     }
 
-//    @Transactional(readOnly = true)
-//    // get record by id
-//    public RecordResponse getRecordByCode(String code) {
-//        Record record = recordRepository.findByUserCode(code);
-//        return mapToRecordResponse(record);
-//    }
+    // Save the updated record --> Klaar
     @Transactional(readOnly = true)
-    // get record by id
-    public RecordResponse getRecordByCode(String code) {
-        Record record = recordRepository.findByUserCode(code);
-
-        return record != null ? mapToRecordResponse(record) : null;
-    }
-
-    // Save the updated record
-    public void updateRecord(String id, RecordRequest recordRequest) {
-        Record record = recordRepository.findById(id).orElseThrow();
+    public void updateRecord(String userCode, RecordRequest recordRequest) {
+        Record record = recordRepository.findByUserCode(userCode);
 
         record.setFastestTime(recordRequest.getFastestTime());
         record.setLongestDistance(recordRequest.getLongestDistance());
@@ -62,11 +54,22 @@ public class RecordService {
         recordRepository.save(record);
     }
 
-    // Delete record by id
-    public void deleteRecord(String id) {
-        recordRepository.deleteById(id);
+    // Get record by code --> Klaar
+    @Transactional(readOnly = true)
+    public RecordResponse getRecordByCode(String code) {
+        Record record = recordRepository.findByUserCode(code);
+        return record != null ? mapToRecordResponse(record) : null;
     }
 
+    // Delete record by id --> Klaar
+    @Transactional(readOnly = true)
+    public void deleteRecord(String userCode) {
+        Record record = recordRepository.findByUserCode(userCode);
+
+        recordRepository.delete(record);
+    }
+
+    // Map record to record response --> Klaar
     private RecordResponse mapToRecordResponse(Record record) {
         return RecordResponse.builder()
                 .id(record.getId())

@@ -15,7 +15,7 @@ public class UserResponse {
     private String name;
     private double height;
     private double weight;
-    private boolean isMale;
+    private boolean male;
     private String email;
     private String fitnessGoals;
 }

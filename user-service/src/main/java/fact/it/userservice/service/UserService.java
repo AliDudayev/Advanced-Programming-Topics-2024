@@ -7,6 +7,7 @@ import fact.it.userservice.dto.UserResponse;
 import fact.it.userservice.model.UserLineItem;
 import fact.it.userservice.model.User;
 import fact.it.userservice.repository.UserRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,8 +25,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final WebClient webClient;
 
-//    @Value("${record.service.url}")
-//    private String recordServiceUrl;
+    @Value("${RECORD_SERVICE_URL:http://localhost:8082}")
+    private String recordServiceUrl;
 
     // create user --> Klaar
     public void createUser(UserRequest userRequest) {
@@ -38,7 +39,7 @@ public class UserService {
                     .weight(userRequest.getWeight())
                     .email(userRequest.getEmail())
                     .phoneNr(userRequest.getPhoneNr())
-                    .isMale(userRequest.isMale())
+                    .male(userRequest.isMale())
                     .fitnessGoals(userRequest.getFitnessGoals())
                     .build();
             userRepository.save(user);
@@ -51,14 +52,14 @@ public class UserService {
     // Get user by code --> Klaar
     public UserResponse getUserByCode(String userCode) {
         User user = userRepository.findByUserCode(userCode);
-        return mapToRecordResponse(user);
+        return mapToUserResponse(user);
     }
 
     // Get all users --> Klaar
     public List<UserResponse> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream()
-                .map(this::mapToRecordResponse)
+                .map(this::mapToUserResponse)
                 .collect(Collectors.toList());
     }
 
@@ -83,22 +84,35 @@ public class UserService {
         User user = userRepository.findByUserCode(code);
         userRepository.delete(user);
 
-        return mapToRecordResponse(user);
+        return mapToUserResponse(user);
     }
 
-//    // get records
-//    public RecordResponse getAllRecords(String userCode) {
-//        User user = userRepository.findByUserCode(userCode);
-//
-//        RecordResponse recordResponse = webClient.get()
-//                .uri("http://" + recordServiceUrl + "/api/record",
-//                        uriBuilder -> uriBuilder.queryParam("code", userCode).build())
-//                .retrieve()
-//                .bodyToMono(RecordResponse.class)
-//                .block();
-//
-//        return recordResponse;
-//    }
+    private UserResponse mapToUserResponse(User user) {
+        return UserResponse.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .userCode(user.getUserCode())
+                .height(user.getHeight())
+                .weight(user.getWeight())
+                .email(user.getEmail())
+                .male(user.isMale())
+                .fitnessGoals(user.getFitnessGoals())
+                .build();
+    }
+
+        // get records
+    public RecordResponse getRecordOfUser(String userCode) {
+        User user = userRepository.findByUserCode(userCode);
+
+        RecordResponse recordResponse = webClient.get()
+                .uri(recordServiceUrl + "/api/record",
+                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
+                .retrieve()
+                .bodyToMono(RecordResponse.class)
+                .block();
+
+        return recordResponse;
+    }
 
 
 
@@ -120,17 +134,5 @@ public class UserService {
 //                ))
 //                .collect(Collectors.toList());
 //    }
-
-    private UserResponse mapToRecordResponse(User user) {
-        return UserResponse.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .userCode(user.getUserCode())
-                .height(user.getHeight())
-                .weight(user.getWeight())
-                .email(user.getEmail())
-                .fitnessGoals(user.getFitnessGoals())
-                .build();
-    }
 
 }

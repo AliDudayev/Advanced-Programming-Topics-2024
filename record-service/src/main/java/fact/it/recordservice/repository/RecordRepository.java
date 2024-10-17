@@ -11,5 +11,4 @@ import java.util.List;
 @Transactional
 public interface RecordRepository extends MongoRepository<Record, String> {
     Record findByUserCode(String code);
-
 }
