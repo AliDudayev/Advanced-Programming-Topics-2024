@@ -43,6 +43,17 @@ public class UserService {
                     .fitnessGoals(userRequest.getFitnessGoals())
                     .build();
             userRepository.save(user);
+
+            RecordResponse recordResponse = RecordResponse.builder()
+                    .userCode(user.getUserCode())
+                    .fastestTime(0.0)
+                    .longestDistance(0.0)
+                    .maxWeightLifted(0.0)
+                    .longestWorkoutDuration(0.0)
+                    .mostCaloriesBurned(0.0)
+                    .build();
+
+            createRecord(user.getUserCode(), recordResponse);
         }
         else {
             log.info("User with userCode: " + userRequest.getUserCode() + " already exists");
@@ -51,8 +62,11 @@ public class UserService {
 
     // Get user by code --> Klaar
     public UserResponse getUserByCode(String userCode) {
-        User user = userRepository.findByUserCode(userCode);
-        return mapToUserResponse(user);
+        if(userRepository.findByUserCode(userCode) != null) {
+            User user = userRepository.findByUserCode(userCode);
+            return mapToUserResponse(user);
+        }
+        return null;
     }
 
     // Get all users --> Klaar
@@ -65,26 +79,33 @@ public class UserService {
 
     // Save the updated user --> Klaar
     public void updateUser(String userCode, UserRequest userRequest) {
-        User user = userRepository.findByUserCode(userCode);
+        if(userRepository.findByUserCode(userCode) != null)
+        {
+            User user = userRepository.findByUserCode(userCode);
 
-        user.setName(userRequest.getName());
-        user.setAge(userRequest.getAge());
-        user.setHeight(userRequest.getHeight());
-        user.setWeight(userRequest.getWeight());
-        user.setEmail(userRequest.getEmail());
-        user.setPhoneNr(userRequest.getPhoneNr());
-        user.setMale(userRequest.isMale());
-        user.setFitnessGoals(userRequest.getFitnessGoals());
+            user.setName(userRequest.getName());
+            user.setAge(userRequest.getAge());
+            user.setHeight(userRequest.getHeight());
+            user.setWeight(userRequest.getWeight());
+            user.setEmail(userRequest.getEmail());
+            user.setPhoneNr(userRequest.getPhoneNr());
+            user.setMale(userRequest.isMale());
+            user.setFitnessGoals(userRequest.getFitnessGoals());
 
-        userRepository.save(user);
+            userRepository.save(user);
+        }
     }
 
     // Delete user by code --> Klaar
-    public UserResponse deleteUser(String code) {
-        User user = userRepository.findByUserCode(code);
-        userRepository.delete(user);
+    public UserResponse deleteUser(String userCode) {
+        if (userRepository.findByUserCode(userCode) != null) {
+            User user = userRepository.findByUserCode(userCode);
+            userRepository.delete(user);
+            deleteRecord(userCode);
 
-        return mapToUserResponse(user);
+            return mapToUserResponse(user);
+        }
+        return null;
     }
 
     private UserResponse mapToUserResponse(User user) {
@@ -157,8 +178,6 @@ public class UserService {
                 .bodyToMono(Void.class)
                 .block();
     }
-
-
 
 
 //    private List<UserLineItemDto> MapToUserLineItemsDto(List<UserLineItem> userLineItems) {
