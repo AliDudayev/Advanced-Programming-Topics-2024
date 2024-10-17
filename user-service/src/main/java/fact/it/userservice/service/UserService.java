@@ -7,6 +7,7 @@ import fact.it.userservice.dto.UserResponse;
 import fact.it.userservice.model.UserLineItem;
 import fact.it.userservice.model.User;
 import fact.it.userservice.repository.UserRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,8 +25,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final WebClient webClient;
 
-//    @Value("${record.service.url}")
-//    private String recordServiceUrl;
+    @Value("${RECORD_SERVICE_URL:http://localhost:8082}")
+    private String recordServiceUrl;
 
     // create user --> Klaar
     public void createUser(UserRequest userRequest) {
@@ -38,10 +39,21 @@ public class UserService {
                     .weight(userRequest.getWeight())
                     .email(userRequest.getEmail())
                     .phoneNr(userRequest.getPhoneNr())
-                    .isMale(userRequest.isMale())
+                    .male(userRequest.isMale())
                     .fitnessGoals(userRequest.getFitnessGoals())
                     .build();
             userRepository.save(user);
+
+            RecordResponse recordResponse = RecordResponse.builder()
+                    .userCode(user.getUserCode())
+                    .fastestTime(0.0)
+                    .longestDistance(0.0)
+                    .maxWeightLifted(0.0)
+                    .longestWorkoutDuration(0.0)
+                    .mostCaloriesBurned(0.0)
+                    .build();
+
+            createRecord(user.getUserCode(), recordResponse);
         }
         else {
             log.info("User with userCode: " + userRequest.getUserCode() + " already exists");
@@ -50,61 +62,122 @@ public class UserService {
 
     // Get user by code --> Klaar
     public UserResponse getUserByCode(String userCode) {
-        User user = userRepository.findByUserCode(userCode);
-        return mapToRecordResponse(user);
+        if(userRepository.findByUserCode(userCode) != null) {
+            User user = userRepository.findByUserCode(userCode);
+            return mapToUserResponse(user);
+        }
+        return null;
     }
 
     // Get all users --> Klaar
     public List<UserResponse> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream()
-                .map(this::mapToRecordResponse)
+                .map(this::mapToUserResponse)
                 .collect(Collectors.toList());
     }
 
     // Save the updated user --> Klaar
     public void updateUser(String userCode, UserRequest userRequest) {
-        User user = userRepository.findByUserCode(userCode);
+        if(userRepository.findByUserCode(userCode) != null)
+        {
+            User user = userRepository.findByUserCode(userCode);
 
-        user.setName(userRequest.getName());
-        user.setAge(userRequest.getAge());
-        user.setHeight(userRequest.getHeight());
-        user.setWeight(userRequest.getWeight());
-        user.setEmail(userRequest.getEmail());
-        user.setPhoneNr(userRequest.getPhoneNr());
-        user.setMale(userRequest.isMale());
-        user.setFitnessGoals(userRequest.getFitnessGoals());
+            user.setName(userRequest.getName());
+            user.setAge(userRequest.getAge());
+            user.setHeight(userRequest.getHeight());
+            user.setWeight(userRequest.getWeight());
+            user.setEmail(userRequest.getEmail());
+            user.setPhoneNr(userRequest.getPhoneNr());
+            user.setMale(userRequest.isMale());
+            user.setFitnessGoals(userRequest.getFitnessGoals());
 
-        userRepository.save(user);
+            userRepository.save(user);
+        }
     }
 
     // Delete user by code --> Klaar
-    public UserResponse deleteUser(String code) {
-        User user = userRepository.findByUserCode(code);
-        userRepository.delete(user);
+    public UserResponse deleteUser(String userCode) {
+        if (userRepository.findByUserCode(userCode) != null) {
+            User user = userRepository.findByUserCode(userCode);
+            userRepository.delete(user);
+            deleteRecord(userCode);
 
-        return mapToRecordResponse(user);
+            return mapToUserResponse(user);
+        }
+        return null;
     }
 
-//    // get records
-//    public RecordResponse getAllRecords(String userCode) {
-//        User user = userRepository.findByUserCode(userCode);
-//
-//        RecordResponse recordResponse = webClient.get()
-//                .uri("http://" + recordServiceUrl + "/api/record",
-//                        uriBuilder -> uriBuilder.queryParam("code", userCode).build())
-//                .retrieve()
-//                .bodyToMono(RecordResponse.class)
-//                .block();
-//
-//        return recordResponse;
-//    }
+    private UserResponse mapToUserResponse(User user) {
+        return UserResponse.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .userCode(user.getUserCode())
+                .height(user.getHeight())
+                .weight(user.getWeight())
+                .email(user.getEmail())
+                .male(user.isMale())
+                .fitnessGoals(user.getFitnessGoals())
+                .build();
+    }
 
+    // get record of specific user --> Klaar
+    public RecordResponse getRecordOfUser(String userCode) {
 
+        RecordResponse recordResponse = webClient.get()
+                .uri(recordServiceUrl + "/api/record",
+                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
+                .retrieve()
+                .bodyToMono(RecordResponse.class)
+                .block();
 
+        return recordResponse;
+    }
 
+    // get all records --> Klaar
+    public List<RecordResponse> getAllRecords() {
+        return webClient.get()
+                .uri(recordServiceUrl + "/api/record/all")
+                .retrieve()
+                .bodyToFlux(RecordResponse.class)
+                .collectList()
+                .block();
+    }
 
+    // Change a record of a specific user --> Klaar
+    public void updateRecord(String userCode, RecordResponse recordResponse) {
 
+        webClient.put()
+                .uri(recordServiceUrl + "/api/record",
+                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
+                .bodyValue(recordResponse)
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
+    }
+
+    // create a record for a specific user
+    public void createRecord(String userCode, RecordResponse recordResponse) {
+
+        webClient.post()
+                .uri(recordServiceUrl + "/api/record",
+                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
+                .bodyValue(recordResponse)
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
+    }
+
+    // delete a record of a specific user
+    public void deleteRecord(String userCode) {
+
+        webClient.delete()
+                .uri(recordServiceUrl + "/api/record",
+                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
+    }
 
 
 //    private List<UserLineItemDto> MapToUserLineItemsDto(List<UserLineItem> userLineItems) {
@@ -120,17 +193,5 @@ public class UserService {
 //                ))
 //                .collect(Collectors.toList());
 //    }
-
-    private UserResponse mapToRecordResponse(User user) {
-        return UserResponse.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .userCode(user.getUserCode())
-                .height(user.getHeight())
-                .weight(user.getWeight())
-                .email(user.getEmail())
-                .fitnessGoals(user.getFitnessGoals())
-                .build();
-    }
 
 }

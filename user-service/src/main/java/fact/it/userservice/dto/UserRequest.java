@@ -17,7 +17,7 @@ public class UserRequest {
     private double height;
     private double weight;
     private String phoneNr;
-    private boolean isMale;
+    private boolean male;
     private String email;
     private String fitnessGoals;
 }
