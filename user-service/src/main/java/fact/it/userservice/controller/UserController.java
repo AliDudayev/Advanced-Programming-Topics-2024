@@ -25,6 +25,13 @@ public class UserController {
         userService.createUser(userRequest);
     }
 
+    // Get a single user by code  --> Klaar
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public UserResponse getUserByCode(@RequestParam String userCode) {
+        return userService.getUserByCode(userCode);
+    }
+
     // Get all users  --> Klaar
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
@@ -32,26 +39,34 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    // add the getRecords
-    @GetMapping("/record")
-    @ResponseStatus(HttpStatus.OK)
-    public RecordResponse getAllRecords(@RequestParam String userCode) {
-        System.out.println("in Controller");
-        return userService.getAllRecords(userCode);
-    }
-
-    // Delete a user
-    @GetMapping // Het ophalen van een record op basis van een id
-    @ResponseStatus(HttpStatus.OK)
-    public UserResponse getUserById
-            (@RequestParam String id) {
-        return userService.getUserById(id);
-    }
-
-    @PutMapping// Find the record by id and update it
+    // Update a user  --> isMale werkt niet.
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public void updateUser(@RequestParam String userCode, @RequestBody UserRequest userRequest) {
         userService.updateUser(userCode, userRequest);
     }
+
+    //Delete a user by code  --> Klaar
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteUser(@RequestParam String userCode) {
+        userService.deleteUser(userCode);
+    }
+
+    // Delete a user  --> Klaar
+//    @DeleteMapping
+//    @ResponseStatus(HttpStatus.OK)
+//    public void deleteUser
+//    (@RequestParam String userCode) {
+//        return userService.deleteUser(userCode);
+//    }
+
+    // add the getRecords
+//    @GetMapping("/records/all")
+//    @ResponseStatus(HttpStatus.OK)
+//    public RecordResponse getAllRecords(@RequestParam String userCode) {
+//        System.out.println("in Controller");
+//        return userService.getAllRecords(userCode);
+//    }
 }
 

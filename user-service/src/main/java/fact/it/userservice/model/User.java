@@ -25,7 +25,7 @@ public class User {
     private double weight;
     private String email;
     private String phoneNr;
-    private boolean gender;
+    private boolean isMale;
     private String fitnessGoals;
 
 //    private List<UserLineItem> userLineItemList;
