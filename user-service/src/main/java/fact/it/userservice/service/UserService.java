@@ -1,13 +1,10 @@
 package fact.it.userservice.service;
 
 import fact.it.userservice.dto.RecordResponse;
-import fact.it.userservice.dto.UserLineItemDto;
 import fact.it.userservice.dto.UserRequest;
 import fact.it.userservice.dto.UserResponse;
-import fact.it.userservice.model.UserLineItem;
 import fact.it.userservice.model.User;
 import fact.it.userservice.repository.UserRepository;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -178,20 +175,5 @@ public class UserService {
                 .bodyToMono(Void.class)
                 .block();
     }
-
-
-//    private List<UserLineItemDto> MapToUserLineItemsDto(List<UserLineItem> userLineItems) {
-//        return userLineItems.stream()
-//                .map(userLineItem -> new UserLineItemDto(
-//                        userLineItem.getId(),
-//                        userLineItem.getUserCode(),
-//                        userLineItem.getFastestTime(),
-//                        userLineItem.getLongestDistance(),
-//                        userLineItem.getMaxWeightLifted(),
-//                        userLineItem.getLongestWorkoutDuration(),
-//                        userLineItem.getMostCaloriesBurned()
-//                ))
-//                .collect(Collectors.toList());
-//    }
 
 }
