@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -13,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class WorkoutRequest {
     private String name;
-    private Date date;
+    private LocalDate date;
     private String duration;
     private String sets;
     private String reps;
