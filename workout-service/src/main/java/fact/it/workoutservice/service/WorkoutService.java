@@ -7,6 +7,7 @@ import fact.it.workoutservice.dto.WorkoutResponse;
 import fact.it.workoutservice.model.Workout;
 import fact.it.workoutservice.repository.WorkoutRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class WorkoutService {
@@ -58,22 +60,27 @@ public class WorkoutService {
 
 
     public void createWorkout(WorkoutRequest workoutRequest){
-        Workout workout = Workout.builder()
-                .name(workoutRequest.getName())
-                .userCode(workoutRequest.getUserCode())
-                .workoutCode(workoutRequest.getWorkoutCode())
-                .date(workoutRequest.getDate())
-                .duration(workoutRequest.getDuration())
-                .sets(workoutRequest.getSets())
-                .reps(workoutRequest.getReps())
-                .pauseBetweenReps(workoutRequest.getPauseBetweenReps())
-                .type(workoutRequest.getType())
-                .weight(workoutRequest.getWeight())
-                .distance(workoutRequest.getDistance())
-                .speed(workoutRequest.getSpeed())
-                .description(workoutRequest.getDescription())
-                .build();
-        workoutRepository.save(workout);
+        if (workoutRepository.findByWorkoutCode(workoutRequest.getWorkoutCode()) != null) {
+            log.info("User with userCode: " + workoutRequest.getUserCode() + " already exists");
+        }
+        else {
+            Workout workout = Workout.builder()
+                    .name(workoutRequest.getName())
+                    .userCode(workoutRequest.getUserCode())
+                    .workoutCode(workoutRequest.getWorkoutCode())
+                    .date(workoutRequest.getDate())
+                    .duration(workoutRequest.getDuration())
+                    .sets(workoutRequest.getSets())
+                    .reps(workoutRequest.getReps())
+                    .pauseBetweenReps(workoutRequest.getPauseBetweenReps())
+                    .type(workoutRequest.getType())
+                    .weight(workoutRequest.getWeight())
+                    .distance(workoutRequest.getDistance())
+                    .speed(workoutRequest.getSpeed())
+                    .description(workoutRequest.getDescription())
+                    .build();
+            workoutRepository.save(workout);
+        }
     }
     public List<WorkoutResponse> getAllWorkouts() {
         List<Workout> workouts = workoutRepository.findAll();

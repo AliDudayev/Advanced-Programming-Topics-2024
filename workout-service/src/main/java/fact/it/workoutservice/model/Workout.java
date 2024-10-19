@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity  // Specifies that this class is an entity mapped to a database table
@@ -24,7 +25,7 @@ public class Workout {
     private String name;
 
     @Column(nullable = true)  // Optional 'date' field
-    private Date date;
+    private LocalDate date;
 
     @Column(nullable = true)  // Optional 'duration' field
     private String duration;
