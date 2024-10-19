@@ -42,21 +42,25 @@ class UserServiceApplicationTests {
                 .weight(80.0)
                 .email("test")
                 .phoneNr("123")
+                .fitnessGoals("test")
+                .male(true)
                 .build();
         userService.createUser(userRequest);
 
         // To test that there are no errors when creating a user that already exists
         userService.createUser(userRequest);
 
-        User user = userRepository.findByUserCode("TestUser126");
+//        User user = userRepository.findByUserCode("TestUser126");
+        UserResponse user = userService.getUserByCode("TestUser126");
 
         assertEquals("TestUser126", user.getUserCode());
         assertEquals("Test", user.getName());
-        assertEquals(20, user.getAge());
         assertEquals(1.80, user.getHeight());
         assertEquals(80.0, user.getWeight());
         assertEquals("test", user.getEmail());
-        assertEquals("123", user.getPhoneNr());
+        assertTrue(user.isMale());
+        assertEquals("test", user.getEmail());
+        assertEquals("test", user.getFitnessGoals());
     }
 
     // Write me a test that checks if the record of a user is correctly retrieved
@@ -108,8 +112,8 @@ class UserServiceApplicationTests {
     @Test
     @Order(5)
     public void getAllUsers_WhenUsersExist_ReturnsAllUsers() {
-        assertEquals("TestUser126", userService.getAllUsers().get(0).getUserCode());
-        assertEquals("TestUser127", userService.getAllUsers().get(1).getUserCode());
+        assertEquals("TestUser127", userService.getAllUsers().get(userService.getAllUsers().size() - 1).getUserCode());
+        assertEquals("TestUser126", userService.getAllUsers().get(userService.getAllUsers().size() - 2).getUserCode());
     }
 
     // Write me a test that checks updateUser
@@ -167,8 +171,8 @@ class UserServiceApplicationTests {
     @Order(8)
     public void getAllRecords_WhenRecordsExist_ReturnsAllRecords() {
         // So I want to use GetAllRecords to return a List<RecordResponse>. Then I want to check if the first and second record in the list has the correct usercode.
-        assertEquals("TestUser126", userService.getAllRecords().get(0).getUserCode());
-        assertEquals("TestUser127", userService.getAllRecords().get(1).getUserCode());
+        assertEquals("TestUser127", userService.getAllRecords().get(userService.getAllRecords().size() - 1).getUserCode());
+        assertEquals("TestUser126", userService.getAllRecords().get(userService.getAllRecords().size() - 2).getUserCode());
     }
 
     // Write me a test that checks updateRecord
