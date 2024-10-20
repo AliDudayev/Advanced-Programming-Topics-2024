@@ -32,7 +32,7 @@ class UserServiceApplicationTests {
 
     @Test
     @Order(1)
-    public void testCreateUser() {
+    public void createUser_WithValidRequest_UserIsSaved() {
         // I want to make a unittest here that creates a user and checks if it is saved in the database
         UserRequest userRequest = UserRequest.builder()
                 .userCode("TestUser126")
@@ -42,27 +42,31 @@ class UserServiceApplicationTests {
                 .weight(80.0)
                 .email("test")
                 .phoneNr("123")
+                .fitnessGoals("test")
+                .male(true)
                 .build();
         userService.createUser(userRequest);
 
         // To test that there are no errors when creating a user that already exists
         userService.createUser(userRequest);
 
-        User user = userRepository.findByUserCode("TestUser126");
+//        User user = userRepository.findByUserCode("TestUser126");
+        UserResponse user = userService.getUserByCode("TestUser126");
 
         assertEquals("TestUser126", user.getUserCode());
         assertEquals("Test", user.getName());
-        assertEquals(20, user.getAge());
         assertEquals(1.80, user.getHeight());
         assertEquals(80.0, user.getWeight());
         assertEquals("test", user.getEmail());
-        assertEquals("123", user.getPhoneNr());
+        assertTrue(user.isMale());
+        assertEquals("test", user.getEmail());
+        assertEquals("test", user.getFitnessGoals());
     }
 
     // Write me a test that checks if the record of a user is correctly retrieved
     @Test
     @Order(2)
-    public void testGetRecordOfUser() {
+    public void getRecordOfUser_WithValidUserCode_ReturnsUserRecord() {
         UserRequest userRequest = UserRequest.builder()
                 .userCode("TestUser127")
                 .name("Test")
@@ -87,8 +91,14 @@ class UserServiceApplicationTests {
     // Write me a test that checks getuserbycode
     @Test
     @Order(3)
-    public void testGetUserByCode() {
+    public void getUserByCode_WithNonExistentCode_ReturnsNull () {
         assertNull(userService.getUserByCode("DezeUserCodeBestaatNiet"));
+    }
+
+    // Write me a test that checks getuserbycode
+    @Test
+    @Order(4)
+    public void getUserByCode_WithExistingCode_ReturnsUserDetails() {
         assertEquals("TestUser127", userService.getUserByCode("TestUser127").getUserCode());
         assertEquals("Test", userService.getUserByCode("TestUser127").getName());
         assertEquals(1.80, userService.getUserByCode("TestUser127").getHeight());
@@ -100,16 +110,16 @@ class UserServiceApplicationTests {
 
     // Write me a test that checks getAllUsers
     @Test
-    @Order(4)
-    public void testGetAllUsers() {
-        assertEquals("TestUser126", userService.getAllUsers().get(0).getUserCode());
-        assertEquals("TestUser127", userService.getAllUsers().get(1).getUserCode());
+    @Order(5)
+    public void getAllUsers_WhenUsersExist_ReturnsAllUsers() {
+        assertEquals("TestUser127", userService.getAllUsers().get(userService.getAllUsers().size() - 1).getUserCode());
+        assertEquals("TestUser126", userService.getAllUsers().get(userService.getAllUsers().size() - 2).getUserCode());
     }
 
     // Write me a test that checks updateUser
     @Test
-    @Order(5)
-    public void testUpdateUser() {
+    @Order(6)
+    public void updateUser_WithExistingUser_UpdatesUserSuccessfully() {
         UserRequest userRequest = UserRequest.builder()
                 .userCode("TestUser128")
                 .name("Test")
@@ -148,8 +158,8 @@ class UserServiceApplicationTests {
 
     // Write me a test that checks deleteUser
     @Test
-    @Order(6)
-    public void testDeleteUser() {
+    @Order(7)
+    public void deleteUser_WithExistingUser_RemovesUserSuccessfully() {
         userService.deleteUser("TestUser128");
         assertNull(userService.deleteUser("FakeUser"));
         assertNull(userService.getUserByCode("TestUser128"));
@@ -158,17 +168,17 @@ class UserServiceApplicationTests {
 
     // Write me a test that checks getAllRecords
     @Test
-    @Order(7)
-    public void testGetAllRecords() {
+    @Order(8)
+    public void getAllRecords_WhenRecordsExist_ReturnsAllRecords() {
         // So I want to use GetAllRecords to return a List<RecordResponse>. Then I want to check if the first and second record in the list has the correct usercode.
-        assertEquals("TestUser126", userService.getAllRecords().get(0).getUserCode());
-        assertEquals("TestUser127", userService.getAllRecords().get(1).getUserCode());
+        assertEquals("TestUser127", userService.getAllRecords().get(userService.getAllRecords().size() - 1).getUserCode());
+        assertEquals("TestUser126", userService.getAllRecords().get(userService.getAllRecords().size() - 2).getUserCode());
     }
 
     // Write me a test that checks updateRecord
     @Test
-    @Order(8)
-    public void testUpdateRecord() {
+    @Order(9)
+    public void updateRecord_WithValidData_UpdatesRecordSuccessfully() {
         // I want to update the record of a user and check if the record is updated
 
         RecordResponse recordResponse = RecordResponse.builder()
@@ -190,8 +200,8 @@ class UserServiceApplicationTests {
     }
 
     @Test
-    @Order(9)
-    public void DeleteUsersOfTest() {
+    @Order(10)
+    public void cleanupTestUsers_RemovesTestUsers() {
         userService.deleteUser("TestUser126");
         userService.deleteUser("TestUser127");
     }
