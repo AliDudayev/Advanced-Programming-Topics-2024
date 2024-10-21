@@ -3,6 +3,7 @@ package fact.it.userservice.controller;
 import fact.it.userservice.dto.RecordResponse;
 import fact.it.userservice.dto.UserRequest;
 import fact.it.userservice.dto.UserResponse;
+import fact.it.userservice.dto.WorkoutResponse;
 import fact.it.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -89,5 +90,11 @@ public class UserController {
         userService.deleteRecord(userCode);
     }
 
+    // get all workouts from user --> Klaar
+    @GetMapping("/workout/all")
+    @ResponseStatus(HttpStatus.OK)
+    public List<WorkoutResponse> getAllWorkouts(@RequestParam String userCode) {
+        return userService.getAllWorkoutsFromUser(userCode);
+    }
 }
 
