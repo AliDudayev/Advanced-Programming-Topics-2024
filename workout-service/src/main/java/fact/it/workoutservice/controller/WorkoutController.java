@@ -39,6 +39,13 @@ public class WorkoutController {
         return workoutService.getWorkoutByWorkoutCode(workoutCode);
     }
 
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<WorkoutResponse> getWorkoutByUserCode
+            (@RequestParam String userCode) {
+        return workoutService.getWorkoutByUserCode(userCode);
+    }
+
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public List<WorkoutResponse> getAllWorkouts() {

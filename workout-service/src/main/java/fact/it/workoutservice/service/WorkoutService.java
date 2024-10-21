@@ -6,6 +6,7 @@ import fact.it.workoutservice.dto.WorkoutRequest;
 import fact.it.workoutservice.dto.WorkoutResponse;
 import fact.it.workoutservice.model.Workout;
 import fact.it.workoutservice.repository.WorkoutRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -84,6 +85,12 @@ public class WorkoutService {
     public WorkoutResponse getWorkoutByWorkoutCode(String workoutCode) {
         Workout workout = workoutRepository.findByWorkoutCode(workoutCode);
         return mapToWorkoutResponse(workout);
+    }
+
+    @Transactional
+    public List<WorkoutResponse> getWorkoutByUserCode(String userCode) {
+        List<Workout> workouts = workoutRepository.findByUserCode(userCode);
+        return workouts.stream().map(this::mapToWorkoutResponse).toList();
     }
 
     private WorkoutResponse mapToWorkoutResponse(Workout workout) {
