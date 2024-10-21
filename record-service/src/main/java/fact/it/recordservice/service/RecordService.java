@@ -63,6 +63,9 @@ public class RecordService {
         Record record = recordRepository.findByUserCode(userCode);
 
         if (record == null) {
+            // return a message to postman that the record does not exist
+            this.createRecord(userCode, recordRequest);
+
             return;
         }
 

@@ -39,7 +39,7 @@ public class WorkoutController {
         return workoutService.getWorkoutByWorkoutCode(workoutCode);
     }
 
-    @GetMapping
+    @GetMapping("/user")
     @ResponseStatus(HttpStatus.OK)
     public List<WorkoutResponse> getWorkoutByUserCode
             (@RequestParam String userCode) {
