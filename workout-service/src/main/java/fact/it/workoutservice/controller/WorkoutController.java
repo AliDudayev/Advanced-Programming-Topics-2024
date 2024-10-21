@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/workout")
-
 @RequiredArgsConstructor
 public class WorkoutController {
 
@@ -39,7 +38,7 @@ public class WorkoutController {
         return workoutService.getWorkoutByWorkoutCode(workoutCode);
     }
 
-    @GetMapping
+    @GetMapping("/user")
     @ResponseStatus(HttpStatus.OK)
     public List<WorkoutResponse> getWorkoutByUserCode
             (@RequestParam String userCode) {
