@@ -90,8 +90,8 @@ class WorkoutServiceApplicationTests {
                 .description("Test description")
                 .build();
         workoutService.createWorkout(workoutRequest);
-        assertEquals("TestWorkout126", workoutService.getAllWorkouts().get(0).getWorkoutCode());
-        assertEquals("TestWorkout127", workoutService.getAllWorkouts().get(1).getWorkoutCode());
+        assertEquals("TestWorkout126", workoutService.getAllWorkouts().get(workoutService.getAllWorkouts().size() - 1).getWorkoutCode());
+        assertEquals("TestWorkout127", workoutService.getAllWorkouts().get(workoutService.getAllWorkouts().size() - 1).getWorkoutCode());
     }
 
     @Test
