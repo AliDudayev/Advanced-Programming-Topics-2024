@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -13,4 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 public class WorkoutResponse {
     private String id;
+    private String workoutCode;
+    private String name;
+    private Date date;
+    private String description;
 }

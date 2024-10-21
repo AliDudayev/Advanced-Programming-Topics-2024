@@ -3,6 +3,7 @@ package fact.it.userservice.service;
 import fact.it.userservice.dto.RecordResponse;
 import fact.it.userservice.dto.UserRequest;
 import fact.it.userservice.dto.UserResponse;
+import fact.it.userservice.dto.WorkoutResponse;
 import fact.it.userservice.model.User;
 import fact.it.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,9 @@ public class UserService {
 
     @Value("${RECORD_SERVICE_URL:http://localhost:8082}")
     private String recordServiceUrl;
+
+    @Value("${WORKOUT_SERVICE_URL:http://localhost:8083}")
+    private String workoutServiceUrl;
 
     // create user --> Klaar
     public void createUser(UserRequest userRequest) {
@@ -105,19 +109,6 @@ public class UserService {
         return null;
     }
 
-    private UserResponse mapToUserResponse(User user) {
-        return UserResponse.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .userCode(user.getUserCode())
-                .height(user.getHeight())
-                .weight(user.getWeight())
-                .email(user.getEmail())
-                .male(user.isMale())
-                .fitnessGoals(user.getFitnessGoals())
-                .build();
-    }
-
     // get record of specific user --> Klaar
     public RecordResponse getRecordOfUser(String userCode) {
 
@@ -176,4 +167,27 @@ public class UserService {
                 .block();
     }
 
+    // get all workouts
+    public List<WorkoutResponse> getAllWorkoutsFromUser(String userCode) {
+        return webClient.get()
+                .uri(workoutServiceUrl + "/api/workout/all",
+                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
+                .retrieve()
+                .bodyToFlux(WorkoutResponse.class)
+                .collectList()
+                .block();
+    }
+
+    private UserResponse mapToUserResponse(User user) {
+        return UserResponse.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .userCode(user.getUserCode())
+                .height(user.getHeight())
+                .weight(user.getWeight())
+                .email(user.getEmail())
+                .male(user.isMale())
+                .fitnessGoals(user.getFitnessGoals())
+                .build();
+    }
 }
