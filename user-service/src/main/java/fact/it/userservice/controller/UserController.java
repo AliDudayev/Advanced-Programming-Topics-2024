@@ -91,7 +91,7 @@ public class UserController {
     }
 
     // get all workouts from user --> Klaar
-    @GetMapping("/workout/all")
+    @GetMapping("/workout")
     @ResponseStatus(HttpStatus.OK)
     public List<WorkoutResponse> getAllWorkouts(@RequestParam String userCode) {
         return userService.getAllWorkoutsFromUser(userCode);

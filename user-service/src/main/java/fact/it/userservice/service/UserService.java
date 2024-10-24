@@ -47,7 +47,7 @@ public class UserService {
 
             RecordResponse recordResponse = RecordResponse.builder()
                     .userCode(user.getUserCode())
-                    .fastestTime(0.0)
+                    .fastestTime(1000.0)
                     .longestDistance(0.0)
                     .maxWeightLifted(0.0)
                     .longestWorkoutDuration(0.0)
@@ -170,7 +170,7 @@ public class UserService {
     // get all workouts
     public List<WorkoutResponse> getAllWorkoutsFromUser(String userCode) {
         return webClient.get()
-                .uri(workoutServiceUrl + "/api/workout/all",
+                .uri(workoutServiceUrl + "/api/workout/user",
                         uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
                 .retrieve()
                 .bodyToFlux(WorkoutResponse.class)

@@ -81,7 +81,7 @@ class UserServiceApplicationTests {
         userService.createUser(userRequest);
 
         assertEquals("TestUser127", userService.getRecordOfUser("TestUser127").getUserCode());
-        assertEquals(0.0, userService.getRecordOfUser("TestUser127").getFastestTime());
+        assertEquals(1000.0, userService.getRecordOfUser("TestUser127").getFastestTime());
         assertEquals(0.0, userService.getRecordOfUser("TestUser127").getLongestDistance());
         assertEquals(0.0, userService.getRecordOfUser("TestUser127").getMaxWeightLifted());
         assertEquals(0.0, userService.getRecordOfUser("TestUser127").getLongestWorkoutDuration());
