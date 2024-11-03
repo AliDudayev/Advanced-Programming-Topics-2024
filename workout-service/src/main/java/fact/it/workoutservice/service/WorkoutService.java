@@ -103,7 +103,7 @@ public class WorkoutService {
             double newCaloriesBurned = 0;
 
 
-            if (recordResponse == null) {
+            if (recordResponse != null) {
                 if(workout.getDistance() != null && workout.getSpeed() != null)
                 {
 

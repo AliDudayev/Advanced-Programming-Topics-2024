@@ -47,7 +47,7 @@ public class UserService {
 
             RecordResponse recordResponse = RecordResponse.builder()
                     .userCode(user.getUserCode())
-                    .fastestTime(1000.0)
+                    .fastestTime(10000.0)
                     .longestDistance(0.0)
                     .maxWeightLifted(0.0)
                     .longestWorkoutDuration(0.0)
