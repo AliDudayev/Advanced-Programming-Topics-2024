@@ -20,7 +20,7 @@ public class RecordController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public void createRecord
-            (@RequestParam(required = false) String userCode, @RequestBody RecordRequest recordRequest) {
+    (@RequestParam(required = false) String userCode, @RequestBody RecordRequest recordRequest) {
         if(userCode == null) {
             recordService.createRecord(recordRequest);
         }
@@ -49,7 +49,7 @@ public class RecordController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public RecordResponse getRecordByCode
-            (@RequestParam String userCode) {
+    (@RequestParam String userCode) {
         return recordService.getRecordByCode(userCode);
     }
 

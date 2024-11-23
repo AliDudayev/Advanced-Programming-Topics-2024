@@ -51,6 +51,7 @@ services:
   environment:
    MONGODB_PORT: 27017
    MONGODB_HOST: mongo-record
+  entrypoint: ["sh", "-c", "until nc -z mongo-record 27017; do echo waiting for mongo-record; sleep 3; done; java -jar app.jar"]
 
  workout-service:
   depends_on:
@@ -61,6 +62,7 @@ services:
   links:
     - mysql-workout
     - health-service
+    - record-service
   environment:
    USER_SERVICE_BASEURL: user-service:8081
    HEALTH_SERVICE_BASEURL: health-service:8084
