@@ -51,7 +51,6 @@ services:
   environment:
    MONGODB_PORT: 27017
    MONGODB_HOST: mongo-record
-  entrypoint: ["sh", "-c", "until nc -z mongo-record 27017; do echo waiting for mongo-record; sleep 3; done; java -jar app.jar"]
 
  workout-service:
   depends_on:
