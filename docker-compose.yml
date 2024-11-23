@@ -26,7 +26,7 @@ services:
  user-service:
   depends_on:
     - mongo-user
-  image: alisaga/program-user
+  image: alisaga/sport-user
   ports:
     - 8081:8081
   links:
@@ -42,7 +42,7 @@ services:
  record-service:
   depends_on:
     - mongo-record
-  image: alisaga/program-record
+  image: alisaga/sport-record
   pull_policy: always
   ports:
     - 8082:8082
@@ -55,12 +55,13 @@ services:
  workout-service:
   depends_on:
     - mysql-workout
-  image: alisaga/program-workout
+  image: alisaga/sport-workout
   ports:
     - 8083:8083
   links:
     - mysql-workout
     - health-service
+    - record-service
   environment:
    USER_SERVICE_BASEURL: user-service:8081
    HEALTH_SERVICE_BASEURL: health-service:8084
@@ -73,7 +74,7 @@ services:
  health-service:
   depends_on:
     - mysql-health
-  image: alisaga/program-health
+  image: alisaga/sport-health
   ports:
     - 8084:8084
   links:

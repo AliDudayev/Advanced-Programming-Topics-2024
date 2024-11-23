@@ -29,7 +29,7 @@ class RecordServiceApplicationTests {
 
     @Test
     @Order(1)
-    public void createRecord_WithValidRequest_RecordIsSaved() {
+        public void createRecord_WithValidRequest_RecordIsSaved() {
         // I want to make a unittest here that creates a record and checks if it is saved in the database
         RecordRequest recordRequest = RecordRequest.builder()
                 .userCode("TestRecord126")
