@@ -45,7 +45,6 @@ public class RecordController {
 
 
     // Het ophalen van een record op basis van een code --> Klaar
-    // http://localhost:8082/api/record?code=user1
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public RecordResponse getRecordByCode
