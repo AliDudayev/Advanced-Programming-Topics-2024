@@ -15,7 +15,7 @@ import java.util.List;
 public class RecordController {
 
     private final RecordService recordService;
-
+ 
     // Het toevoegen van een record --> Klaar
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
