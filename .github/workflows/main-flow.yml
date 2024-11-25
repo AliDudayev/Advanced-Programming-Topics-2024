@@ -3,9 +3,9 @@ name: Build and deliver containers
 on: push
 
 jobs:
-  productservice:
+  healthservice:
     runs-on: ubuntu-latest
-    name: Java 17 build, test, deliver product-service container
+    name: Java 17 build, test, deliver health-service container
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
@@ -18,20 +18,20 @@ jobs:
           distribution: adopt
       
       - name: Build, test and package project
-        working-directory: ./product-service
+        working-directory: ./health-service
         run: mvn package -DskipTests
 
       - name: Docker login
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Docker Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/product-service:latest ./product-service
+        run: docker build -t ${{ secrets.DOCKER_USER }}/health-service:latest ./health-service
 
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ secrets.DOCKER_USER }}/product-service:latest
-  inventoryservice:
+        run: docker push ${{ secrets.DOCKER_USER }}/health-service:latest
+  userservice:
     runs-on: ubuntu-latest
-    name: Java 17 build, test, deliver inventory-service container
+    name: Java 17 build, test, deliver user-service container
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
@@ -44,20 +44,20 @@ jobs:
           distribution: adopt
 
       - name: Build, test and package project
-        working-directory: ./inventory-service
+        working-directory: ./user-service
         run: mvn package -DskipTests
 
       - name: Docker login
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Docker Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/inventory-service:latest ./inventory-service
+        run: docker build -t ${{ secrets.DOCKER_USER }}/user-service:latest ./user-service
 
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ secrets.DOCKER_USER }}/inventory-service:latest
-  orderservice:
+        run: docker push ${{ secrets.DOCKER_USER }}/user-service:latest
+  workoutservice:
     runs-on: ubuntu-latest
-    name: Java 17 build, test, deliver order-service container
+    name: Java 17 build, test, deliver workout-service container
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
@@ -70,14 +70,40 @@ jobs:
           distribution: adopt
         
       - name: Build, test and package project
-        working-directory: ./order-service
+        working-directory: ./workout-service
         run: mvn package -DskipTests
         
       - name: Docker login
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Docker Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/order-service:latest ./order-service
+        run: docker build -t ${{ secrets.DOCKER_USER }}/workout-service:latest ./workout-service
 
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ secrets.DOCKER_USER }}/order-service:latest
+        run: docker push ${{ secrets.DOCKER_USER }}/workout-service:latest
+  recordservice:
+    runs-on: ubuntu-latest
+    name: Java 17 build, test, deliver record-service container
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          cache: maven
+          distribution: adopt
+      
+      - name: Build, test and package project
+        working-directory: ./record-service
+        run: mvn package -DskipTests
+
+      - name: Docker login
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Docker Build
+        run: docker build -t ${{ secrets.DOCKER_USER }}/record-service:latest ./record-service
+
+      - name: Upload container to Docker Hub with Push
+        run: docker push ${{ secrets.DOCKER_USER }}/record-service:latest
