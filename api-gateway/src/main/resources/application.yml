@@ -1,0 +1,229 @@
+server:
+  port: 8085
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: INFO
+    reactor.netty: TRACE
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENTID}
+            client-secret: ${GOOGLE_CLIENTSECRET}
+            scope: openid,profile,email
+      resourceserver:
+        jwt:
+          issuer-uri: https://accounts.google.com
+          jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+  cloud:
+    gateway:
+      routes:
+        # Health Service
+        - id: health-get-all
+          uri: http://${HEALTH_SERVICE_BASEURL:localhost:8084}
+          predicates:
+            - Path=/health/all
+            - Method=GET
+          filters:
+            - SetPath=/api/health/all
+
+        - id: health-get
+          uri: http://${HEALTH_SERVICE_BASEURL:localhost:8084}
+          predicates:
+            - Path=/health
+            - Method=GET
+          filters:
+            - SetPath=/api/health
+
+        - id: health-post
+          uri: http://${HEALTH_SERVICE_BASEURL:localhost:8084}
+          predicates:
+            - Path=/health
+            - Method=POST
+          filters:
+            - SetPath=/api/health
+
+        - id: health-put
+          uri: http://${HEALTH_SERVICE_BASEURL:localhost:8084}
+          predicates:
+            - Path=/health
+            - Method=PUT
+          filters:
+            - SetPath=/api/health
+
+        # Record Service
+        - id: record-get-all
+          uri: http://${RECORD_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/record/all
+            - Method=GET
+          filters:
+            - SetPath=/api/record/all
+
+        - id: record-get
+          uri: http://${RECORD_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/record
+            - Method=GET
+          filters:
+            - SetPath=/api/record
+
+        - id: record-post
+          uri: http://${RECORD_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/record
+            - Method=POST
+          filters:
+            - SetPath=/api/record
+
+        - id: record-put
+          uri: http://${RECORD_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/record
+            - Method=PUT
+          filters:
+            - SetPath=/api/record
+
+        - id: record-delete
+          uri: http://${RECORD_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/record
+            - Method=DELETE
+          filters:
+            - SetPath=/api/record
+
+        # User Service
+        - id: user-get-all
+          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/user/all
+            - Method=GET
+          filters:
+            - SetPath=/api/user/all
+
+        - id: user-get
+          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/user
+            - Method=GET
+          filters:
+            - SetPath=/api/user
+
+        - id: user-post
+          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/user
+            - Method=POST
+          filters:
+            - SetPath=/api/user
+
+        - id: user-put
+          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/user
+            - Method=PUT
+          filters:
+            - SetPath=/api/user
+
+        - id: user-delete
+          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/user
+            - Method=DELETE
+          filters:
+            - SetPath=/api/user
+
+        - id: user-get-record
+          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/user/record
+            - Method=GET
+          filters:
+            - SetPath=/api/user/record
+
+        - id: user-get-all-records
+          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/user/record/all
+            - Method=GET
+          filters:
+            - SetPath=/api/user/record/all
+
+        - id: user-post-record
+          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/user/record
+            - Method=POST
+          filters:
+            - SetPath=/api/user/record
+
+        - id: user-put-record
+          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/user/record
+            - Method=PUT
+          filters:
+            - SetPath=/api/user/record
+
+        - id: user-delete-record
+          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/user/record
+            - Method=DELETE
+          filters:
+            - SetPath=/api/user/record
+
+        - id: user-get-workouts
+          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/user/workout
+            - Method=GET
+          filters:
+            - SetPath=/api/user/workout
+
+        # Workout Service
+        - id: workout-get-all
+          uri: http://${WORKOUT_SERVICE_BASEURL:localhost:8083}
+          predicates:
+            - Path=/workout/all
+            - Method=GET
+          filters:
+            - SetPath=/api/workout/all
+
+        - id: workout-get
+          uri: http://${WORKOUT_SERVICE_BASEURL:localhost:8083}
+          predicates:
+            - Path=/workout
+            - Method=GET
+          filters:
+            - SetPath=/api/workout
+
+        - id: workout-post
+          uri: http://${WORKOUT_SERVICE_BASEURL:localhost:8083}
+          predicates:
+            - Path=/workout
+            - Method=POST
+          filters:
+            - SetPath=/api/workout
+
+        - id: workout-get-user
+          uri: http://${WORKOUT_SERVICE_BASEURL:localhost:8083}
+          predicates:
+            - Path=/workout/user
+            - Method=GET
+          filters:
+            - SetPath=/api/workout/user
+
+        - id: workout-get-health
+          uri: http://${WORKOUT_SERVICE_BASEURL:localhost:8083}
+          predicates:
+            - Path=/workout/health
+            - Method=GET
+          filters:
+            - SetPath=/api/workout/health
