@@ -65,7 +65,7 @@ public class WorkoutService {
     }
 
 
-
+    @Transactional
     public void createWorkout(WorkoutRequest workoutRequest){
         if (workoutRepository.findByWorkoutCode(workoutRequest.getWorkoutCode()) != null) {
             log.info("Workout with workoutCode: " + workoutRequest.getWorkoutCode() + " already exists");
