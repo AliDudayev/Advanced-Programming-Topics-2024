@@ -187,14 +187,6 @@ spring:
           filters:
             - SetPath=/api/user/workout
 
-        - id: user-create-workout
-          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
-          predicates:
-            - Path=/user/workout
-            - Method=POST
-          filters:
-            - SetPath=/api/user/workout
-
         # Workout Service
         - id: workout-get-all
           uri: http://${WORKOUT_SERVICE_BASEURL:localhost:8083}

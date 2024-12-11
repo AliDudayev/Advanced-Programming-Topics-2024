@@ -97,12 +97,5 @@ public class UserController {
         return userService.getAllWorkoutsFromUser(userCode);
     }
 
-    // create a record for a specific user --> Klaar
-    @PostMapping("/workout")
-    @ResponseStatus(HttpStatus.OK)
-    public void createWorkout(@RequestBody WorkoutResponse workoutResponse) {
-        userService.createWorkout(workoutResponse);
-    }
-
 }
 
