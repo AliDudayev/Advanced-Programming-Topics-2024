@@ -14,6 +14,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -31,34 +32,36 @@ public class UserService {
 
     // create user --> Klaar
     public void createUser(UserRequest userRequest) {
-        if(userRepository.findByUserCode(userRequest.getUserCode()) == null) {
-            User user = User.builder()
-                    .userCode(userRequest.getUserCode())
-                    .name(userRequest.getName())
-                    .age(userRequest.getAge())
-                    .height(userRequest.getHeight())
-                    .weight(userRequest.getWeight())
-                    .email(userRequest.getEmail())
-                    .phoneNr(userRequest.getPhoneNr())
-                    .male(userRequest.isMale())
-                    .fitnessGoals(userRequest.getFitnessGoals())
-                    .build();
-            userRepository.save(user);
 
-            RecordResponse recordResponse = RecordResponse.builder()
-                    .userCode(user.getUserCode())
-                    .fastestTime(10000.0)
-                    .longestDistance(0.0)
-                    .maxWeightLifted(0.0)
-                    .longestWorkoutDuration(0.0)
-                    .mostCaloriesBurned(0.0)
-                    .build();
+        String userCode;
 
-            createRecord(user.getUserCode(), recordResponse);
-        }
-        else {
-            log.info("User with userCode: " + userRequest.getUserCode() + " already exists");
-        }
+        do {
+            userCode = "UserCode-" + UUID.randomUUID().toString();
+        } while (userRepository.findByUserCode(userCode) != null);
+
+        User user = User.builder()
+                .userCode(userCode)
+                .name(userRequest.getName())
+                .age(userRequest.getAge())
+                .height(userRequest.getHeight())
+                .weight(userRequest.getWeight())
+                .email(userRequest.getEmail())
+                .phoneNr(userRequest.getPhoneNr())
+                .male(userRequest.isMale())
+                .fitnessGoals(userRequest.getFitnessGoals())
+                .build();
+        userRepository.save(user);
+
+        RecordResponse recordResponse = RecordResponse.builder()
+                .userCode(user.getUserCode())
+                .fastestTime(10000.0)
+                .longestDistance(0.0)
+                .maxWeightLifted(0.0)
+                .longestWorkoutDuration(0.0)
+                .mostCaloriesBurned(0.0)
+                .build();
+
+        createRecord(user.getUserCode(), recordResponse);
     }
 
     // Get user by code --> Klaar
