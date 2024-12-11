@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.UUID;
+
 import java.util.List;
 import java.util.Arrays;
 import java.util.List;
@@ -65,127 +67,129 @@ public class WorkoutService {
 
 
     public void createWorkout(WorkoutRequest workoutRequest){
-        if (workoutRepository.findByWorkoutCode(workoutRequest.getWorkoutCode()) != null) {
-            log.info("Workout with workoutCode: " + workoutRequest.getWorkoutCode() + " already exists");
-        }
-        else {
-            Workout workout = Workout.builder()
-                    .name(workoutRequest.getName())
-                    .userCode(workoutRequest.getUserCode())
-                    .workoutCode(workoutRequest.getWorkoutCode())
-                    .date(workoutRequest.getDate())
-                    .duration(workoutRequest.getDuration())
-                    .sets(workoutRequest.getSets())
-                    .reps(workoutRequest.getReps())
-                    .pauseBetweenReps(workoutRequest.getPauseBetweenReps())
-                    .type(workoutRequest.getType())
-                    .weight(workoutRequest.getWeight())
-                    .distance(workoutRequest.getDistance())
-                    .speed(workoutRequest.getSpeed())
-                    .description(workoutRequest.getDescription())
-                    .build();
-            workoutRepository.save(workout);
 
-            RecordResponse recordResponse = webClient.get()
-                    .uri( "http://" + recordServiceBaseUrl + "/api/record",
-                            uriBuilder -> uriBuilder.queryParam("userCode", workoutRequest.getUserCode()).build())
-                    .retrieve()
-                    .bodyToMono(RecordResponse.class)
-                    .block();
+        String workoutCode;
 
-            Double fastestTime = recordResponse.getFastestTime();
-            Double longestDistance = recordResponse.getLongestDistance();
-            Double maxWeightLifted = recordResponse.getMaxWeightLifted();
-            Double longestWorkoutDuration = recordResponse.getLongestWorkoutDuration();
-            Double mostCaloriesBurned = recordResponse.getMostCaloriesBurned();
-
-            double newFastestTime = 0;
-            double newCaloriesBurned = 0;
+        do {
+            workoutCode = "WorkoutCode-" + UUID.randomUUID().toString();
+        } while (workoutRepository.findByWorkoutCode(workoutRequest.getWorkoutCode()) != null);
 
 
-            if (recordResponse != null) {
-                if(workout.getDistance() != null && workout.getSpeed() != null)
+        Workout workout = Workout.builder()
+                .name(workoutRequest.getName())
+                .userCode(workoutRequest.getUserCode())
+                .workoutCode(workoutCode)
+                .date(workoutRequest.getDate())
+                .duration(workoutRequest.getDuration())
+                .sets(workoutRequest.getSets())
+                .reps(workoutRequest.getReps())
+                .pauseBetweenReps(workoutRequest.getPauseBetweenReps())
+                .type(workoutRequest.getType())
+                .weight(workoutRequest.getWeight())
+                .distance(workoutRequest.getDistance())
+                .speed(workoutRequest.getSpeed())
+                .description(workoutRequest.getDescription())
+                .build();
+        workoutRepository.save(workout);
+
+        RecordResponse recordResponse = webClient.get()
+                .uri( "http://" + recordServiceBaseUrl + "/api/record",
+                        uriBuilder -> uriBuilder.queryParam("userCode", workoutRequest.getUserCode()).build())
+                .retrieve()
+                .bodyToMono(RecordResponse.class)
+                .block();
+
+        Double fastestTime = recordResponse.getFastestTime();
+        Double longestDistance = recordResponse.getLongestDistance();
+        Double maxWeightLifted = recordResponse.getMaxWeightLifted();
+        Double longestWorkoutDuration = recordResponse.getLongestWorkoutDuration();
+        Double mostCaloriesBurned = recordResponse.getMostCaloriesBurned();
+
+        double newFastestTime = 0;
+        double newCaloriesBurned = 0;
+
+
+        if (recordResponse != null) {
+            if(workout.getDistance() != null && workout.getSpeed() != null)
+            {
+
+                newFastestTime = Double.parseDouble(workout.getDistance()) / Double.parseDouble(workout.getSpeed());
+                if((newFastestTime < recordResponse.getFastestTime()) || (recordResponse.getFastestTime() == null))
                 {
-
-                    newFastestTime = Double.parseDouble(workout.getDistance()) / Double.parseDouble(workout.getSpeed());
-                    if((newFastestTime < recordResponse.getFastestTime()) || (recordResponse.getFastestTime() == null))
-                    {
-                        fastestTime = newFastestTime;
-                    }
+                    fastestTime = newFastestTime;
                 }
+            }
 
-                if(workout.getDistance() != null && Double.parseDouble(workout.getDistance()) > recordResponse.getLongestDistance())
-                {
-                    longestDistance = Double.parseDouble(workout.getDistance());
-                }
+            if(workout.getDistance() != null && Double.parseDouble(workout.getDistance()) > recordResponse.getLongestDistance())
+            {
+                longestDistance = Double.parseDouble(workout.getDistance());
+            }
 
-                if(workout.getWeight() != null && Double.parseDouble(workout.getWeight()) > recordResponse.getMaxWeightLifted())
-                {
-                    maxWeightLifted = Double.parseDouble(workout.getWeight());
-                }
+            if(workout.getWeight() != null && Double.parseDouble(workout.getWeight()) > recordResponse.getMaxWeightLifted())
+            {
+                maxWeightLifted = Double.parseDouble(workout.getWeight());
+            }
 
-                if(workout.getDuration() != null && Double.parseDouble(workout.getDuration()) > recordResponse.getLongestWorkoutDuration())
-                {
-                    longestWorkoutDuration = Double.parseDouble(workout.getDuration());
-                }
+            if(workout.getDuration() != null && Double.parseDouble(workout.getDuration()) > recordResponse.getLongestWorkoutDuration())
+            {
+                longestWorkoutDuration = Double.parseDouble(workout.getDuration());
+            }
 
-                if(workout.getDistance() != null && workout.getSpeed() != null)
-                {
-                    UserResponse userResponse = webClient.get()
-                            .uri("http://" + userServiceBaseUrl + "/api/user",
-                                    uriBuilder -> uriBuilder.queryParam("userCode", workout.getUserCode()).build())
-                            .retrieve()
-                            .bodyToMono(UserResponse.class)
-                            .block();
-
-                    double met = 0;
-                    if(Double.parseDouble(workout.getSpeed()) < 8.0)
-                    {
-                        met = 6;
-                    }
-                    else if(Double.parseDouble(workout.getSpeed()) < 9.7)
-                    {
-                        met = 8;
-                    }
-                    else if(Double.parseDouble(workout.getSpeed()) < 11.3)
-                    {
-                        met = 10;
-                    }
-                    else if(Double.parseDouble(workout.getSpeed()) < 12.9)
-                    {
-                        met = 11.5;
-                    }
-                    else
-                    {
-                        met = 12.8;
-                    }
-
-                    newCaloriesBurned = met * userResponse.getWeight() * Double.parseDouble(workout.getDuration()) / 60;
-                    if(newCaloriesBurned > recordResponse.getMostCaloriesBurned())
-                    {
-                        mostCaloriesBurned = newCaloriesBurned;
-                    }
-                }
-
-                RecordResponse newRecordResponse = RecordResponse.builder()
-                        .userCode(workout.getUserCode())
-                        .fastestTime(fastestTime)
-                        .longestDistance(longestDistance)
-                        .maxWeightLifted(maxWeightLifted)
-                        .longestWorkoutDuration(longestWorkoutDuration)
-                        .mostCaloriesBurned(mostCaloriesBurned)
-                        .build();
-
-                webClient.put()
-                        .uri( "http://" + recordServiceBaseUrl + "/api/record",
+            if(workout.getDistance() != null && workout.getSpeed() != null)
+            {
+                UserResponse userResponse = webClient.get()
+                        .uri("http://" + userServiceBaseUrl + "/api/user",
                                 uriBuilder -> uriBuilder.queryParam("userCode", workout.getUserCode()).build())
-                        .bodyValue(newRecordResponse)
                         .retrieve()
-                        .bodyToMono(Void.class)
+                        .bodyToMono(UserResponse.class)
                         .block();
 
+                double met = 0;
+                if(Double.parseDouble(workout.getSpeed()) < 8.0)
+                {
+                    met = 6;
+                }
+                else if(Double.parseDouble(workout.getSpeed()) < 9.7)
+                {
+                    met = 8;
+                }
+                else if(Double.parseDouble(workout.getSpeed()) < 11.3)
+                {
+                    met = 10;
+                }
+                else if(Double.parseDouble(workout.getSpeed()) < 12.9)
+                {
+                    met = 11.5;
+                }
+                else
+                {
+                    met = 12.8;
+                }
 
+                newCaloriesBurned = met * userResponse.getWeight() * Double.parseDouble(workout.getDuration()) / 60;
+                if(newCaloriesBurned > recordResponse.getMostCaloriesBurned())
+                {
+                    mostCaloriesBurned = newCaloriesBurned;
+                }
             }
+
+            RecordResponse newRecordResponse = RecordResponse.builder()
+                    .userCode(workout.getUserCode())
+                    .fastestTime(fastestTime)
+                    .longestDistance(longestDistance)
+                    .maxWeightLifted(maxWeightLifted)
+                    .longestWorkoutDuration(longestWorkoutDuration)
+                    .mostCaloriesBurned(mostCaloriesBurned)
+                    .build();
+
+            webClient.put()
+                    .uri( "http://" + recordServiceBaseUrl + "/api/record",
+                            uriBuilder -> uriBuilder.queryParam("userCode", workout.getUserCode()).build())
+                    .bodyValue(newRecordResponse)
+                    .retrieve()
+                    .bodyToMono(Void.class)
+                    .block();
+
         }
     }
     public List<WorkoutResponse> getAllWorkouts() {

@@ -181,6 +181,17 @@ public class UserService {
                 .block();
     }
 
+    // create a record for a specific user
+    public void createWorkout(WorkoutResponse workoutResponse) {
+
+        webClient.post()
+                .uri(workoutServiceUrl + "/api/workout")
+                .bodyValue(workoutResponse)
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
+    }
+
     private UserResponse mapToUserResponse(User user) {
         return UserResponse.builder()
                 .id(user.getId())
