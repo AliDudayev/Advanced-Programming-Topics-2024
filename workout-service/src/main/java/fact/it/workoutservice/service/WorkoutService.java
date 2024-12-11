@@ -92,7 +92,7 @@ public class WorkoutService {
         workoutRepository.save(workout);
 
         RecordResponse recordResponse = webClient.get()
-                .uri( "http://" + recordServiceBaseUrl + "/api/record",
+                .uri( recordServiceBaseUrl + "/api/record",
                         uriBuilder -> uriBuilder.queryParam("userCode", workoutRequest.getUserCode()).build())
                 .retrieve()
                 .bodyToMono(RecordResponse.class)
@@ -137,7 +137,7 @@ public class WorkoutService {
             if(workout.getDistance() != null && workout.getSpeed() != null)
             {
                 UserResponse userResponse = webClient.get()
-                        .uri("http://" + userServiceBaseUrl + "/api/user",
+                        .uri(userServiceBaseUrl + "/api/user",
                                 uriBuilder -> uriBuilder.queryParam("userCode", workout.getUserCode()).build())
                         .retrieve()
                         .bodyToMono(UserResponse.class)
@@ -182,7 +182,7 @@ public class WorkoutService {
                     .build();
 
             webClient.put()
-                    .uri( "http://" + recordServiceBaseUrl + "/api/record",
+                    .uri( recordServiceBaseUrl + "/api/record",
                             uriBuilder -> uriBuilder.queryParam("userCode", workout.getUserCode()).build())
                     .bodyValue(newRecordResponse)
                     .retrieve()
