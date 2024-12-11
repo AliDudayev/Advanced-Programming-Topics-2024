@@ -23,10 +23,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final WebClient webClient;
 
-    @Value("${RECORD_SERVICE_URL:http://localhost:8082}")
+    @Value("${recordService.baseurl}")
     private String recordServiceUrl;
 
-    @Value("${WORKOUT_SERVICE_URL:http://localhost:8083}")
+    @Value("${workoutService.baseurl}")
     private String workoutServiceUrl;
 
     // create user --> Klaar
