@@ -1,4 +1,27 @@
 services:
+ api-gateway:
+  depends_on:
+    - user-service
+    - record-service
+    - workout-service
+    - health-service
+  image: alisaga/api-gateway:latest
+  pull_policy: always
+  ports:
+    - 8085:8085
+  links:
+    - user-service
+    - record-service
+    - workout-service
+    - health-service
+  environment:
+    USER_SERVICE_BASEURL: user-service:8081
+    RECORD_SERVICE_BASEURL: record-service:8082
+    WORKOUT_SERVICE_BASEURL: workout-service:8083
+    HEALTH_SERVICE_BASEURL: health-service:8084
+    GOOGLE_CLIENTID: your-google-client-id
+    GOOGLE_CLIENTSECRET: your-google-client-secret
+    
  mongo-user:
   image: mongo:latest
   ports:
