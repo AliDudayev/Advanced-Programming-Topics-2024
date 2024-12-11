@@ -56,8 +56,8 @@ services:
     - record-service
     - workout-service
   environment:
-   RECORD_SERVICE_BASEURL: record-service:8082
-   WORKOUT_SERVICE_BASEURL: workout-service:8083
+   RECORD_SERVICE_BASEURL: http://record-service:8082
+   WORKOUT_SERVICE_BASEURL: http://workout-service:8083
    MONGODB_PORT: 27017
    MONGODB_HOST: mongo-user
    
@@ -87,9 +87,9 @@ services:
     - health-service
     - record-service
   environment:
-   USER_SERVICE_BASEURL: user-service:8081
-   HEALTH_SERVICE_BASEURL: health-service:8084
-   RECORD_SERVICE_BASEURL: record-service:8082
+   USER_SERVICE_BASEURL: http://user-service:8081
+   HEALTH_SERVICE_BASEURL: http://health-service:8084
+   RECORD_SERVICE_BASEURL: http://record-service:8082
    MYSQL_DB_USERNAME: root
    MYSQL_DB_PASSWORD: abc123
    MYSQL_DB_HOST: mysql-workout
