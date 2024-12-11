@@ -51,6 +51,8 @@ services:
   pull_policy: always
   ports:
     - 8081:8081
+  volumes:
+    - volume_mongo_user:/data/db
   links:
     - mongo-user
     - record-service
@@ -68,6 +70,8 @@ services:
   pull_policy: always
   ports:
     - 8082:8082
+  volumes:
+    - volume_mongo_record:/data/db
   links:
     - mongo-record
   environment:
@@ -81,6 +85,8 @@ services:
   pull_policy: always
   ports:
     - 8083:8083
+  volumes:
+    - volume_mysql_workout:/var/lib/mysql
   restart: on-failure
   links:
     - mysql-workout
@@ -102,6 +108,8 @@ services:
   pull_policy: always
   ports:
     - 8084:8084
+  volumes:
+    - volume_mysql_health:/var/lib/mysql
   restart: on-failure
   links:
     - mysql-health
@@ -110,3 +118,9 @@ services:
    MYSQL_DB_PASSWORD: abc123
    MYSQL_DB_HOST: mysql-health
    MYSQL_DB_PORT: 3306
+
+volumes:
+  volume_mongo_user:
+  volume_mongo_record:
+  volume_mysql_workout:
+  volume_mysql_health:
