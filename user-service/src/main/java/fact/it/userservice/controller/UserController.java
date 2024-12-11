@@ -93,8 +93,16 @@ public class UserController {
     // get all workouts from user --> Klaar
     @GetMapping("/workout")
     @ResponseStatus(HttpStatus.OK)
-    public List<WorkoutResponse> getAllWorkouts(@RequestParam String userCode) {
+    public List<WorkoutResponse> getAllWorkoutsFromUser(@RequestParam String userCode) {
         return userService.getAllWorkoutsFromUser(userCode);
     }
+
+    // create a record for a specific user --> Klaar
+    @PostMapping("/workout")
+    @ResponseStatus(HttpStatus.OK)
+    public void createWorkout(@RequestBody WorkoutResponse workoutResponse) {
+        userService.createWorkout(workoutResponse);
+    }
+
 }
 
