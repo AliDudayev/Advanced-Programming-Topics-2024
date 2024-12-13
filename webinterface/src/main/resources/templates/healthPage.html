@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Health Records</title>
+</head>
+<body>
+<h1>Health Records</h1>
+
+<table>
+    <tr>
+        <th>Workout Code</th>
+        <th>Recovery Heart Rate</th>
+        <th>Blood Pressure</th>
+        <th>Calories Burned</th>
+        <th>Oxygen Saturation</th>
+    </tr>
+    <tr th:each="health : ${healthRecords}">
+        <td th:text="${health.workoutCode}">Workout Code</td>
+        <td th:text="${health.recoveryHeartRate}">Recovery Heart Rate</td>
+        <td th:text="${health.bloodPressure}">Blood Pressure</td>
+        <td th:text="${health.caloriesBurned}">Calories Burned</td>
+        <td th:text="${health.oxygenSaturation}">Oxygen Saturation</td>
+    </tr>
+</table>
+
+<h2>Create New Health Record</h2>
+<form action="/addHealth" method="post">
+    <label for="workoutCode">Workout Code:</label>
+    <input type="text" id="workoutCode" name="workoutCode" required>
+    <br/>
+    <label for="recoveryHeartRate">Recovery Heart Rate:</label>
+    <input type="text" id="recoveryHeartRate" name="recoveryHeartRate">
+    <br/>
+    <label for="bloodPressure">Blood Pressure:</label>
+    <input type="text" id="bloodPressure" name="bloodPressure">
+    <br/>
+    <label for="caloriesBurned">Calories Burned:</label>
+    <input type="text" id="caloriesBurned" name="caloriesBurned">
+    <br/>
+    <label for="oxygenSaturation">Oxygen Saturation:</label>
+    <input type="text" id="oxygenSaturation" name="oxygenSaturation">
+    <br/>
+    <button type="submit">Add Health Record</button>
+</form>
+</body>
+</html>
