@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workouts</title>
+</head>
+<body>
+<h1>Workout List</h1>
+
+<!-- Display list of workouts -->
+<table>
+    <thead>
+    <tr>
+        <th>Workout Code</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Duration</th>
+        <th>Sets</th>
+        <th>Reps</th>
+        <th>Type</th>
+        <th>Weight</th>
+        <th>Distance</th>
+        <th>Speed</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="workout : ${workouts}">
+        <td th:text="${workout.workoutCode}"></td>
+        <td th:text="${workout.name}"></td>
+        <td th:text="${workout.date}"></td>
+        <td th:text="${workout.duration}"></td>
+        <td th:text="${workout.sets}"></td>
+        <td th:text="${workout.reps}"></td>
+        <td th:text="${workout.type}"></td>
+        <td th:text="${workout.weight}"></td>
+        <td th:text="${workout.distance}"></td>
+        <td th:text="${workout.speed}"></td>
+        <td th:text="${workout.description}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Button to add a new workout -->
+<a href="/workoutForm"><button>Create New Workout</button></a>
+</body>
+</html>
