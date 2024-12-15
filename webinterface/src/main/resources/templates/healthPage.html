@@ -7,41 +7,40 @@
 <body>
 <h1>Health Records</h1>
 
+<!-- Add Health Record Form -->
+<h2>Add New Health Record</h2>
+<form th:action="@{/addHealthRecord}" method="post">
+    <label for="recoveryHeartRate">Recovery Heart Rate:</label>
+    <input type="text" id="recoveryHeartRate" name="recoveryHeartRate"><br>
+    <label for="bloodPressure">Blood Pressure:</label>
+    <input type="text" id="bloodPressure" name="bloodPressure"><br>
+    <label for="workoutCodeForm">Workout Code:</label>
+    <input type="text" id="workoutCodeForm" name="workoutCode" required><br>
+    <label for="caloriesBurned">Calories Burned:</label>
+    <input type="text" id="caloriesBurned" name="caloriesBurned"><br>
+    <label for="oxygenSaturation">Oxygen Saturation:</label>
+    <input type="text" id="oxygenSaturation" name="oxygenSaturation"><br>
+    <button type="submit">Add Record</button>
+</form>
+
+<!-- Health Records Table -->
+<h2>All Health Records</h2>
 <table>
     <tr>
-        <th>Workout Code</th>
         <th>Recovery Heart Rate</th>
         <th>Blood Pressure</th>
+        <th>Workout Code</th>
         <th>Calories Burned</th>
         <th>Oxygen Saturation</th>
     </tr>
-    <tr th:each="health : ${healthRecords}">
-        <td th:text="${health.workoutCode}">Workout Code</td>
-        <td th:text="${health.recoveryHeartRate}">Recovery Heart Rate</td>
-        <td th:text="${health.bloodPressure}">Blood Pressure</td>
-        <td th:text="${health.caloriesBurned}">Calories Burned</td>
-        <td th:text="${health.oxygenSaturation}">Oxygen Saturation</td>
+    <tr th:each="health, iterStat : ${healthRecords}">
+        <!-- Dynamically assign unique IDs -->
+        <td th:id="'recoveryHeartRate_' + ${iterStat.index}" th:text="${health.recoveryHeartRate}">Recovery Heart Rate</td>
+        <td th:id="'bloodPressure_' + ${iterStat.index}" th:text="${health.bloodPressure}">Blood Pressure</td>
+        <td th:id="'workoutCode_' + ${iterStat.index}" th:text="${health.workoutCode}">Workout Code</td>
+        <td th:id="'caloriesBurned_' + ${iterStat.index}" th:text="${health.caloriesBurned}">Calories Burned</td>
+        <td th:id="'oxygenSaturation_' + ${iterStat.index}" th:text="${health.oxygenSaturation}">Oxygen Saturation</td>
     </tr>
 </table>
-
-<h2>Create New Health Record</h2>
-<form action="/addHealth" method="post">
-    <label for="workoutCode">Workout Code:</label>
-    <input type="text" id="workoutCode" name="workoutCode" required>
-    <br/>
-    <label for="recoveryHeartRate">Recovery Heart Rate:</label>
-    <input type="text" id="recoveryHeartRate" name="recoveryHeartRate">
-    <br/>
-    <label for="bloodPressure">Blood Pressure:</label>
-    <input type="text" id="bloodPressure" name="bloodPressure">
-    <br/>
-    <label for="caloriesBurned">Calories Burned:</label>
-    <input type="text" id="caloriesBurned" name="caloriesBurned">
-    <br/>
-    <label for="oxygenSaturation">Oxygen Saturation:</label>
-    <input type="text" id="oxygenSaturation" name="oxygenSaturation">
-    <br/>
-    <button type="submit">Add Health Record</button>
-</form>
 </body>
 </html>

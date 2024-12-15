@@ -29,6 +29,7 @@ public class MainController {
         tokenService.setToken(token);
         model.addAttribute("message", "Token saved successfully!");
         model.addAttribute("tokenExists", tokenService.hasToken());
+        System.out.println("Token saved successfully!: " + token);
         return "homePage";  // After saving the token, return to the same page
     }
 }

@@ -1,5 +1,6 @@
 package fact.it.webinterface.controller;
 
+import fact.it.webinterface.dto.HealthRequest;
 import fact.it.webinterface.service.HealthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,21 +20,27 @@ public class HealthController {
     }
 
     @GetMapping("/health")
-    public String getAllHealthRecords(Model model) {
-        model.addAttribute("healthRecords", healthService.getAllHealthRecords());
+    public String getAllHealthMetrics(Model model) {
+        model.addAttribute("healthMetrics", healthService.getAllHealthRecords());
         return "healthPage";
     }
 
-    @PostMapping("/addHealth")
-    public String addHealthRecord(@RequestParam("workoutCode") String workoutCode,
-                                  @RequestParam("recoveryHeartRate") String recoveryHeartRate,
+    @GetMapping("/health/user")
+    public String getHealthMetricsByUser(@RequestParam("workoutCode") String workoutCode, Model model) {
+        model.addAttribute("healthMetrics", healthService.getHealthRecord(workoutCode));
+        return "healthPage";
+    }
+
+    @PostMapping("/addHealthMetric")
+    public String addHealthMetric(@RequestParam("recoveryHeartRate") String recoveryHeartRate,
                                   @RequestParam("bloodPressure") String bloodPressure,
+                                  @RequestParam("workoutCode") String workoutCode,
                                   @RequestParam("caloriesBurned") String caloriesBurned,
                                   @RequestParam("oxygenSaturation") String oxygenSaturation,
                                   Model model) {
-        Object newHealthRecord = new Object(); // Create and populate the health record
-        healthService.createHealthRecord(newHealthRecord);
-        model.addAttribute("message", "Health Record created successfully!");
+        HealthRequest healthRequest = new HealthRequest(recoveryHeartRate, bloodPressure, workoutCode, caloriesBurned, oxygenSaturation);
+        healthService.createHealthRecord(healthRequest);
+        model.addAttribute("message", "Health metric added successfully!");
         return "redirect:/health";
     }
 }
