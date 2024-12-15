@@ -17,14 +17,21 @@ public class SecurityConfig {
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity serverHttpSecurity) {
         serverHttpSecurity
                 .authorizeExchange(exchange ->
-                        exchange.pathMatchers(HttpMethod.GET,"/user")
-                                .permitAll()
+                        exchange.pathMatchers(HttpMethod.GET, "/user/**", "/workout/**", "/record/**", "/health/**")
+                                .permitAll()  // Allow GET requests for all resources without token
+                                .pathMatchers(HttpMethod.POST, "/user/**", "/workout/**", "/record/**", "/health/**")
+                                .permitAll()  // Allow POST requests for all resources without token
+                                .pathMatchers(HttpMethod.PUT, "/user/**", "/workout/**", "/record/**", "/health/**")
+                                .permitAll()  // Allow PUT requests for all resources without token
+                                .pathMatchers(HttpMethod.DELETE, "/user/**", "/workout/**", "/record/**", "/health/**")
+                                .authenticated()  // Require token for DELETE requests
                                 .anyExchange()
-                                .authenticated()
+                                .authenticated()  // Default: Authenticate all other requests
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(withDefaults())
                 );
         return serverHttpSecurity.build();
     }
+
 }
