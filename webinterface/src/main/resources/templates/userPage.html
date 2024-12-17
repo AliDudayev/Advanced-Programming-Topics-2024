@@ -6,9 +6,37 @@
     <title>Users</title>
 </head>
 <body>
-<h1>Users List</h1>
+<h1>Create New User</h1>
 
-<!-- Display list of users -->
+<form action="/users/add" method="post">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required />
+    </div>
+    <div>
+        <label for="age">Age:</label>
+        <input type="text" id="age" name="age" required />
+    </div>
+    <div>
+        <label for="height">Height:</label>
+        <input type="text" id="height" name="height" required />
+    </div>
+    <div>
+        <label for="weight">Weight:</label>
+        <input type="text" id="weight" name="weight" required />
+    </div>
+    <div>
+        <label for="fitnessGoals">Fitness Goals:</label>
+        <input type="text" id="fitnessGoals" name="fitnessGoals" required />
+    </div>
+    <button type="submit">Add User</button>
+</form>
+
+<div>
+    <p th:text="${message}"></p>
+</div>
+
+<h1>Users List</h1>
 <table>
     <thead>
     <tr>
@@ -17,6 +45,7 @@
         <th>Height</th>
         <th>Weight</th>
         <th>Fitness Goals</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -26,12 +55,18 @@
         <td th:text="${user.height}"></td>
         <td th:text="${user.weight}"></td>
         <td th:text="${user.fitnessGoals}"></td>
+        <td>
+            <form th:action="@{/users/update/{userCode}(userCode=${user.userCode})}" method="get" style="display:inline;">
+                <button type="submit">Edit</button>
+            </form>
+            <form th:action="@{/users/delete/{userCode}(userCode=${user.userCode})}" method="post" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
 
-<!-- Button to add a new user -->
-<a href="/userForm"><button>Create New User</button></a>
-
+<a href="/"><button>Back</button></a>
 </body>
 </html>

@@ -45,6 +45,42 @@
     <button type="submit">Add Workout</button>
 </form>
 
-<a href="/workouts"><button>Back to Workouts</button></a>
+<h1>Workout List</h1>
+
+<!-- Display list of workouts -->
+<table>
+    <thead>
+    <tr>
+        <th>Workout Code</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Duration</th>
+        <th>Sets</th>
+        <th>Reps</th>
+        <th>Type</th>
+        <th>Weight</th>
+        <th>Distance</th>
+        <th>Speed</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="workout : ${workouts}">
+        <td th:text="${workout.workoutCode}"></td>
+        <td th:text="${workout.name}"></td>
+        <td th:text="${workout.date}"></td>
+        <td th:text="${workout.duration}"></td>
+        <td th:text="${workout.sets}"></td>
+        <td th:text="${workout.reps}"></td>
+        <td th:text="${workout.type}"></td>
+        <td th:text="${workout.weight}"></td>
+        <td th:text="${workout.distance}"></td>
+        <td th:text="${workout.speed}"></td>
+        <td th:text="${workout.description}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/"><button>Back</button></a>
 </body>
 </html>
