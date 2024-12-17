@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Workouts</title>
+</head>
+<body>
+<h1>Workouts</h1>
+
+<!-- Filter Workouts by User -->
+<h2>Filter Workouts by User Code</h2>
+<form th:action="@{/workouts/user/{userCode}(userCode=${userCode})}" method="get">
+    <label for="userCode">User Code:</label>
+    <input type="text" id="userCode" name="userCode" required><br>
+    <button type="submit">Filter Workouts</button>
+</form>
+
+<!-- Workouts Table -->
+<h2>All Workouts</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Workout Code</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Duration</th>
+        <th>Sets</th>
+        <th>Reps</th>
+        <th>Type</th>
+        <th>Weight</th>
+        <th>Distance</th>
+        <th>Speed</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="workout : ${workouts}">
+        <td th:text="${workout.workoutCode}"></td>
+        <td th:text="${workout.name}"></td>
+        <td th:text="${workout.date}"></td>
+        <td th:text="${workout.duration}"></td>
+        <td th:text="${workout.sets}"></td>
+        <td th:text="${workout.reps}"></td>
+        <td th:text="${workout.type}"></td>
+        <td th:text="${workout.weight}"></td>
+        <td th:text="${workout.distance}"></td>
+        <td th:text="${workout.speed}"></td>
+        <td th:text="${workout.description}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Add Workout Form -->
+<h2>Add New Workout</h2>
+<form th:action="@{/workouts/add}" method="post">
+    <label for="workoutCode">Workout Code:</label>
+    <input type="text" id="workoutCode" name="workoutCode" required><br>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name"><br>
+    <label for="date">Date:</label>
+    <input type="text" id="date" name="date"><br>
+    <label for="duration">Duration:</label>
+    <input type="text" id="duration" name="duration"><br>
+    <label for="sets">Sets:</label>
+    <input type="text" id="sets" name="sets"><br>
+    <label for="reps">Reps:</label>
+    <input type="text" id="reps" name="reps"><br>
+    <label for="type">Type:</label>
+    <input type="text" id="type" name="type"><br>
+    <label for="weight">Weight:</label>
+    <input type="text" id="weight" name="weight"><br>
+    <label for="distance">Distance:</label>
+    <input type="text" id="distance" name="distance"><br>
+    <label for="speed">Speed:</label>
+    <input type="text" id="speed" name="speed"><br>
+    <label for="description">Description:</label>
+    <input type="text" id="description" name="description"><br>
+    <button type="submit">Add Workout</button>
+</form>
+
+<a href="/"><button>Back</button></a>
+</body>
+</html>

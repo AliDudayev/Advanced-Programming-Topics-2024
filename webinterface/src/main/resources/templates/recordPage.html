@@ -9,33 +9,26 @@
 
 <!-- Add Record Form -->
 <h2>Add New Record</h2>
-<form th:action="@{/addRecord}" method="post">
-    <label for="addUserCode">User Code:</label>
-    <input type="text" id="addUserCode" name="userCode" required><br>
-    <label for="addFastestTime">Fastest Time:</label>
-    <input type="text" id="addFastestTime" name="fastestTime"><br>
-    <label for="addLongestDistance">Longest Distance:</label>
-    <input type="text" id="addLongestDistance" name="longestDistance"><br>
-    <label for="addMaxWeightLifted">Max Weight Lifted:</label>
-    <input type="text" id="addMaxWeightLifted" name="maxWeightLifted"><br>
-    <label for="addLongestWorkoutDuration">Longest Workout Duration:</label>
-    <input type="text" id="addLongestWorkoutDuration" name="longestWorkoutDuration"><br>
-    <label for="addMostCaloriesBurned">Most Calories Burned:</label>
-    <input type="text" id="addMostCaloriesBurned" name="mostCaloriesBurned"><br>
+<form th:action="@{/records/add}" method="post">
+    <label for="userCode">User Code:</label>
+    <input type="text" id="userCode" name="userCode" required><br>
+    <label for="fastestTime">Fastest Time:</label>
+    <input type="text" id="fastestTime" name="fastestTime"><br>
+    <label for="longestDistance">Longest Distance:</label>
+    <input type="text" id="longestDistance" name="longestDistance"><br>
+    <label for="maxWeightLifted">Max Weight Lifted:</label>
+    <input type="text" id="maxWeightLifted" name="maxWeightLifted"><br>
+    <label for="longestWorkoutDuration">Longest Workout Duration:</label>
+    <input type="text" id="longestWorkoutDuration" name="longestWorkoutDuration"><br>
+    <label for="mostCaloriesBurned">Most Calories Burned:</label>
+    <input type="text" id="mostCaloriesBurned" name="mostCaloriesBurned"><br>
     <button type="submit">Add Record</button>
-</form>
-
-<!-- Filter Records by User -->
-<h2>Find Records by User</h2>
-<form th:action="@{/records/user}" method="get">
-    <label for="filterUserCode">User Code:</label>
-    <input type="text" id="filterUserCode" name="userCode" required>
-    <button type="submit">Search</button>
 </form>
 
 <!-- Records Table -->
 <h2>All Records</h2>
 <table>
+    <thead>
     <tr>
         <th>User Code</th>
         <th>Fastest Time</th>
@@ -43,16 +36,27 @@
         <th>Max Weight Lifted</th>
         <th>Longest Workout Duration</th>
         <th>Most Calories Burned</th>
+        <th>Actions</th>
     </tr>
-    <tr th:each="record, iterStat : ${records}">
-        <!-- No `id` attribute needed for table rows -->
-        <td th:id="'userCode_' + ${iterStat.index}" th:text="${record.userCode}">User Code</td>
-        <td th:id="'fastestTime_' + ${iterStat.index}" th:text="${record.fastestTime}">Fastest Time</td>
-        <td th:id="'longestDistance_' + ${iterStat.index}" th:text="${record.longestDistance}">Longest Distance</td>
-        <td th:id="'maxWeightLifted_' + ${iterStat.index}" th:text="${record.maxWeightLifted}">Max Weight Lifted</td>
-        <td th:id="'longestWorkoutDuration_' + ${iterStat.index}" th:text="${record.longestWorkoutDuration}">Longest Workout Duration</td>
-        <td th:id="'mostCaloriesBurned_' + ${iterStat.index}" th:text="${record.mostCaloriesBurned}">Most Calories Burned</td>
+    </thead>
+    <tbody>
+    <tr th:each="record : ${records}">
+        <td th:text="${record.userCode}"></td>
+        <td th:text="${record.fastestTime}"></td>
+        <td th:text="${record.longestDistance}"></td>
+        <td th:text="${record.maxWeightLifted}"></td>
+        <td th:text="${record.longestWorkoutDuration}"></td>
+        <td th:text="${record.mostCaloriesBurned}"></td>
+        <td>
+            <a th:href="@{/records/update(userCode=${record.userCode})}">
+                <button>Edit</button>
+            </a>
+            <form th:action="@{/records/delete(userCode=${record.userCode})}" method="post" style="display: inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
     </tr>
+    </tbody>
 </table>
 <a href="/"><button>Back</button></a>
 </body>

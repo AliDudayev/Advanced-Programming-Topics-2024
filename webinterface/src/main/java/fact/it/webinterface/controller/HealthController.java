@@ -5,11 +5,10 @@ import fact.it.webinterface.service.HealthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/health")
 public class HealthController {
 
     private final HealthService healthService;
@@ -19,28 +18,33 @@ public class HealthController {
         this.healthService = healthService;
     }
 
-    @GetMapping("/health")
+    // Endpoint to display all health metrics
+    @RequestMapping
     public String getAllHealthMetrics(Model model) {
-        model.addAttribute("healthMetrics", healthService.getAllHealthRecords());
+        model.addAttribute("healthMetrics", healthService.getAllHealth());
         return "healthPage";
     }
 
-    @GetMapping("/health/user")
-    public String getHealthMetricsByUser(@RequestParam("workoutCode") String workoutCode, Model model) {
-        model.addAttribute("healthMetrics", healthService.getHealthRecord(workoutCode));
+    // Endpoint to get health metrics by workout code
+    @RequestMapping("/user/{workoutCode}")
+    public String getHealthMetricsByUser(@PathVariable String workoutCode, Model model) {
+        model.addAttribute("healthMetrics", healthService.getHealth(workoutCode));
         return "healthPage";
     }
 
-    @PostMapping("/addHealthMetric")
-    public String addHealthMetric(@RequestParam("recoveryHeartRate") String recoveryHeartRate,
-                                  @RequestParam("bloodPressure") String bloodPressure,
-                                  @RequestParam("workoutCode") String workoutCode,
-                                  @RequestParam("caloriesBurned") String caloriesBurned,
-                                  @RequestParam("oxygenSaturation") String oxygenSaturation,
-                                  Model model) {
-        HealthRequest healthRequest = new HealthRequest(recoveryHeartRate, bloodPressure, workoutCode, caloriesBurned, oxygenSaturation);
-        healthService.createHealthRecord(healthRequest);
+    // Endpoint to add a new health metric
+    @RequestMapping("/add")
+    public String addHealthMetric(@RequestBody HealthRequest healthRequest, Model model) {
+        healthService.createHealth(healthRequest);
         model.addAttribute("message", "Health metric added successfully!");
+        return "redirect:/health";
+    }
+
+    // Endpoint to update an existing health metric
+    @RequestMapping("/update")
+    public String updateHealthMetric(@RequestBody HealthRequest healthRequest, Model model) {
+        healthService.updateHealth(healthRequest);
+        model.addAttribute("message", "Health metric updated successfully!");
         return "redirect:/health";
     }
 }

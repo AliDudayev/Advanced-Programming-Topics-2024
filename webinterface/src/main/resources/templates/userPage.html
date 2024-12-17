@@ -10,6 +10,10 @@
 
 <form action="/users/add" method="post">
     <div>
+        <label for="userCode">User Code:</label>
+        <input type="text" id="userCode" name="userCode" required />
+    </div>
+    <div>
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required />
     </div>
@@ -40,6 +44,7 @@
 <table>
     <thead>
     <tr>
+        <th>User Code</th>
         <th>Name</th>
         <th>Age</th>
         <th>Height</th>
@@ -50,6 +55,7 @@
     </thead>
     <tbody>
     <tr th:each="user : ${users}">
+        <td th:text="${user.userCode}"></td>
         <td th:text="${user.name}"></td>
         <td th:text="${user.age}"></td>
         <td th:text="${user.height}"></td>

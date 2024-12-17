@@ -33,13 +33,14 @@ public class UserController {
     // Endpoint to add a new user
     @PostMapping("/add")
     public String addUser(Model model, HttpServletRequest request) {
+        String userCode = request.getParameter("userCode");
         String name = request.getParameter("name");
         String age = request.getParameter("age");
         String height = request.getParameter("height");
         String weight = request.getParameter("weight");
         String fitnessGoals = request.getParameter("fitnessGoals");
 
-        UserRequest userRequest = new UserRequest(name, age, height, weight, fitnessGoals);
+        UserRequest userRequest = new UserRequest(userCode, name, age, height, weight, fitnessGoals);
         userService.createUser(userRequest);
 
         return "redirect:/users";
@@ -61,7 +62,7 @@ public class UserController {
         String weight = request.getParameter("weight");
         String fitnessGoals = request.getParameter("fitnessGoals");
 
-        UserRequest userRequest = new UserRequest(name, age, height, weight, fitnessGoals);
+        UserRequest userRequest = new UserRequest(userCode, name, age, height, weight, fitnessGoals);
         userService.updateUser(userRequest);
 
         return "redirect:/users";

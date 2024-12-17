@@ -1,6 +1,7 @@
 package fact.it.webinterface.dto;
 
 public class WorkoutRequest {
+    private String userCode;
     private String workoutCode;
     private String name;
     private String date;
@@ -13,7 +14,7 @@ public class WorkoutRequest {
     private String speed;
     private String description;
 
-    public WorkoutRequest(String workoutCode, String name, String date, String duration, String sets, String reps, String type, String weight, String distance, String speed, String description) {
+    public WorkoutRequest(String userCode, String workoutCode, String name, String date, String duration, String sets, String reps, String type, String weight, String distance, String speed, String description) {
         this.workoutCode = workoutCode;
         this.name = name;
         this.date = date;
@@ -25,9 +26,20 @@ public class WorkoutRequest {
         this.distance = distance;
         this.speed = speed;
         this.description = description;
+        this.userCode = userCode;
     }
 
+
     // Getters and Setters
+
+    public String getUserCode() {
+        return userCode;
+    }
+
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
+    }
+
     public String getWorkoutCode() {
         return workoutCode;
     }
