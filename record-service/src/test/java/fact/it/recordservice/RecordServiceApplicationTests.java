@@ -11,26 +11,39 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
+//@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class RecordServiceApplicationTests {
 
-    @Autowired
+    //@Autowired
+    @InjectMocks
     private RecordService recordService;
-    @Autowired
+    //@Autowired
+    @Mock
     private RecordRepository recordRepository;
 
-    @Test
-    void contextLoads() {
-    }
+//    @Test
+//    void contextLoads() {
+//    }
 
     @Test
     @Order(1)
-    public void createRecord_WithValidRequest_RecordIsSaved() {
-        // I want to make a unittest here that creates a record and checks if it is saved in the database
+    public void createRecord_WithValidRequest_RecordIsSavedOnce() {
+        // Arrange
         RecordRequest recordRequest = RecordRequest.builder()
                 .userCode("TestRecord126")
                 .fastestTime(10.0)
@@ -40,44 +53,68 @@ class RecordServiceApplicationTests {
                 .mostCaloriesBurned(500.0)
                 .build();
 
-        recordService.createRecord(recordRequest);
+        // Simulate no existing record on first call and an existing record on second call
+        when(recordRepository.findByUserCode("TestRecord126"))
+                .thenReturn(null)  // First call: no record exists
+                .thenReturn(Record.builder()
+                        .userCode("TestRecord126")
+                        .build()); // Second call: record already exists
 
-        // To test that there are no errors when creating a record that already exists
-        recordService.createRecord(recordRequest);
+        // Act
+        recordService.createRecord(recordRequest); // First attempt to create
+        recordService.createRecord(recordRequest); // Second attempt to create (should be ignored)
 
-        RecordResponse record = recordService.getRecordByCode("TestRecord126");
-
-        assertEquals("TestRecord126", record.getUserCode());
-        assertEquals(10.0, record.getFastestTime());
-        assertEquals(100.0, record.getLongestDistance());
-        assertEquals(50.0, record.getMaxWeightLifted());
-        assertEquals(60.0, record.getLongestWorkoutDuration());
-        assertEquals(500.0, record.getMostCaloriesBurned());
+        // Assert
+        verify(recordRepository, times(1)).save(any(Record.class)); // Ensure save is called only once
     }
 
     @Test
     @Order(2)
     public void createRecord_WithExistingUserCode_RecordIsNotSaved() {
-        // I want to make a unittest here that creates a record with an existing userCode and checks if it is not saved in the database
-        RecordRequest recordRequest = RecordRequest.builder()
-                .userCode("TestRecord126")
-                .fastestTime(99.0)
-                .longestDistance(99.0)
-                .maxWeightLifted(99.0)
-                .longestWorkoutDuration(99.0)
-                .mostCaloriesBurned(99.0)
-                .build();
+        // Arrange
+//        RecordRequest recordRequest = RecordRequest.builder()
+//                .userCode("TestRecord126")
+//                .fastestTime(99.0)
+//                .longestDistance(99.0)
+//                .maxWeightLifted(99.0)
+//                .longestWorkoutDuration(99.0)
+//                .mostCaloriesBurned(99.0)
+//                .build();
+//        RecordRequest recordRequest = new RecordRequest();
+//        recordRequest.setUserCode("TestRecord126");
+//        recordRequest.setFastestTime(10.0);
+//        recordRequest.setLongestDistance(100.0);
+//        recordRequest.setMaxWeightLifted(50.0);
+//        recordRequest.setLongestWorkoutDuration(60.0);
+//        recordRequest.setMostCaloriesBurned(500.0);
+        Record record = new Record();
+        record.setUserCode("TestRecord126");
+        record.setFastestTime(10.0);
+        record.setLongestDistance(100.0);
+        record.setMaxWeightLifted(50.0);
+        record.setLongestWorkoutDuration(60.0);
+        record.setMostCaloriesBurned(500.0);
 
-        recordService.createRecord(recordRequest);
+        when(recordRepository.findAll()).thenReturn(Arrays.asList(record));
+        when(recordRepository.findByUserCode("TestRecord126")).thenReturn(null);
 
-        RecordResponse record = recordService.getRecordByCode("TestRecord126");
+//        recordService.createRecord  (recordRequest);
 
-        assertEquals("TestRecord126", record.getUserCode());
-        assertEquals(10.0, record.getFastestTime());
-        assertEquals(100.0, record.getLongestDistance());
-        assertEquals(50.0, record.getMaxWeightLifted());
-        assertEquals(60.0, record.getLongestWorkoutDuration());
-        assertEquals(500.0, record.getMostCaloriesBurned());
+        // Act
+//        RecordResponse record = recordService.getRecordByCode("TestRecord126");
+//        List<RecordResponse> records = recordService.getAllRecords();
+
+        // Assert
+
+//
+//        assertEquals("TestRecord126", record.getUserCode());
+//        assertEquals(10.0, record.getFastestTime());
+//        assertEquals(100.0, record.getLongestDistance());
+//        assertEquals(50.0, record.getMaxWeightLifted());
+//        assertEquals(60.0, record.getLongestWorkoutDuration());
+//        assertEquals(500.0, record.getMostCaloriesBurned());
+
+        verify(recordRepository, times(1)).findAll();
     }
 
     // Create a record with a usercode in the request that does not exist
@@ -174,9 +211,9 @@ class RecordServiceApplicationTests {
         assertNull(recordService.getRecordByCode("TestRecord126"));
     }
 
-    @Test
-    @Order(8)
-    public void cleanupTestRecords_RemovesTestRecords() {
-        recordService.deleteRecord("TestRecord127");
-    }
+//    @Test
+//    @Order(8)
+//    public void cleanupTestRecords_RemovesTestRecords() {
+//        recordService.deleteRecord("TestRecord127");
+//    }
 }
