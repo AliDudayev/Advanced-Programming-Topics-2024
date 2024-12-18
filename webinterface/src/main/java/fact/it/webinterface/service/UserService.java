@@ -1,5 +1,6 @@
 package fact.it.webinterface.service;
 
+import fact.it.webinterface.dto.UserRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,8 @@ public class UserService {
 
     // Update a user
     public void updateUser(Object userRequest) {
-        String url = apiGatewayUrl + BASE_PATH;
+        String userCode = ((UserRequest) userRequest).getUserCode();
+        String url = apiGatewayUrl + BASE_PATH + "?userCode=" + userCode;
         HttpEntity<Object> requestEntity = new HttpEntity<>(userRequest);
         restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Void.class);
     }

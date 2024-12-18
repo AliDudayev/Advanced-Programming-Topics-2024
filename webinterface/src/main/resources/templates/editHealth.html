@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Edit Health Record</title>
+</head>
+<body>
+<h1>Edit Health Record</h1>
+<form th:action="@{/health/update}" method="post">
+    <div>
+        <label for="workoutCode">Workout Code:</label>
+        <input type="text" id="workoutCode" name="workoutCode" th:value="${health.workoutCode}" required disabled />
+    </div>
+    <div>
+        <label for="recoveryHeartRate">Recovery Heart Rate:</label>
+        <input type="text" id="recoveryHeartRate" name="recoveryHeartRate" th:value="${health.recoveryHeartRate}" required />
+    </div>
+    <div>
+        <label for="bloodPressure">Blood Pressure:</label>
+        <input type="text" id="bloodPressure" name="bloodPressure" th:value="${health.bloodPressure}" required />
+    </div>
+    <div>
+        <label for="caloriesBurned">Calories Burned:</label>
+        <input type="text" id="caloriesBurned" name="caloriesBurned" th:value="${health.caloriesBurned}" required />
+    </div>
+    <div>
+        <label for="oxygenSaturation">Oxygen Saturation:</label>
+        <input type="text" id="oxygenSaturation" name="oxygenSaturation" th:value="${health.oxygenSaturation}" required />
+    </div>
+    <button type="submit">Update Health</button>
+</form>
+<a href="/health"><button>Cancel</button></a>
+</body>
+</html>

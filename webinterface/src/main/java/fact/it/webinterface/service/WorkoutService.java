@@ -1,39 +1,79 @@
 package fact.it.webinterface.service;
 
+import fact.it.webinterface.dto.WorkoutRequest;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 public class WorkoutService {
 
-    private final ApiService apiService;
+    private final RestTemplate restTemplate;
+    private final TokenService tokenService; // Needed only for delete
     private static final String BASE_PATH = "/workout";
 
-    public WorkoutService(ApiService apiService) {
-        this.apiService = apiService;
+    @Value("${api.gateway.url}")
+    private String apiGatewayUrl;
+
+    public WorkoutService(RestTemplate restTemplate, TokenService tokenService) {
+        this.restTemplate = restTemplate;
+        this.tokenService = tokenService;
     }
 
     // Get all workouts
     public Object getAllWorkouts() {
-        return apiService.get(BASE_PATH + "/all", Object.class);  // GET /workout/all
+        String url = apiGatewayUrl + BASE_PATH + "/all";
+        ResponseEntity<Object> response = restTemplate.exchange(
+                url, HttpMethod.GET, null, Object.class
+        );
+        return response.getBody();
     }
 
-    // Get a specific workout by workoutCode
-    public Object getWorkout(String workoutCode) {
-        return apiService.get(BASE_PATH + "?workoutCode=" + workoutCode, Object.class);  // GET /workout?workoutCode=xxx
+    // Get a specific workout by userCode
+    public Object getWorkout(String userCode) {
+        String url = apiGatewayUrl + BASE_PATH + "?userCode=" + userCode;
+        ResponseEntity<Object> response = restTemplate.exchange(
+                url, HttpMethod.GET, null, Object.class
+        );
+        return response.getBody();
     }
 
     // Create a new workout
     public Object createWorkout(Object workoutRequest) {
-        return apiService.post(BASE_PATH, workoutRequest, Object.class);
+        String url = apiGatewayUrl + BASE_PATH;
+        HttpEntity<Object> requestEntity = new HttpEntity<>(workoutRequest);
+        ResponseEntity<Object> response = restTemplate.exchange(
+                url, HttpMethod.POST, requestEntity, Object.class
+        );
+        return response.getBody();
+    }
+
+    // Get workout by userCode
+    public Object getWorkoutByUserCode(String userCode) {
+        String url = apiGatewayUrl + BASE_PATH + "?userCode=" + userCode;
+        ResponseEntity<Object> response = restTemplate.exchange(
+                url, HttpMethod.GET, null, Object.class
+        );
+        return response.getBody();
     }
 
     // Update a workout
-    public void updateWorkout(Object workoutRequest) {
-        apiService.put(BASE_PATH, workoutRequest, Object.class);
-    }
+//    public void updateWorkout(Object workoutRequest) {
+//        String userCode = ((WorkoutRequest) workoutRequest).getUserCode();
+//        String url = apiGatewayUrl + BASE_PATH + "?userCode=" + userCode;
+//        HttpEntity<Object> requestEntity = new HttpEntity<>(workoutRequest);
+//        restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Void.class);
+//    }
 
-    // Delete a workout by workoutCode
-    public void deleteWorkout(String workoutCode) {
-        apiService.delete(BASE_PATH + "?workoutCode=" + workoutCode);  // DELETE /workout?workoutCode=xxx
-    }
+    // Delete a workout by userCode
+//    public void deleteWorkout(String userCode) {
+//        String url = apiGatewayUrl + BASE_PATH + "?userCode=" + userCode;
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setBearerAuth(tokenService.getToken());
+//        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+//
+//        restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class);
+//    }
 }

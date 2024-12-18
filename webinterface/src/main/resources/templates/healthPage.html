@@ -9,13 +9,13 @@
 
 <!-- Add Health Record Form -->
 <h2>Add New Health Record</h2>
-<form th:action="@{/addHealthRecord}" method="post">
+<form th:action="@{/health/add}" method="post">
+    <label for="workoutCodeForm">Workout Code:</label>
+    <input type="text" id="workoutCodeForm" name="workoutCode" required><br>
     <label for="recoveryHeartRate">Recovery Heart Rate:</label>
     <input type="text" id="recoveryHeartRate" name="recoveryHeartRate"><br>
     <label for="bloodPressure">Blood Pressure:</label>
     <input type="text" id="bloodPressure" name="bloodPressure"><br>
-    <label for="workoutCodeForm">Workout Code:</label>
-    <input type="text" id="workoutCodeForm" name="workoutCode" required><br>
     <label for="caloriesBurned">Calories Burned:</label>
     <input type="text" id="caloriesBurned" name="caloriesBurned"><br>
     <label for="oxygenSaturation">Oxygen Saturation:</label>
@@ -26,21 +26,32 @@
 <!-- Health Records Table -->
 <h2>All Health Records</h2>
 <table>
+    <thead>
     <tr>
+        <th>Workout Code</th>
         <th>Recovery Heart Rate</th>
         <th>Blood Pressure</th>
         <th>Workout Code</th>
         <th>Calories Burned</th>
         <th>Oxygen Saturation</th>
+        <th>Actions</th>
     </tr>
-    <tr th:each="health, iterStat : ${healthRecords}">
-        <!-- Dynamically assign unique IDs -->
-        <td th:id="'recoveryHeartRate_' + ${iterStat.index}" th:text="${health.recoveryHeartRate}">Recovery Heart Rate</td>
-        <td th:id="'bloodPressure_' + ${iterStat.index}" th:text="${health.bloodPressure}">Blood Pressure</td>
-        <td th:id="'workoutCode_' + ${iterStat.index}" th:text="${health.workoutCode}">Workout Code</td>
-        <td th:id="'caloriesBurned_' + ${iterStat.index}" th:text="${health.caloriesBurned}">Calories Burned</td>
-        <td th:id="'oxygenSaturation_' + ${iterStat.index}" th:text="${health.oxygenSaturation}">Oxygen Saturation</td>
+    </thead>
+    <tbody>
+    <tr th:each="health : ${healthMetrics}">
+        <td th:text="${health.workoutCode}"></td>
+        <td th:text="${health.recoveryHeartRate}"></td>
+        <td th:text="${health.bloodPressure}"></td>
+        <td th:text="${health.workoutCode}"></td>
+        <td th:text="${health.caloriesBurned}"></td>
+        <td th:text="${health.oxygenSaturation}"></td>
+        <td>
+            <a th:href="@{/health/update(workoutCode=${health.workoutCode})}">
+                <button>Edit</button>
+            </a>
+        </td>
     </tr>
+    </tbody>
 </table>
 <a href="/"><button>Back</button></a>
 </body>

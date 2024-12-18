@@ -1,18 +1,28 @@
 package fact.it.webinterface.dto;
 
 public class UserRequest {
+    private String userCode;
     private String name;
     private String age;
     private String height;
     private String weight;
     private String fitnessGoals;
 
-    public UserRequest(String name, String age, String height, String weight, String fitnessGoals) {
+    public UserRequest(String userCode, String name, String age, String height, String weight, String fitnessGoals) {
+        this.userCode = userCode;
         this.name = name;
         this.age = age;
         this.height = height;
         this.weight = weight;
         this.fitnessGoals = fitnessGoals;
+    }
+
+    public String getUserCode() {
+        return userCode;
+    }
+
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
     }
 
     // Getters and setters
