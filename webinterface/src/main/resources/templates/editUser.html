@@ -8,7 +8,10 @@
 <body>
 <h1>Edit User</h1>
 
-<form th:action="@{/users/update/{userCode}(userCode=${user.userCode})}" method="post">
+<form action="/users/update" method="post">
+    <div>
+        <input type="hidden" name="userCode" th:value="${user.userCode}">
+    </div>
     <div>
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" th:value="${user.name}" required />

@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Controller
 @RequestMapping("/users")
 public class UserController {
@@ -23,20 +21,22 @@ public class UserController {
         this.tokenService = tokenService;
     }
 
+    // Endpoint to display all users
     @GetMapping
     public String getAllUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "userPage";
     }
 
+    // Endpoint to add a new user
     @PostMapping("/add")
-    public String addUser(HttpServletRequest request) {
-        String userCode = request.getParameter("userCode");
-        String name = request.getParameter("name");
-        String age = request.getParameter("age");
-        String height = request.getParameter("height");
-        String weight = request.getParameter("weight");
-        String fitnessGoals = request.getParameter("fitnessGoals");
+    public String addUser(
+            @RequestParam String userCode,
+            @RequestParam String name,
+            @RequestParam String age,
+            @RequestParam String height,
+            @RequestParam String weight,
+            @RequestParam String fitnessGoals) {
 
         UserRequest userRequest = new UserRequest(userCode, name, age, height, weight, fitnessGoals);
         userService.createUser(userRequest);
@@ -44,21 +44,22 @@ public class UserController {
         return "redirect:/users";
     }
 
+    // Endpoint to edit user details
     @GetMapping("/edit")
-    public String editUser(HttpServletRequest request, Model model) {
-        String userCode = request.getParameter("userCode");
+    public String editUser(@RequestParam String userCode, Model model) {
         model.addAttribute("user", userService.getUser(userCode));
         return "editUser";
     }
 
+    // Endpoint to update an existing user
     @PostMapping("/update")
-    public String updateUser(HttpServletRequest request) {
-        String userCode = request.getParameter("userCode");
-        String name = request.getParameter("name");
-        String age = request.getParameter("age");
-        String height = request.getParameter("height");
-        String weight = request.getParameter("weight");
-        String fitnessGoals = request.getParameter("fitnessGoals");
+    public String updateUser(
+            @RequestParam String userCode,
+            @RequestParam String name,
+            @RequestParam String age,
+            @RequestParam String height,
+            @RequestParam String weight,
+            @RequestParam String fitnessGoals) {
 
         UserRequest userRequest = new UserRequest(userCode, name, age, height, weight, fitnessGoals);
         userService.updateUser(userRequest);
@@ -66,9 +67,9 @@ public class UserController {
         return "redirect:/users";
     }
 
+    // Endpoint to delete an existing user
     @PostMapping("/delete")
-    public String deleteUser(HttpServletRequest request) {
-        String userCode = request.getParameter("userCode");
+    public String deleteUser(@RequestParam String userCode) {
         String token = tokenService.getToken();
         if (token == null) {
             return "redirect:/error";
@@ -77,5 +78,4 @@ public class UserController {
             return "redirect:/users";
         }
     }
-
 }
