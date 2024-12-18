@@ -23,16 +23,14 @@ public class UserController {
         this.tokenService = tokenService;
     }
 
-    // Endpoint to display all users
-    @RequestMapping
+    @GetMapping
     public String getAllUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "userPage";
     }
 
-    // Endpoint to add a new user
-    @RequestMapping("/add")
-    public String addUser(Model model, HttpServletRequest request) {
+    @PostMapping("/add")
+    public String addUser(HttpServletRequest request) {
         String userCode = request.getParameter("userCode");
         String name = request.getParameter("name");
         String age = request.getParameter("age");
@@ -46,15 +44,14 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @RequestMapping("/edit")
-    public String editUser(Model model, HttpServletRequest request) {
+    @GetMapping("/edit")
+    public String editUser(HttpServletRequest request, Model model) {
         String userCode = request.getParameter("userCode");
         model.addAttribute("user", userService.getUser(userCode));
         return "editUser";
     }
 
-    // Endpoint to update an existing user
-    @RequestMapping("/update")
+    @PostMapping("/update")
     public String updateUser(HttpServletRequest request) {
         String userCode = request.getParameter("userCode");
         String name = request.getParameter("name");
@@ -69,8 +66,7 @@ public class UserController {
         return "redirect:/users";
     }
 
-    // Endpoint to delete an existing user
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     public String deleteUser(HttpServletRequest request) {
         String userCode = request.getParameter("userCode");
         String token = tokenService.getToken();
@@ -81,4 +77,5 @@ public class UserController {
             return "redirect:/users";
         }
     }
+
 }
