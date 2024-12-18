@@ -1,10 +1,15 @@
 package fact.it.webinterface.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import fact.it.webinterface.dto.UserRequest;
 import fact.it.webinterface.dto.WorkoutRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 @Service
 public class WorkoutService {
@@ -22,41 +27,54 @@ public class WorkoutService {
     }
 
     // Get all workouts
-    public Object getAllWorkouts() {
+    public List<WorkoutRequest> getAllWorkouts() {
         String url = apiGatewayUrl + BASE_PATH + "/all";
-        ResponseEntity<Object> response = restTemplate.exchange(
-                url, HttpMethod.GET, null, Object.class
-        );
-        return response.getBody();
+        List<?> response = restTemplate.getForObject(url, List.class);
+
+        System.out.println(url);
+        System.out.println(response);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<WorkoutRequest> workouts = objectMapper.convertValue(response, new TypeReference<List<WorkoutRequest>>() {});
+        return workouts;
     }
 
     // Get a specific workout by userCode
-    public Object getWorkout(String userCode) {
+    public List<WorkoutRequest> getWorkoutByUserCode(String userCode) {
         String url = apiGatewayUrl + BASE_PATH + "?userCode=" + userCode;
-        ResponseEntity<Object> response = restTemplate.exchange(
-                url, HttpMethod.GET, null, Object.class
-        );
-        return response.getBody();
+        List<?> response = restTemplate.getForObject(url, List.class);
+
+        System.out.println(url);
+        System.out.println(response);
+
+        // Use ObjectMapper to convert the response into a UserRequest object
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<WorkoutRequest> workouts = objectMapper.convertValue(response, new TypeReference<List<WorkoutRequest>>() {});
+        return workouts;
     }
 
     // Create a new workout
-    public Object createWorkout(Object workoutRequest) {
+    public boolean createWorkout(WorkoutRequest workoutRequest) {
         String url = apiGatewayUrl + BASE_PATH;
-        HttpEntity<Object> requestEntity = new HttpEntity<>(workoutRequest);
-        ResponseEntity<Object> response = restTemplate.exchange(
-                url, HttpMethod.POST, requestEntity, Object.class
+
+        // Add token to the header
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(tokenService.getToken());  // Add Bearer token
+
+        // Create the HttpEntity with the user data and headers
+        HttpEntity<WorkoutRequest> requestEntity = new HttpEntity<>(workoutRequest, headers);
+        ResponseEntity<Void> response = restTemplate.exchange(
+                url, HttpMethod.POST, requestEntity, Void.class
         );
-        return response.getBody();
+
+        // Print the response status code for debugging
+        System.out.println(url);
+        System.out.println(response.getStatusCode());
+
+        // Check for HttpStatus.OK (200)
+        return response.getStatusCode() == HttpStatus.OK;
     }
 
-    // Get workout by userCode
-    public Object getWorkoutByUserCode(String userCode) {
-        String url = apiGatewayUrl + BASE_PATH + "?userCode=" + userCode;
-        ResponseEntity<Object> response = restTemplate.exchange(
-                url, HttpMethod.GET, null, Object.class
-        );
-        return response.getBody();
-    }
 
     // Update a workout
 //    public void updateWorkout(Object workoutRequest) {

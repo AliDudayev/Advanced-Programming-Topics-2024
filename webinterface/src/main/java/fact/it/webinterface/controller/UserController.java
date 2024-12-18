@@ -31,9 +31,7 @@ public class UserController {
     // Endpoint to add a new user
     @PostMapping("/add")
     public String addUser(
-            @RequestParam String id,
             @RequestParam Boolean male,
-            @RequestParam String userCode,
             @RequestParam String name,
             @RequestParam String age,
             @RequestParam String height,
@@ -41,6 +39,8 @@ public class UserController {
             @RequestParam String fitnessGoals,
             @RequestParam String email) {
 
+        String id = String.valueOf(System.currentTimeMillis());
+        String userCode = "U" + id;
         UserRequest userRequest = new UserRequest(id, userCode, name, age, male, height, weight, fitnessGoals, email);
         userService.createUser(userRequest);
 
@@ -49,7 +49,10 @@ public class UserController {
 
     // Endpoint to edit user details
     @GetMapping("/edit")
-    public String editUser(@RequestParam String userCode, Model model) {
+    public String editUser(@RequestParam("userCode") String userCode, Model model) {
+        System.out.println("got here");
+        System.out.println("User code: " + userCode);
+        System.out.println("User: " + userService.getUser(userCode));
         model.addAttribute("user", userService.getUser(userCode));
         return "editUser";
     }
@@ -57,7 +60,6 @@ public class UserController {
     // Endpoint to update an existing user
     @PostMapping("/update")
     public String updateUser(
-            @RequestParam String id,
             @RequestParam Boolean male,
             @RequestParam String userCode,
             @RequestParam String name,
@@ -67,6 +69,8 @@ public class UserController {
             @RequestParam String fitnessGoals,
             @RequestParam String email) {
 
+        UserRequest old = userService.getUser(userCode);
+        String id = old.getId();
         UserRequest userRequest = new UserRequest(id, userCode, name, age, male, height, weight, fitnessGoals, email);
         userService.updateUser(userRequest);
 

@@ -27,17 +27,33 @@ public class WorkoutController {
 
     // Add a new workout
     @PostMapping("/add")
-    public String addWorkout(@RequestBody WorkoutRequest workoutRequest, Model model) {
-        workoutService.createWorkout(workoutRequest);
+    public String addWorkout(
+            @RequestParam String userCodeAdd,
+            @RequestParam String workoutCode,
+            @RequestParam String name,
+            @RequestParam String date,
+            @RequestParam String duration,
+            @RequestParam String sets,
+            @RequestParam String reps,
+            @RequestParam String type,
+            @RequestParam String weight,
+            @RequestParam String distance,
+            @RequestParam String speed,
+            @RequestParam String description,
+            @RequestParam String pauseBetweenReps,
+            Model model) {
+
+        String id = String.valueOf(System.currentTimeMillis());
+        workoutService.createWorkout(new WorkoutRequest(id, userCodeAdd, workoutCode, name, date, duration, sets, reps, type, weight, distance, speed, description, pauseBetweenReps));
         model.addAttribute("message", "Workout created successfully!");
         return "redirect:/workouts";
     }
 
     // Get a workout by a userCode
-    @GetMapping("/user/{userCode}")
-    public String getWorkoutByUserCode(@PathVariable String userCode, Model model) {
-        model.addAttribute("workout", workoutService.getWorkoutByUserCode(userCode));
-        return "workoutPage";
+    @GetMapping("/user")
+    public String getWorkoutByUserCode(@RequestParam("userCode") String userCode, Model model) {
+        model.addAttribute("workouts", workoutService.getWorkoutByUserCode(userCode));
+        return "redirect:/workouts";
     }
 
     // Update an existing workout

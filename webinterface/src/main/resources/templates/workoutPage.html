@@ -53,6 +53,8 @@
 <!-- Add Workout Form -->
 <h2>Add New Workout</h2>
 <form th:action="@{/workouts/add}" method="post">
+    <label for="userCodeAdd">User Code:</label>
+    <input type="text" id="userCodeAdd" name="userCode" required><br>
     <label for="workoutCode">Workout Code:</label>
     <input type="text" id="workoutCode" name="workoutCode" required><br>
     <label for="name">Name:</label>
@@ -75,6 +77,8 @@
     <input type="text" id="speed" name="speed"><br>
     <label for="description">Description:</label>
     <input type="text" id="description" name="description"><br>
+    <label for="pauseBetweenReps"></label>
+    <input type="text" id="pauseBetweenReps" name="pauseBetweenReps"><br>
     <button type="submit">Add Workout</button>
 </form>
 
