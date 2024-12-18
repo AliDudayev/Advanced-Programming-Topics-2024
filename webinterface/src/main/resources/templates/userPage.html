@@ -62,10 +62,10 @@
         <td th:text="${user.weight}"></td>
         <td th:text="${user.fitnessGoals}"></td>
         <td>
-            <form th:action="@{/users/update/{userCode}(userCode=${user.userCode})}" method="get" style="display:inline;">
+            <form th:action="@{/users/edit(userCode=${user.userCode})}" method="get" style="display:inline;">
                 <button type="submit">Edit</button>
             </form>
-            <form th:action="@{/users/delete/{userCode}(userCode=${user.userCode})}" method="post" style="display:inline;">
+            <form th:action="@{/users/delete(userCode=${user.userCode})}" method="post" style="display:inline;">
                 <button type="submit">Delete</button>
             </form>
         </td>
