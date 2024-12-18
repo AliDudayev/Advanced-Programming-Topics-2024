@@ -9,7 +9,7 @@
 
 <!-- Filter Workouts by User -->
 <h2>Filter Workouts by User Code</h2>
-<form th:action="@{/workouts/user/{userCode}(userCode=${userCode})}" method="get">
+<form th:action="@{/workouts/user{userCode}(userCode=${userCode})}" method="get">
     <label for="userCode">User Code:</label>
     <input type="text" id="userCode" name="userCode" required><br>
     <button type="submit">Filter Workouts</button>
@@ -31,6 +31,7 @@
         <th>Distance</th>
         <th>Speed</th>
         <th>Description</th>
+        <th>Pause Between Reps</th>
     </tr>
     </thead>
     <tbody>
@@ -46,6 +47,7 @@
         <td th:text="${workout.distance}"></td>
         <td th:text="${workout.speed}"></td>
         <td th:text="${workout.description}"></td>
+        <td th:text="${workout.pauseBetweenReps}"></td>
     </tr>
     </tbody>
 </table>
@@ -54,9 +56,7 @@
 <h2>Add New Workout</h2>
 <form th:action="@{/workouts/add}" method="post">
     <label for="userCodeAdd">User Code:</label>
-    <input type="text" id="userCodeAdd" name="userCode" required><br>
-    <label for="workoutCode">Workout Code:</label>
-    <input type="text" id="workoutCode" name="workoutCode" required><br>
+    <input type="text" id="userCodeAdd" name="userCodeAdd" required><br>
     <label for="name">Name:</label>
     <input type="text" id="name" name="name"><br>
     <label for="date">Date:</label>
@@ -77,7 +77,7 @@
     <input type="text" id="speed" name="speed"><br>
     <label for="description">Description:</label>
     <input type="text" id="description" name="description"><br>
-    <label for="pauseBetweenReps"></label>
+    <label for="pauseBetweenReps">Pause between reps</label>
     <input type="text" id="pauseBetweenReps" name="pauseBetweenReps"><br>
     <button type="submit">Add Workout</button>
 </form>

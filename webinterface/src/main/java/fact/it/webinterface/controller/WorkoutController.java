@@ -29,7 +29,6 @@ public class WorkoutController {
     @PostMapping("/add")
     public String addWorkout(
             @RequestParam String userCodeAdd,
-            @RequestParam String workoutCode,
             @RequestParam String name,
             @RequestParam String date,
             @RequestParam String duration,
@@ -40,12 +39,11 @@ public class WorkoutController {
             @RequestParam String distance,
             @RequestParam String speed,
             @RequestParam String description,
-            @RequestParam String pauseBetweenReps,
-            Model model) {
+            @RequestParam String pauseBetweenReps) {
 
+        String workoutCode = "will be generated in service";
         String id = String.valueOf(System.currentTimeMillis());
         workoutService.createWorkout(new WorkoutRequest(id, userCodeAdd, workoutCode, name, date, duration, sets, reps, type, weight, distance, speed, description, pauseBetweenReps));
-        model.addAttribute("message", "Workout created successfully!");
         return "redirect:/workouts";
     }
 
