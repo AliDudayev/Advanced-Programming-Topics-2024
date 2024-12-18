@@ -10,6 +10,9 @@
 
 <form action="/users/update" method="post">
     <div>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    </div>
+    <div>
         <input type="hidden" name="userCode" th:value="${user.userCode}">
     </div>
     <div>
