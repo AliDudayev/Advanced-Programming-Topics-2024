@@ -1,10 +1,14 @@
 package fact.it.webinterface.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fact.it.webinterface.dto.UserRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -22,49 +26,82 @@ public class UserService {
     }
 
     // Get all users
-    public Object getAllUsers() {
+    public List<UserRequest> getAllUsers() {
         String url = apiGatewayUrl + BASE_PATH + "/all";
-        ResponseEntity<Object> response = restTemplate.exchange(
-                url, HttpMethod.GET, null, Object.class
-        );
-        return response.getBody();
+        List<?> response = restTemplate.getForObject(url, List.class);
+
+        // Print the response for debugging
+        System.out.println(url);
+        System.out.println(response);
+
+        // Use ObjectMapper to convert the response into a list of UserRequest objects
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<UserRequest> users = objectMapper.convertValue(response, new TypeReference<List<UserRequest>>() {});
+        return users;
     }
 
     // Get a specific user by userCode
-    public Object getUser(String userCode) {
+    public UserRequest getUser(String userCode) {
         String url = apiGatewayUrl + BASE_PATH + "?userCode=" + userCode;
-        ResponseEntity<Object> response = restTemplate.exchange(
+        ResponseEntity<?> response = restTemplate.exchange(
                 url, HttpMethod.GET, null, Object.class
         );
-        return response.getBody();
+
+        // Print the response for debugging
+        System.out.println(url);
+        System.out.println(response.getBody());
+
+        // Use ObjectMapper to convert the response into a UserRequest object
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.convertValue(response.getBody(), UserRequest.class);
     }
 
     // Create a new user
-    public Object createUser(Object userRequest) {
+    public boolean createUser(UserRequest userRequest) {
         String url = apiGatewayUrl + BASE_PATH;
-        HttpEntity<Object> requestEntity = new HttpEntity<>(userRequest);
-        ResponseEntity<Object> response = restTemplate.exchange(
-                url, HttpMethod.POST, requestEntity, Object.class
+        HttpEntity<UserRequest> requestEntity = new HttpEntity<>(userRequest);
+        ResponseEntity<Void> response = restTemplate.exchange(
+                url, HttpMethod.POST, requestEntity, Void.class
         );
-        return response.getBody();
+
+        // Print the response status code for debugging
+        System.out.println(url);
+        System.out.println(response.getStatusCode());
+
+        // Check for HttpStatus.OK (200)
+        return response.getStatusCode() == HttpStatus.OK;
     }
 
     // Update a user
-    public void updateUser(Object userRequest) {
-        String userCode = ((UserRequest) userRequest).getUserCode();
+    public boolean updateUser(UserRequest userRequest) {
+        String userCode = userRequest.getUserCode();
         String url = apiGatewayUrl + BASE_PATH + "?userCode=" + userCode;
-        HttpEntity<Object> requestEntity = new HttpEntity<>(userRequest);
-        restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Void.class);
+        HttpEntity<UserRequest> requestEntity = new HttpEntity<>(userRequest);
+        ResponseEntity<Void> response = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Void.class);
+
+        // Print the response status code for debugging
+        System.out.println(url);
+        System.out.println(response.getStatusCode());
+
+        // Check for HttpStatus.OK (200)
+        return response.getStatusCode() == HttpStatus.OK;
     }
 
     // Delete a user by userCode
-    public void deleteUser(String userCode) {
+    public boolean deleteUser(String userCode) {
         String url = apiGatewayUrl + BASE_PATH + "?userCode=" + userCode;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(tokenService.getToken());
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
-        restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class);
+        ResponseEntity<Void> response = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class);
+
+        // Print the response status code for debugging
+        System.out.println(url);
+        System.out.println(response.getStatusCode());
+
+        // Check for HttpStatus.OK (200)
+        return response.getStatusCode() == HttpStatus.OK;
     }
 }

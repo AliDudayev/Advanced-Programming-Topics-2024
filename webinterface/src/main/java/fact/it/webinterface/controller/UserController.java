@@ -31,14 +31,17 @@ public class UserController {
     // Endpoint to add a new user
     @PostMapping("/add")
     public String addUser(
+            @RequestParam String id,
+            @RequestParam Boolean male,
             @RequestParam String userCode,
             @RequestParam String name,
             @RequestParam String age,
             @RequestParam String height,
             @RequestParam String weight,
-            @RequestParam String fitnessGoals) {
+            @RequestParam String fitnessGoals,
+            @RequestParam String email) {
 
-        UserRequest userRequest = new UserRequest(userCode, name, age, height, weight, fitnessGoals);
+        UserRequest userRequest = new UserRequest(id, userCode, name, age, male, height, weight, fitnessGoals, email);
         userService.createUser(userRequest);
 
         return "redirect:/users";
@@ -54,14 +57,17 @@ public class UserController {
     // Endpoint to update an existing user
     @PostMapping("/update")
     public String updateUser(
+            @RequestParam String id,
+            @RequestParam Boolean male,
             @RequestParam String userCode,
             @RequestParam String name,
             @RequestParam String age,
             @RequestParam String height,
             @RequestParam String weight,
-            @RequestParam String fitnessGoals) {
+            @RequestParam String fitnessGoals,
+            @RequestParam String email) {
 
-        UserRequest userRequest = new UserRequest(userCode, name, age, height, weight, fitnessGoals);
+        UserRequest userRequest = new UserRequest(id, userCode, name, age, male, height, weight, fitnessGoals, email);
         userService.updateUser(userRequest);
 
         return "redirect:/users";
