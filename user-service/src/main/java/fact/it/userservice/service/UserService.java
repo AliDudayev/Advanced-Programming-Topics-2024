@@ -15,6 +15,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.UUID;
+//import fact.it.userservice.utils.UUIDGenerator;
 
 @Slf4j
 @Service
@@ -24,20 +25,22 @@ public class UserService {
     private final UserRepository userRepository;
     private final WebClient webClient;
 
+//    private final UUIDGenerator uuidGenerator;
+
     @Value("${recordService.baseurl}")
     private String recordServiceUrl;
 
     @Value("${workoutService.baseurl}")
     private String workoutServiceUrl;
 
-    // create user --> Klaar
     public void createUser(UserRequest userRequest) {
 
-        String userCode;
+        String userCode = userRequest.getName() + UUID.randomUUID();
 
-        do {
-            userCode = "UserCode-" + UUID.randomUUID().toString();
-        } while (userRepository.findByUserCode(userCode) != null);
+//        do {
+//            userCode = uuidGenerator.generate();
+//        } while (userRepository.findByUserCode(userCode) != null);
+
 
         User user = User.builder()
                 .userCode(userCode)
@@ -52,16 +55,16 @@ public class UserService {
                 .build();
         userRepository.save(user);
 
-        RecordResponse recordResponse = RecordResponse.builder()
-                .userCode(user.getUserCode())
-                .fastestTime(10000.0)
-                .longestDistance(0.0)
-                .maxWeightLifted(0.0)
-                .longestWorkoutDuration(0.0)
-                .mostCaloriesBurned(0.0)
-                .build();
-
-        createRecord(user.getUserCode(), recordResponse);
+//        RecordResponse recordResponse = RecordResponse.builder()
+//                .userCode(user.getUserCode())
+//                .fastestTime(10000.0)
+//                .longestDistance(0.0)
+//                .maxWeightLifted(0.0)
+//                .longestWorkoutDuration(0.0)
+//                .mostCaloriesBurned(0.0)
+//                .build();
+//
+//        createRecord(user.getUserCode(), recordResponse);
     }
 
     // Get user by code --> Klaar

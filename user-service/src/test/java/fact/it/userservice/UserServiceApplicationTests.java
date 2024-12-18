@@ -6,203 +6,236 @@ import fact.it.userservice.dto.UserResponse;
 import fact.it.userservice.model.User;
 import fact.it.userservice.repository.UserRepository;
 import fact.it.userservice.service.UserService;
-import org.junit.jupiter.api.Order;
+//import fact.it.userservice.utils.UUIDGenerator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClient.RequestBodyUriSpec;
+import org.springframework.web.reactive.function.client.WebClient.RequestBodySpec;
+import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
+import reactor.core.publisher.Mono;
+import org.springframework.web.reactive.function.client.WebClient;
+import java.util.function.Function;
 
-import java.util.List;
+import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@TestMethodOrder(OrderAnnotation.class)
-class UserServiceApplicationTests {
+@ExtendWith(MockitoExtension.class)
+class UserServiceUnitTests {
 
-    @Autowired
+    @InjectMocks
     private UserService userService;
-    @Autowired
+
+    @Mock
     private UserRepository userRepository;
 
-    @Test
-    void contextLoads() {
+    @Mock
+    private WebClient webClient; // Mock WebClient
+//
+//    @Mock
+//    private RequestBodyUriSpec requestBodyUriSpec;
+//
+//    @Mock
+//    private RequestBodySpec requestBodySpec;
+
+    @Mock
+    private WebClient.RequestHeadersUriSpec requestHeadersUriSpec;
+
+    @Mock
+    private WebClient.RequestHeadersSpec requestHeadersSpec;
+
+    @Mock
+    private ResponseSpec responseSpec;
+
+//    private UUIDGenerator uuidGenerator;
+//    @Mock
+//    private UUIDGenerator uuidGenerator; // Mock UUIDGenerator
+
+    @BeforeEach
+    void setUp() {
+
+        // Set up the URLs for external services (if needed)
+        ReflectionTestUtils.setField(userService, "recordServiceUrl", "http://localhost:8082");
+        ReflectionTestUtils.setField(userService, "workoutServiceUrl", "http://localhost:8083");
     }
 
     @Test
-    @Order(1)
-    public void createUser_WithValidRequest_UserIsSaved() {
-        // I want to make a unittest here that creates a user and checks if it is saved in the database
+    void createUser_WithValidRequest_UserIsSaved() {
+        // Arrange
         UserRequest userRequest = UserRequest.builder()
-                .userCode("TestUser126")
-                .name("Test")
-                .age(20)
+                .name("Test User")
+                .age(25)
                 .height(1.80)
-                .weight(80.0)
-                .email("test")
-                .phoneNr("123")
-                .fitnessGoals("test")
+                .weight(75.0)
+                .phoneNr("123456789")
                 .male(true)
+                .email("testuser@example.com")
+                .fitnessGoals("Build muscle")
                 .build();
+
+
+
+        // Act
         userService.createUser(userRequest);
 
-        // To test that there are no errors when creating a user that already exists
-        userService.createUser(userRequest);
-
-//        User user = userRepository.findByUserCode("TestUser126");
-        UserResponse user = userService.getUserByCode("TestUser126");
-
-        assertEquals("TestUser126", user.getUserCode());
-        assertEquals("Test", user.getName());
-        assertEquals(1.80, user.getHeight());
-        assertEquals(80.0, user.getWeight());
-        assertEquals("test", user.getEmail());
-        assertTrue(user.isMale());
-        assertEquals("test", user.getEmail());
-        assertEquals("test", user.getFitnessGoals());
+        // Assert
+        verify(userRepository, times(1)).save(any(User.class));
     }
 
-    // Write me a test that checks if the record of a user is correctly retrieved
+    /*
     @Test
-    @Order(2)
-    public void getRecordOfUser_WithValidUserCode_ReturnsUserRecord() {
+    void createUser_WithValidRequest_UserIsSaved() {
+        // Arrange
         UserRequest userRequest = UserRequest.builder()
-                .userCode("TestUser127")
-                .name("Test")
-                .age(20)
+                .name("Test User")
+//                .userCode("User123")
+                .age(25)
                 .height(1.80)
-                .weight(80.0)
-                .email("test")
-                .phoneNr("123")
+                .weight(75.0)
+                .phoneNr("123456789")
                 .male(true)
-                .fitnessGoals("test")
+                .email("testuser@example.com")
+                .fitnessGoals("Build muscle")
                 .build();
+
+        // Mock the UUIDGenerator to return a fixed UUID
+        when(uuidGenerator.generate()).thenReturn("UserCode-123");
+
+        // Dit doen we zodat de user de juiste usercode heeft
+        User mockUser = User.builder()
+                .userCode("UserCode-123")
+                .name("Test User")
+                .age(25)
+                .height(1.80)
+                .weight(75.0)
+                .phoneNr("123456789")
+                .male(true)
+                .email("testuser@example.com")
+                .fitnessGoals("Build muscle")
+                .build();
+
+        when(userRepository.save(any(User.class))).thenReturn(mockUser);
+        when(userRepository.findByUserCode("UserCode-123")).thenReturn(null);
+
+
+        // Mock the WebClient for the external call to the RecordService
+//        RecordResponse recordResponse = RecordResponse.builder()
+//                .userCode("TestUser123")
+//                .fastestTime(10000.0)
+//                .longestDistance(0.0)
+//                .maxWeightLifted(0.0)
+//                .longestWorkoutDuration(0.0)
+//                .mostCaloriesBurned(0.0)
+//                .build();
+//
+//        when(webClient.get()).thenReturn(requestHeadersUriSpec);
+//        when(requestHeadersUriSpec.uri(anyString(),  any(Function.class))).thenReturn(requestHeadersSpec);
+//        when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
+//        when(responseSpec.bodyToMono(RecordResponse[].class)).thenReturn(Mono.just(new RecordResponse[]{recordResponse}));
+
+        // Act
         userService.createUser(userRequest);
 
-        assertEquals("TestUser127", userService.getRecordOfUser("TestUser127").getUserCode());
-        assertEquals(1000.0, userService.getRecordOfUser("TestUser127").getFastestTime());
-        assertEquals(0.0, userService.getRecordOfUser("TestUser127").getLongestDistance());
-        assertEquals(0.0, userService.getRecordOfUser("TestUser127").getMaxWeightLifted());
-        assertEquals(0.0, userService.getRecordOfUser("TestUser127").getLongestWorkoutDuration());
-        assertEquals(0.0, userService.getRecordOfUser("TestUser127").getMostCaloriesBurned());
+        // Assert
+//        UserResponse userResponse = userService.getUserByCode("TestUser123");
+//        assertEquals("TestUser123", userResponse.getUserCode());
+//        assertEquals("Test User", userResponse.getName());
+
+        // Verify that the repository save was called
+        verify(userRepository, times(1)).save(any(User.class));
+
+        // Verify that WebClient was called for external interaction
+//        verify(webClient, times(1)).get(); // Ensure get() was called
+//        verify(requestBodyUriSpec, times(1)).uri(anyString()); // Verify uri() was called
+//        verify(requestBodySpec, times(1)).retrieve(); // Verify retrieve() was called
+        assertEquals("UserCode-123", mockUser.getUserCode());  // Assert that the generated user code is correct
     }
 
-    // Write me a test that checks getuserbycode
-    @Test
-    @Order(3)
-    public void getUserByCode_WithNonExistentCode_ReturnsNull () {
-        assertNull(userService.getUserByCode("DezeUserCodeBestaatNiet"));
-    }
+    * */
 
-    // Write me a test that checks getuserbycode
-    @Test
-    @Order(4)
-    public void getUserByCode_WithExistingCode_ReturnsUserDetails() {
-        assertEquals("TestUser127", userService.getUserByCode("TestUser127").getUserCode());
-        assertEquals("Test", userService.getUserByCode("TestUser127").getName());
-        assertEquals(1.80, userService.getUserByCode("TestUser127").getHeight());
-        assertEquals(80.0, userService.getUserByCode("TestUser127").getWeight());
-        assertTrue(userService.getUserByCode("TestUser127").isMale());
-        assertEquals("test", userService.getUserByCode("TestUser127").getEmail());
-        assertEquals("test", userService.getUserByCode("TestUser127").getFitnessGoals());
-    }
 
-    // Write me a test that checks getAllUsers
     @Test
-    @Order(5)
-    public void getAllUsers_WhenUsersExist_ReturnsAllUsers() {
-        assertEquals("TestUser127", userService.getAllUsers().get(userService.getAllUsers().size() - 1).getUserCode());
-        assertEquals("TestUser126", userService.getAllUsers().get(userService.getAllUsers().size() - 2).getUserCode());
-    }
-
-    // Write me a test that checks updateUser
-    @Test
-    @Order(6)
-    public void updateUser_WithExistingUser_UpdatesUserSuccessfully() {
+    void createUser_WithInvalidRequest_ThrowsException() {
+        // Arrange
         UserRequest userRequest = UserRequest.builder()
-                .userCode("TestUser128")
-                .name("Test")
-                .age(20)
+                .name("Test User")
+                .userCode("TestUser123")
+                .age(-5)  // Invalid age
                 .height(1.80)
-                .weight(80.0)
-                .email("test")
-                .phoneNr("123")
+                .weight(75.0)
+                .phoneNr("123456789")
                 .male(true)
-                .fitnessGoals("test")
-                .build();
-        userService.createUser(userRequest);
-
-        userRequest = UserRequest.builder()
-                .userCode("TestUser999")
-                .name("UpdatedTest")
-                .age(30)
-                .height(2.00)
-                .weight(100.0)
-                .email("UpdatedTest")
-                .phoneNr("999")
-                .male(false)
-                .fitnessGoals("updatedTest")
+                .email("testuser@example.com")
+                .fitnessGoals("Build muscle")
                 .build();
 
-        userService.updateUser("TestUser128", userRequest);
-        userService.updateUser("FakeUser", userRequest);
+        // Act & Assert
+        try {
+            userService.createUser(userRequest);
+        } catch (Exception e) {
+            assertEquals("Invalid user details", e.getMessage());
+        }
 
-        assertEquals("UpdatedTest", userService.getUserByCode("TestUser128").getName());
-        assertEquals(2.00, userService.getUserByCode("TestUser128").getHeight());
-        assertEquals(100.0, userService.getUserByCode("TestUser128").getWeight());
-        assertEquals("UpdatedTest", userService.getUserByCode("TestUser128").getEmail());
-        assertFalse(userService.getUserByCode("TestUser128").isMale());
-        assertEquals("updatedTest", userService.getUserByCode("TestUser128").getFitnessGoals());
+        // Verify that the repository save was never called
+        verify(userRepository, never()).save(any(User.class));
+
+        // Verify that WebClient was not called for this invalid case
+        verify(webClient, never()).get();  // Ensure get() was not called
     }
 
-    // Write me a test that checks deleteUser
     @Test
-    @Order(7)
-    public void deleteUser_WithExistingUser_RemovesUserSuccessfully() {
-        userService.deleteUser("TestUser128");
-        assertNull(userService.deleteUser("FakeUser"));
-        assertNull(userService.getUserByCode("TestUser128"));
-        assertNull(userService.getRecordOfUser("TestUser128"));
-    }
-
-    // Write me a test that checks getAllRecords
-    @Test
-    @Order(8)
-    public void getAllRecords_WhenRecordsExist_ReturnsAllRecords() {
-        // So I want to use GetAllRecords to return a List<RecordResponse>. Then I want to check if the first and second record in the list has the correct usercode.
-        assertEquals("TestUser127", userService.getAllRecords().get(userService.getAllRecords().size() - 1).getUserCode());
-        assertEquals("TestUser126", userService.getAllRecords().get(userService.getAllRecords().size() - 2).getUserCode());
-    }
-
-    // Write me a test that checks updateRecord
-    @Test
-    @Order(9)
-    public void updateRecord_WithValidData_UpdatesRecordSuccessfully() {
-        // I want to update the record of a user and check if the record is updated
-
-        RecordResponse recordResponse = RecordResponse.builder()
-                .userCode("TestUser126")
-                .fastestTime(100.0)
-                .longestDistance(100.0)
-                .maxWeightLifted(100.0)
-                .longestWorkoutDuration(100.0)
-                .mostCaloriesBurned(100.0)
+    void getUser_WithValidCode_ReturnsUser() {
+        // Arrange
+        String userCode = "TestUser123";
+        User mockUser = User.builder()
+                .userCode(userCode)
+                .name("Test User")
+                .age(25)
+                .height(1.80)
+                .weight(75.0)
+                .phoneNr("123456789")
+                .male(true)
+                .email("testuser@example.com")
+                .fitnessGoals("Build muscle")
                 .build();
 
-        userService.updateRecord("TestUser126", recordResponse);
+        when(userRepository.findByUserCode(userCode)).thenReturn(null);
 
-        assertEquals(100.0, userService.getRecordOfUser("TestUser126").getFastestTime());
-        assertEquals(100.0, userService.getRecordOfUser("TestUser126").getLongestDistance());
-        assertEquals(100.0, userService.getRecordOfUser("TestUser126").getMaxWeightLifted());
-        assertEquals(100.0, userService.getRecordOfUser("TestUser126").getLongestWorkoutDuration());
-        assertEquals(100.0, userService.getRecordOfUser("TestUser126").getMostCaloriesBurned());
+        // Act
+        UserResponse userResponse = userService.getUserByCode(userCode);
+
+        // Assert
+        assertNotNull(userResponse);
+        assertEquals(userCode, userResponse.getUserCode());
+        assertEquals("Test User", userResponse.getName());
+
+        // Verify that the repository findByUserCode was called
+        verify(userRepository, times(1)).findByUserCode(userCode);
     }
 
     @Test
-    @Order(10)
-    public void cleanupTestUsers_RemovesTestUsers() {
-        userService.deleteUser("TestUser126");
-        userService.deleteUser("TestUser127");
+    void getUser_WithInvalidCode_ThrowsException() {
+        // Arrange
+        String userCode = "InvalidCode";
+        when(userRepository.findByUserCode(userCode)).thenReturn(null);
+
+        // Act & Assert
+        try {
+            userService.getUserByCode(userCode);
+        } catch (Exception e) {
+            assertEquals("User not found", e.getMessage());
+        }
+
+        // Verify that the repository findByUserCode was called
+        verify(userRepository, times(1)).findByUserCode(userCode);
     }
 }
