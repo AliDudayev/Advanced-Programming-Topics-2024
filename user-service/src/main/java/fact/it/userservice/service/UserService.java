@@ -15,7 +15,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.UUID;
-//import fact.it.userservice.utils.UUIDGenerator;
 
 @Slf4j
 @Service
@@ -35,12 +34,7 @@ public class UserService {
 
     public void createUser(UserRequest userRequest) {
 
-        String userCode = userRequest.getName() + UUID.randomUUID();
-
-//        do {
-//            userCode = uuidGenerator.generate();
-//        } while (userRepository.findByUserCode(userCode) != null);
-
+        String userCode = userRequest.getUserCode() + "-" + UUID.randomUUID().toString().substring(0, 5);
 
         User user = User.builder()
                 .userCode(userCode)
@@ -55,16 +49,16 @@ public class UserService {
                 .build();
         userRepository.save(user);
 
-//        RecordResponse recordResponse = RecordResponse.builder()
-//                .userCode(user.getUserCode())
-//                .fastestTime(10000.0)
-//                .longestDistance(0.0)
-//                .maxWeightLifted(0.0)
-//                .longestWorkoutDuration(0.0)
-//                .mostCaloriesBurned(0.0)
-//                .build();
-//
-//        createRecord(user.getUserCode(), recordResponse);
+        RecordResponse recordResponse = RecordResponse.builder()
+                .userCode(user.getUserCode())
+                .fastestTime(10000.0)
+                .longestDistance(0.0)
+                .maxWeightLifted(0.0)
+                .longestWorkoutDuration(0.0)
+                .mostCaloriesBurned(0.0)
+                .build();
+
+        createRecord(user.getUserCode(), recordResponse);
     }
 
     // Get user by code --> Klaar
