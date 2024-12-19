@@ -8,7 +8,7 @@
 <h1>Health Records</h1>
 
 <h2>Filter by workoutCode</h2>
-<form th:action="@{/health/user{workoutCode}(workoutCode=${userCode})}" method="get">
+<form th:action="@{/health/user{workoutCode}(workoutCode=${workoutCode})}" method="get">
     <label for="workoutCode">workoutCode: (type "*" to get everything)</label>
     <input type="text" id="workoutCode" name="workoutCode" required><br>
     <button type="submit">Filter health records</button>
