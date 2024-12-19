@@ -57,8 +57,9 @@ public class WorkoutService {
     public HealthResponse getHealthData(String workoutCode) {
 
         return webClient.get()
-                .uri("http://" + healthServiceBaseUrl + "/api/health",
-                        uriBuilder -> uriBuilder.queryParam("workoutCode", workoutCode).build())
+                .uri(healthServiceBaseUrl + "/api/health?workoutCode=" + workoutCode)
+//                .uri("http://" + healthServiceBaseUrl + "/api/health",
+//                        uriBuilder -> uriBuilder.queryParam("workoutCode", workoutCode).build())
                 .retrieve()
                 .bodyToMono(HealthResponse.class)
                 .block();
@@ -87,12 +88,23 @@ public class WorkoutService {
                 .build();
         workoutRepository.save(workout);
 
+
         RecordResponse recordResponse = webClient.get()
-                .uri( recordServiceBaseUrl + "/api/record",
-                        uriBuilder -> uriBuilder.queryParam("userCode", workoutRequest.getUserCode()).build())
+                .uri(recordServiceBaseUrl + "/api/record?userCode=" + workoutRequest.getUserCode())
+//                .uri( recordServiceBaseUrl + "/api/record",
+//                        uriBuilder -> uriBuilder.queryParam("userCode", workoutRequest.getUserCode()).build())
                 .retrieve()
                 .bodyToMono(RecordResponse.class)
                 .block();
+
+//        RecordResponse recordResponse = RecordResponse.builder()
+//                .userCode("TestUser126")
+//                .fastestTime(1000.0)
+//                .longestDistance(100.0)
+//                .maxWeightLifted(70.0)
+//                .longestWorkoutDuration(150.0)
+//                .mostCaloriesBurned(600.0)
+//                .build();
 
         Double fastestTime = recordResponse.getFastestTime();
         Double longestDistance = recordResponse.getLongestDistance();
@@ -104,8 +116,9 @@ public class WorkoutService {
         double newCaloriesBurned = 0;
 
 
-        if (recordResponse != null) {
-            if(workout.getDistance() != null && workout.getSpeed() != null)
+//        if (recordResponse != null) {
+
+            if(workout.getDistance() != null || workout.getSpeed() != null)
             {
 
                 newFastestTime = Double.parseDouble(workout.getDistance()) / Double.parseDouble(workout.getSpeed());
@@ -133,8 +146,9 @@ public class WorkoutService {
             if(workout.getDistance() != null && workout.getSpeed() != null)
             {
                 UserResponse userResponse = webClient.get()
-                        .uri(userServiceBaseUrl + "/api/user",
-                                uriBuilder -> uriBuilder.queryParam("userCode", workout.getUserCode()).build())
+                        .uri(userServiceBaseUrl + "/api/user?userCode=" + workout.getUserCode())
+//                        .uri(userServiceBaseUrl + "/api/user",
+//                                uriBuilder -> uriBuilder.queryParam("userCode", workout.getUserCode()).build())
                         .retrieve()
                         .bodyToMono(UserResponse.class)
                         .block();
@@ -178,14 +192,15 @@ public class WorkoutService {
                     .build();
 
             webClient.put()
-                    .uri( recordServiceBaseUrl + "/api/record",
-                            uriBuilder -> uriBuilder.queryParam("userCode", workout.getUserCode()).build())
+                    .uri(recordServiceBaseUrl + "/api/record?userCode=" + workout.getUserCode())
+//                    .uri( recordServiceBaseUrl + "/api/record",
+//                            uriBuilder -> uriBuilder.queryParam("userCode", workout.getUserCode()).build())
                     .bodyValue(newRecordResponse)
                     .retrieve()
                     .bodyToMono(Void.class)
                     .block();
 
-        }
+//        }
     }
 
     public List<WorkoutResponse> getAllWorkouts() {
