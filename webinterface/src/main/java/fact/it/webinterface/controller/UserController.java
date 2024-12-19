@@ -50,8 +50,6 @@ public class UserController {
     // Endpoint to edit user details
     @GetMapping("/edit")
     public String editUser(@RequestParam("userCode") String userCode, Model model) {
-        System.out.println("got here");
-        System.out.println("User code: " + userCode);
         System.out.println("User: " + userService.getUser(userCode));
         model.addAttribute("user", userService.getUser(userCode));
         return "editUser";
@@ -70,8 +68,10 @@ public class UserController {
             @RequestParam String email) {
 
         UserRequest old = userService.getUser(userCode);
+        System.out.println(male);
         String id = old.getId();
         UserRequest userRequest = new UserRequest(id, userCode, name, age, male, height, weight, fitnessGoals, email);
+        System.out.println(userRequest.getMale());
         userService.updateUser(userRequest);
 
         return "redirect:/users";
