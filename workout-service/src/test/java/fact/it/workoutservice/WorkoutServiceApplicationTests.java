@@ -39,7 +39,6 @@ class WorkoutServiceApplicationTests {
                 .name("TestWorkout")
                 .userCode("TestUser126")
                 .workoutCode("TestWorkout126")
-                .date(now)
                 .duration("60")
                 .sets("3")
                 .reps("10")
@@ -57,7 +56,6 @@ class WorkoutServiceApplicationTests {
         assertEquals("TestWorkout", workout.getName());
         assertEquals("TestUser126", workout.getUserCode());
         assertEquals("TestWorkout126", workout.getWorkoutCode());
-        assertEquals(now, workout.getDate());
         assertEquals("60", workout.getDuration());
         assertEquals("3", workout.getSets());
         assertEquals("10", workout.getReps());
@@ -78,7 +76,6 @@ class WorkoutServiceApplicationTests {
                 .name("TestWorkout")
                 .userCode("TestUser127")
                 .workoutCode("TestWorkout127")
-                .date(now)
                 .duration("60")
                 .sets("3")
                 .reps("10")
@@ -102,7 +99,6 @@ class WorkoutServiceApplicationTests {
                 .name("TestWorkout")
                 .userCode("TestUser128")
                 .workoutCode("TestWorkout128")
-                .date(now)
                 .duration("60")
                 .sets("3")
                 .reps("10")
@@ -118,7 +114,6 @@ class WorkoutServiceApplicationTests {
         assertEquals("TestWorkout128", workoutService.getWorkoutByWorkoutCode("TestWorkout128").getWorkoutCode());
         assertEquals("TestWorkout", workoutService.getWorkoutByWorkoutCode("TestWorkout128").getName());
         assertEquals("TestUser128", workoutService.getWorkoutByWorkoutCode("TestWorkout128").getUserCode());
-        assertEquals(now, workoutService.getWorkoutByWorkoutCode("TestWorkout128").getDate());
         assertNull(workoutService.getWorkoutByWorkoutCode("FakeWorkout"));
     }
 

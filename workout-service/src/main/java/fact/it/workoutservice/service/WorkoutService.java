@@ -69,16 +69,12 @@ public class WorkoutService {
 
         String workoutCode;
 
-        do {
-            workoutCode = workoutRequest.getWorkoutCode() + "-" + UUID.randomUUID().toString().substring(0, 5);
-        } while (workoutRepository.findByWorkoutCode(workoutCode) != null);
-
+        workoutCode = workoutRequest.getWorkoutCode() + "-" + UUID.randomUUID().toString().substring(0, 5);
 
         Workout workout = Workout.builder()
                 .name(workoutRequest.getName())
                 .userCode(workoutRequest.getUserCode())
                 .workoutCode(workoutCode)
-                .date(workoutRequest.getDate())
                 .duration(workoutRequest.getDuration())
                 .sets(workoutRequest.getSets())
                 .reps(workoutRequest.getReps())
@@ -215,7 +211,6 @@ public class WorkoutService {
                 .name(workout.getName())
                 .userCode(workout.getUserCode())
                 .workoutCode(workout.getWorkoutCode())
-                .date(workout.getDate())
                 .duration(workout.getDuration())
                 .sets(workout.getSets())
                 .reps(workout.getReps())
