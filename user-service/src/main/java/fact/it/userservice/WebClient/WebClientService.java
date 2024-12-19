@@ -1,6 +1,7 @@
 package fact.it.userservice.WebClient;
 
 import fact.it.userservice.dto.RecordResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -8,11 +9,16 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WebClientService {
 
     private final WebClient webClient;
-    private final String recordServiceUrl;
 
-    public WebClientService(WebClient webClient, String recordServiceUrl) {
+    @Value("${recordService.baseurl}")
+    private String recordServiceUrl;
+
+    @Value("${workoutService.baseurl}")
+    private String workoutServiceUrl;
+
+
+    public WebClientService(WebClient webClient) {
         this.webClient = webClient;
-        this.recordServiceUrl = recordServiceUrl;
     }
 
     // Create a record for a specific user
