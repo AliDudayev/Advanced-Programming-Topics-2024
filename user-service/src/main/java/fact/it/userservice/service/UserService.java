@@ -113,7 +113,7 @@ public class UserService {
     public RecordResponse getRecordOfUser(String userCode) {
 
         RecordResponse recordResponse = webClient.get()
-                .uri(recordServiceUrl + "/api/record/" + userCode)
+                .uri(recordServiceUrl + "/api/record" + userCode)
 //                .uri(recordServiceUrl + "/api/record",
 //                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
                 .retrieve()
@@ -137,7 +137,7 @@ public class UserService {
     public void updateRecord(String userCode, RecordResponse recordResponse) {
 
         webClient.put()
-                .uri(recordServiceUrl + "/api/record/" + userCode)
+                .uri(recordServiceUrl + "/api/record" + userCode)
 //                .uri(recordServiceUrl + "/api/record",
 //                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
                 .bodyValue(recordResponse)
@@ -149,7 +149,7 @@ public class UserService {
     // create a record for a specific user
     public void createRecord(String userCode, RecordResponse recordResponse) {
         webClient.post()
-                .uri(recordServiceUrl + "/api/record/" + userCode)
+                .uri(recordServiceUrl + "/api/record" + userCode)
 //                .uri(recordServiceUrl + "/api/record",
 //                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
                 .bodyValue(recordResponse)
@@ -162,7 +162,7 @@ public class UserService {
     public void deleteRecord(String userCode) {
 
         webClient.delete()
-                .uri(recordServiceUrl + "/api/record/" + userCode)
+                .uri(recordServiceUrl + "/api/record" + userCode)
 //                .uri(recordServiceUrl + "/api/record",
 //                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
                 .retrieve()
@@ -173,7 +173,7 @@ public class UserService {
     // get all workouts
     public List<WorkoutResponse> getAllWorkoutsFromUser(String userCode) {
         return webClient.get()
-                .uri(recordServiceUrl + "/api/record/" + userCode)
+                .uri(recordServiceUrl + "/api/record" + userCode)
 //                .uri(workoutServiceUrl + "/api/workout/user",
 //                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
                 .retrieve()
