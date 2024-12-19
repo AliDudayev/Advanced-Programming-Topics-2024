@@ -1,16 +1,4 @@
 services:
-  webinterface:
-    depends_on:
-      - api-gateway
-    image: alisaga/webinterface:latest
-    pull_policy: always
-    ports:
-      - 8086:8086
-    links:
-      - api-gateway
-    environment:
-      API_GATEWAY_URL: http://api-gateway:8085
-
   api-gateway:
     depends_on:
       - user-service
