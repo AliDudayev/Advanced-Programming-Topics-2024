@@ -60,8 +60,8 @@ public class UserService {
                 .mostCaloriesBurned(0.0)
                 .build();
 
-//        createRecord(user.getUserCode(), recordResponse);
-        webClientService.createRecord(user.getUserCode(), recordResponse);
+        createRecord(user.getUserCode(), recordResponse);
+//        webClientService.createRecord(user.getUserCode(), recordResponse);
     }
 
     // Get user by code --> Klaar
