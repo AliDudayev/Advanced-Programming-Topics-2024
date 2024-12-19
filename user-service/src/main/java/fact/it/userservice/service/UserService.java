@@ -24,20 +24,17 @@ public class UserService {
     private final UserRepository userRepository;
     private final WebClient webClient;
 
+//    private final UUIDGenerator uuidGenerator;
+
     @Value("${recordService.baseurl}")
     private String recordServiceUrl;
 
     @Value("${workoutService.baseurl}")
     private String workoutServiceUrl;
 
-    // create user --> Klaar
     public void createUser(UserRequest userRequest) {
 
-        String userCode;
-
-        do {
-            userCode = "UserCode-" + UUID.randomUUID().toString();
-        } while (userRepository.findByUserCode(userCode) != null);
+        String userCode = userRequest.getUserCode() + "-" + UUID.randomUUID().toString().substring(0, 5);
 
         User user = User.builder()
                 .userCode(userCode)

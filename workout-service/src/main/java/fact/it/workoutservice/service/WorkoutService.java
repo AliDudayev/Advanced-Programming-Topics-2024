@@ -70,7 +70,7 @@ public class WorkoutService {
         String workoutCode;
 
         do {
-            workoutCode = "WorkoutCode-" + UUID.randomUUID().toString();
+            workoutCode = workoutRequest.getWorkoutCode() + "-" + UUID.randomUUID().toString().substring(0, 5);
         } while (workoutRepository.findByWorkoutCode(workoutCode) != null);
 
 
