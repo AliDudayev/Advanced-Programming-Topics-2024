@@ -7,26 +7,11 @@
 <body>
 <h1>Health Records</h1>
 
-<!-- Add Health Record Form -->
-<h2>Add New Health Record</h2>
-<form th:action="@{/health/add}" method="post">
-    <label for="workoutCode">workoutCode:</label>
-    <select name="workoutCode" id="workoutCode" required>
-        <option value="">Select your workout</option>
-        <option th:each="workout : ${workouts}"
-                th:text="${workout.getName()}"
-                th:value="${workout.getWorkoutCode()}">
-        </option>
-    </select><br>
-    <label for="recoveryHeartRate">Recovery Heart Rate:</label>
-    <input type="text" id="recoveryHeartRate" name="recoveryHeartRate"><br>
-    <label for="bloodPressure">Blood Pressure:</label>
-    <input type="text" id="bloodPressure" name="bloodPressure"><br>
-    <label for="caloriesBurned">Calories Burned:</label>
-    <input type="text" id="caloriesBurned" name="caloriesBurned"><br>
-    <label for="oxygenSaturation">Oxygen Saturation:</label>
-    <input type="text" id="oxygenSaturation" name="oxygenSaturation"><br>
-    <button type="submit">Add Record</button>
+<h2>Filter by workoutCode</h2>
+<form th:action="@{/health/user{workoutCode}(workoutCode=${userCode})}" method="get">
+    <label for="workoutCode">workoutCode: (type "*" to get everything)</label>
+    <input type="text" id="workoutCode" name="workoutCode" required><br>
+    <button type="submit">Filter health records</button>
 </form>
 
 <!-- Health Records Table -->
@@ -59,6 +44,30 @@
     </tr>
     </tbody>
 </table>
+
+<!-- Add Health Record Form -->
+<h2>Add New Health Record</h2>
+<form action="/health/add" method="post">
+    <label for="workoutCodeAdd">workoutCode:</label>
+    <select name="workoutCodeAdd" id="workoutCodeAdd" required>
+        <option value="">Select your workout</option>
+        <option th:each="workout : ${workouts}"
+                th:text="${workout.getName()}"
+                th:value="${workout.getWorkoutCode()}">
+        </option>
+    </select>
+    <br>
+    <label for="recoveryHeartRate">Recovery Heart Rate:</label>
+    <input type="text" id="recoveryHeartRate" name="recoveryHeartRate"><br>
+    <label for="bloodPressure">Blood Pressure:</label>
+    <input type="text" id="bloodPressure" name="bloodPressure"><br>
+    <label for="caloriesBurned">Calories Burned:</label>
+    <input type="text" id="caloriesBurned" name="caloriesBurned"><br>
+    <label for="oxygenSaturation">Oxygen Saturation:</label>
+    <input type="text" id="oxygenSaturation" name="oxygenSaturation"><br>
+    <button type="submit">Add Record</button>
+</form>
+
 <a href="/"><button>Back</button></a>
 </body>
 </html>

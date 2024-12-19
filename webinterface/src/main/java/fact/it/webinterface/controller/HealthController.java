@@ -24,7 +24,7 @@ public class HealthController {
     }
 
     // Endpoint to display all health metrics
-    @RequestMapping
+    @GetMapping
     public String getAllHealthMetrics(Model model) {
         model.addAttribute("healthMetrics", healthService.getAllHealth());
         model.addAttribute("workouts", workoutService.getAllWorkouts());
@@ -32,33 +32,33 @@ public class HealthController {
     }
 
     // Endpoint to get health metrics by workout code
-    @RequestMapping("/user")
+    @GetMapping("/user")
     public String getHealthMetricsByUser(@RequestParam("workoutCode") String workoutCode, Model model) {
         if (Objects.equals(workoutCode, "*")) {
-            return "redirect:/workouts";
+            return "redirect:/health";
         }
         model.addAttribute("healthMetrics", healthService.getHealth(workoutCode));
         return "healthPage";
     }
 
-    // Endpoint to add a new health metric
     @RequestMapping("/add")
     public String addHealthMetric(
             @RequestParam String recoveryHeartRate,
             @RequestParam String bloodPressure,
-            @RequestParam String workoutCode,
+            @RequestParam("workoutCodeAdd") String workoutCode,
             @RequestParam String caloriesBurned,
-            @RequestParam String oxygenSaturation,
-            Model model) {
+            @RequestParam String oxygenSaturation) {
 
         String id = String.valueOf(System.currentTimeMillis());
         healthService.createHealth(new HealthRequest(id, recoveryHeartRate, bloodPressure, workoutCode, caloriesBurned, oxygenSaturation));
         return "redirect:/health";
     }
 
-    @RequestMapping("/edit")
+
+
+    @GetMapping("/edit")
     public String editHealthMetric(@RequestParam("workoutCode") String workoutCode, Model model) {
-        model.addAttribute("healthMetric", healthService.getHealth(workoutCode));
+        model.addAttribute("health", healthService.getHealth(workoutCode));
         return "editHealth";
     }
 
@@ -69,10 +69,9 @@ public class HealthController {
             @RequestParam String bloodPressure,
             @RequestParam String workoutCode,
             @RequestParam String caloriesBurned,
-            @RequestParam String oxygenSaturation,
-            Model model) {
+            @RequestParam String oxygenSaturation) {
 
-        HealthRequest old = (HealthRequest) healthService.getHealth(workoutCode);
+        HealthRequest old = healthService.getHealth(workoutCode);
         String id = old.getId();
         healthService.updateHealth(new HealthRequest(id, recoveryHeartRate, bloodPressure, workoutCode, caloriesBurned, oxygenSaturation));
         return "redirect:/health";

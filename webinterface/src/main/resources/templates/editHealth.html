@@ -6,10 +6,10 @@
 </head>
 <body>
 <h1>Edit Health Record</h1>
-<form th:action="@{/health/update}" method="post">
+<form action="/health/update" method="post">
     <div>
         <label for="workoutCode">Workout Code:</label>
-        <input type="text" id="workoutCode" name="workoutCode" th:value="${health.workoutCode}" required disabled />
+        <input type="text" id="workoutCode" name="workoutCode" th:value="${health.workoutCode}" required readonly />
     </div>
     <div>
         <label for="recoveryHeartRate">Recovery Heart Rate:</label>

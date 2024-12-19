@@ -33,7 +33,7 @@ public class UserController {
     public String addUser(
             @RequestParam Boolean male,
             @RequestParam String name,
-            @RequestParam String age,
+            @RequestParam int age,
             @RequestParam String height,
             @RequestParam String weight,
             @RequestParam String fitnessGoals,
@@ -63,7 +63,7 @@ public class UserController {
             @RequestParam Boolean male,
             @RequestParam String userCode,
             @RequestParam String name,
-            @RequestParam String age,
+            @RequestParam int age,
             @RequestParam String height,
             @RequestParam String weight,
             @RequestParam String fitnessGoals,
