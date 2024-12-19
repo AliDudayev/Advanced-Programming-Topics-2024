@@ -13,7 +13,7 @@ public class UserRequest {
 //    private String id;
     private String name;
     private String userCode;
-    private int age;
+    private Integer age;
     private double height;
     private double weight;
     private String phoneNr;
