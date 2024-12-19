@@ -309,7 +309,7 @@ class UserServiceUnitTests {
         // Arrange
         UserRequest userRequest = new UserRequest("Test User", "UserCode-123", 25, 1.80, 75.0, "123456789", true, "testuser@example.com", "Build muscle");
 
-        RecordResponse recordResponse = new RecordResponse("1", "UserCode-123", 10000.0, 0.0, 0.0, 0.0, 0.0);
+        RecordResponse recordResponse = new RecordResponse("1", "UserCode-123", 10000.0, 1000.0, 100.0, 80.0, 600.0);
 
         when(webClient.post()).thenReturn(requestBodyUriSpec);
         when(requestBodyUriSpec.uri(anyString())).thenReturn(requestBodySpec);
@@ -330,19 +330,22 @@ class UserServiceUnitTests {
         assertNotNull(capturedRecord);
         assertEquals("UserCode-123", capturedRecord.getUserCode());
         assertEquals(10000.0, capturedRecord.getFastestTime());
+        assertEquals(1000.0, capturedRecord.getLongestDistance());
+        assertEquals(100.0, capturedRecord.getMaxWeightLifted());
+        assertEquals(80.0, capturedRecord.getLongestWorkoutDuration());
+        assertEquals(600.0, capturedRecord.getMostCaloriesBurned());
     }
 
     @Order(10)
     @Test
     void deleteUser_UserExists_DeletesUser() {
         // Arrange
-        String userCode = "UserCode-123";
         User user = User.builder()
-                .userCode(userCode)
+                .userCode("UserCode-123")
                 .name("Test User")
                 .build();
 
-        when(userRepository.findByUserCode(userCode)).thenReturn(user);
+        when(userRepository.findByUserCode(user.getUserCode())).thenReturn(user);
 
         when(webClient.delete()).thenReturn(requestHeadersUriSpec);
         when(requestHeadersUriSpec.uri(anyString())).thenReturn(requestHeadersSpec);
@@ -350,7 +353,7 @@ class UserServiceUnitTests {
         when(responseSpec.bodyToMono(Void.class)).thenReturn(Mono.empty());
 
         // Act
-        UserResponse deletedUser = userService.deleteUser(userCode);
+        UserResponse deletedUser = userService.deleteUser(user.getUserCode());
 
         // Assert
         assertNotNull(deletedUser);
@@ -377,9 +380,7 @@ class UserServiceUnitTests {
     @Test
     void updateRecord_UserExists_DeletesUser() {
         // Arrange
-        String userCode = "UserCode-123";
-
-        RecordResponse recordResponse = new RecordResponse("1", "UserCode-123", 10000.0, 0.0, 0.0, 0.0, 0.0);
+        RecordResponse recordResponse = new RecordResponse("1", "UserCode-123", 10000.0, 1000.0, 60.0, 80.0, 600.0);
 
         when(webClient.put()).thenReturn(requestBodyUriSpec);
         when(requestBodyUriSpec.uri(anyString())).thenReturn(requestBodySpec);
@@ -391,14 +392,19 @@ class UserServiceUnitTests {
         ArgumentCaptor<RecordResponse> recordCaptor = ArgumentCaptor.forClass(RecordResponse.class);
 
         // Act
-        userService.updateRecord(userCode, recordResponse);
+        userService.updateRecord(recordResponse.getUserCode(), recordResponse);
 
         verify(requestBodySpec, times(1)).bodyValue(recordCaptor.capture()); // Capture the argument
         RecordResponse capturedRecord = recordCaptor.getValue();
 
+        // Assert
         assertNotNull(capturedRecord);
         assertEquals("UserCode-123", capturedRecord.getUserCode());
         assertEquals(10000.0, capturedRecord.getFastestTime());
+        assertEquals(1000.0, capturedRecord.getLongestDistance());
+        assertEquals(60.0, capturedRecord.getMaxWeightLifted());
+        assertEquals(80.0, capturedRecord.getLongestWorkoutDuration());
+        assertEquals(600.0, capturedRecord.getMostCaloriesBurned());
     }
     @Order(13)
     @Test
@@ -422,6 +428,10 @@ class UserServiceUnitTests {
         assertEquals(2, workoutResponseList.size());
         assertEquals("WorkoutCode-123", workoutResponseList.get(0).getWorkoutCode());
         assertEquals("WorkoutCode-456", workoutResponseList.get(1).getWorkoutCode());
+        assertEquals("Workout 1", workoutResponseList.get(0).getName());
+        assertEquals("Workout 2", workoutResponseList.get(1).getName());
+        assertEquals("Gym", workoutResponseList.get(0).getDescription());
+        assertEquals("Track", workoutResponseList.get(1).getDescription());
     }
 
 }
