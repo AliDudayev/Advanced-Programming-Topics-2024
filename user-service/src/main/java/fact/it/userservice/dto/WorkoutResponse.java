@@ -16,6 +16,5 @@ public class WorkoutResponse {
     private String id;
     private String workoutCode;
     private String name;
-    private Date date;
     private String description;
 }

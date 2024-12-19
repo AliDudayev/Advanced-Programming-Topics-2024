@@ -1,6 +1,5 @@
 package fact.it.userservice.service;
 
-import fact.it.userservice.WebClient.WebClientService;
 import fact.it.userservice.dto.RecordResponse;
 import fact.it.userservice.dto.UserRequest;
 import fact.it.userservice.dto.UserResponse;
@@ -24,7 +23,6 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final WebClient webClient;
-    private final WebClientService webClientService;  // Inject WebClientService
 
 //    private final UUIDGenerator uuidGenerator;
 
@@ -61,7 +59,6 @@ public class UserService {
                 .build();
 
         createRecord(user.getUserCode(), recordResponse);
-//        webClientService.createRecord(user.getUserCode(), recordResponse);
     }
 
     // Get user by code --> Klaar
@@ -116,8 +113,9 @@ public class UserService {
     public RecordResponse getRecordOfUser(String userCode) {
 
         RecordResponse recordResponse = webClient.get()
-                .uri(recordServiceUrl + "/api/record",
-                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
+                .uri(recordServiceUrl + "/api/record/" + userCode)
+//                .uri(recordServiceUrl + "/api/record",
+//                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
                 .retrieve()
                 .bodyToMono(RecordResponse.class)
                 .block();
@@ -139,8 +137,9 @@ public class UserService {
     public void updateRecord(String userCode, RecordResponse recordResponse) {
 
         webClient.put()
-                .uri(recordServiceUrl + "/api/record",
-                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
+                .uri(recordServiceUrl + "/api/record/" + userCode)
+//                .uri(recordServiceUrl + "/api/record",
+//                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
                 .bodyValue(recordResponse)
                 .retrieve()
                 .bodyToMono(Void.class)
@@ -149,10 +148,10 @@ public class UserService {
 
     // create a record for a specific user
     public void createRecord(String userCode, RecordResponse recordResponse) {
-
         webClient.post()
-                .uri(recordServiceUrl + "/api/record",
-                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
+                .uri(recordServiceUrl + "/api/record/" + userCode)
+//                .uri(recordServiceUrl + "/api/record",
+//                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
                 .bodyValue(recordResponse)
                 .retrieve()
                 .bodyToMono(Void.class)
@@ -163,8 +162,9 @@ public class UserService {
     public void deleteRecord(String userCode) {
 
         webClient.delete()
-                .uri(recordServiceUrl + "/api/record",
-                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
+                .uri(recordServiceUrl + "/api/record/" + userCode)
+//                .uri(recordServiceUrl + "/api/record",
+//                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
                 .retrieve()
                 .bodyToMono(Void.class)
                 .block();
@@ -173,8 +173,9 @@ public class UserService {
     // get all workouts
     public List<WorkoutResponse> getAllWorkoutsFromUser(String userCode) {
         return webClient.get()
-                .uri(workoutServiceUrl + "/api/workout/user",
-                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
+                .uri(recordServiceUrl + "/api/record/" + userCode)
+//                .uri(workoutServiceUrl + "/api/workout/user",
+//                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
                 .retrieve()
                 .bodyToFlux(WorkoutResponse.class)
                 .collectList()
