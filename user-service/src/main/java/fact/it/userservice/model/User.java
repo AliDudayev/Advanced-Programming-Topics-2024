@@ -20,7 +20,7 @@ public class User {
     private String id;
     private String userCode;
     private String name;
-    private int age;
+    private Integer age;
     private double height;
     private double weight;
     private String email;
