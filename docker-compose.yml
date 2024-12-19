@@ -1,123 +1,135 @@
 services:
- api-gateway:
-  depends_on:
-    - user-service
-    - record-service
-    - workout-service
-    - health-service
-  image: alisaga/api-gateway:latest
-  pull_policy: always
-  ports:
-    - 8085:8085
-  links:
-    - user-service
-    - record-service
-    - workout-service
-    - health-service
-  environment:
-    USER_SERVICE_BASEURL: user-service:8081
-    RECORD_SERVICE_BASEURL: record-service:8082
-    WORKOUT_SERVICE_BASEURL: workout-service:8083
-    HEALTH_SERVICE_BASEURL: health-service:8084
-    
- mongo-user:
-  image: mongo:latest
-  ports:
-    - 27019:27017
-  volumes:
-    - volume_mongo_user:/data/db
+  webinterface:
+    depends_on:
+      - api-gateway
+    image: alisaga/webinterface:latest
+    pull_policy: always
+    ports:
+      - 8086:8086
+    links:
+      - api-gateway
+    environment:
+      API_GATEWAY_URL: http://api-gateway:8085
 
- mongo-record:
-  image: mongo:latest
-  ports:
-    - 27020:27017
-  volumes:
-    - volume_mongo_record:/data/db
+  api-gateway:
+    depends_on:
+      - user-service
+      - record-service
+      - workout-service
+      - health-service
+    image: alisaga/api-gateway:latest
+    pull_policy: always
+    ports:
+      - 8085:8085
+    links:
+      - user-service
+      - record-service
+      - workout-service
+      - health-service
+    environment:
+      USER_SERVICE_BASEURL: user-service:8081
+      RECORD_SERVICE_BASEURL: record-service:8082
+      WORKOUT_SERVICE_BASEURL: workout-service:8083
+      HEALTH_SERVICE_BASEURL: health-service:8084
 
- mysql-workout:
-  image: mysql:latest
-  ports:
-    - 3305:3306
-  volumes:
-    - volume_mysql_workout:/var/lib/mysql
-  environment:
-   MYSQL_ROOT_PASSWORD: abc123
-    
- mysql-health:
-  image: mysql:latest
-  ports:
-    - 3309:3306
-  volumes:
-    - volume_mysql_health:/var/lib/mysql
-  environment:
-   MYSQL_ROOT_PASSWORD: abc123
-    
- user-service:
-  depends_on:
-    - mongo-user
-  image: alisaga/user-service:latest
-  pull_policy: always
-  ports:
-    - 8081:8081
-  links:
-    - mongo-user
-    - record-service
-    - workout-service
-  environment:
-   RECORD_SERVICE_BASEURL: http://record-service:8082
-   WORKOUT_SERVICE_BASEURL: http://workout-service:8083
-   MONGODB_PORT: 27017
-   MONGODB_HOST: mongo-user
-   
- record-service:
-  depends_on:
-    - mongo-record
-  image: alisaga/record-service:latest
-  pull_policy: always
-  ports:
-    - 8082:8082
-  links:
-    - mongo-record
-  environment:
-   MONGODB_PORT: 27017
-   MONGODB_HOST: mongo-record
+  mongo-user:
+    image: mongo:latest
+    ports:
+      - 27019:27017
+    volumes:
+      - volume_mongo_user:/data/db
 
- workout-service:
-  depends_on:
-    - mysql-workout
-  image: alisaga/workout-service:latest
-  pull_policy: always
-  ports:
-    - 8083:8083
-  restart: on-failure
-  links:
-    - mysql-workout
-    - health-service
-    - record-service
-  environment:
-   USER_SERVICE_BASEURL: http://user-service:8081
-   HEALTH_SERVICE_BASEURL: http://health-service:8084
-   RECORD_SERVICE_BASEURL: http://record-service:8082
-   MYSQL_DB_USERNAME: root
-   MYSQL_DB_PASSWORD: abc123
-   MYSQL_DB_HOST: mysql-workout
-   MYSQL_DB_PORT: 3306
+  mongo-record:
+    image: mongo:latest
+    ports:
+      - 27020:27017
+    volumes:
+      - volume_mongo_record:/data/db
 
- health-service:
-  depends_on:
-    - mysql-health
-  image: alisaga/health-service:latest
-  pull_policy: always
-  ports:
-    - 8084:8084
-  restart: on-failure
-  links:
-    - mysql-health
-  environment:
-   MYSQL_DB_USERNAME: root
-   MYSQL_DB_PASSWORD: abc123
-   MYSQL_DB_HOST: mysql-health
-   MYSQL_DB_PORT: 3306
+  mysql-workout:
+    image: mysql:latest
+    ports:
+      - 3305:3306
+    volumes:
+      - volume_mysql_workout:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123
+
+  mysql-health:
+    image: mysql:latest
+    ports:
+      - 3309:3306
+    volumes:
+      - volume_mysql_health:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123
+
+  user-service:
+    depends_on:
+      - mongo-user
+    image: alisaga/user-service:latest
+    pull_policy: always
+    ports:
+      - 8081:8081
+    links:
+      - mongo-user
+      - record-service
+      - workout-service
+    environment:
+      RECORD_SERVICE_BASEURL: http://record-service:8082
+      WORKOUT_SERVICE_BASEURL: http://workout-service:8083
+      MONGODB_PORT: 27017
+      MONGODB_HOST: mongo-user
+
+  record-service:
+    depends_on:
+      - mongo-record
+    image: alisaga/record-service:latest
+    pull_policy: always
+    ports:
+      - 8082:8082
+    links:
+      - mongo-record
+    environment:
+      MONGODB_PORT: 27017
+      MONGODB_HOST: mongo-record
+
+  workout-service:
+    depends_on:
+      - mysql-workout
+    image: alisaga/workout-service:latest
+    pull_policy: always
+    ports:
+      - 8083:8083
+    restart: on-failure
+    links:
+      - mysql-workout
+      - health-service
+      - record-service
+    environment:
+      USER_SERVICE_BASEURL: http://user-service:8081
+      HEALTH_SERVICE_BASEURL: http://health-service:8084
+      RECORD_SERVICE_BASEURL: http://record-service:8082
+      MYSQL_DB_USERNAME: root
+      MYSQL_DB_PASSWORD: abc123
+      MYSQL_DB_HOST: mysql-workout
+      MYSQL_DB_PORT: 3306
+
+  health-service:
+    depends_on:
+      - mysql-health
+    image: alisaga/health-service:latest
+    pull_policy: always
+    ports:
+      - 8084:8084
+    restart: on-failure
+    links:
+      - mysql-health
+    environment:
+      MYSQL_DB_USERNAME: root
+      MYSQL_DB_PASSWORD: abc123
+      MYSQL_DB_HOST: mysql-health
+      MYSQL_DB_PORT: 3306
 
 volumes:
   volume_mongo_user:
