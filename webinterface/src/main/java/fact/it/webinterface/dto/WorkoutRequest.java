@@ -1,10 +1,12 @@
 package fact.it.webinterface.dto;
 
+import java.time.LocalDate;
+
 public class WorkoutRequest {
+    private String id;
     private String userCode;
     private String workoutCode;
     private String name;
-    private String date;
     private String duration;
     private String sets;
     private String reps;
@@ -13,11 +15,14 @@ public class WorkoutRequest {
     private String distance;
     private String speed;
     private String description;
+    private String pauseBetweenReps;
 
-    public WorkoutRequest(String userCode, String workoutCode, String name, String date, String duration, String sets, String reps, String type, String weight, String distance, String speed, String description) {
+    public WorkoutRequest() {
+    }
+
+    public WorkoutRequest(String id, String userCode, String workoutCode, String name, String duration, String sets, String reps, String type, String weight, String distance, String speed, String description, String pauseBetweenReps) {
         this.workoutCode = workoutCode;
         this.name = name;
-        this.date = date;
         this.duration = duration;
         this.sets = sets;
         this.reps = reps;
@@ -27,10 +32,28 @@ public class WorkoutRequest {
         this.speed = speed;
         this.description = description;
         this.userCode = userCode;
+        this.pauseBetweenReps = pauseBetweenReps;
+        this.id = id;
     }
 
 
     // Getters and Setters
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPauseBetweenReps() {
+        return pauseBetweenReps;
+    }
+
+    public void setPauseBetweenReps(String pauseBetweenReps) {
+        this.pauseBetweenReps = pauseBetweenReps;
+    }
 
     public String getUserCode() {
         return userCode;
@@ -54,14 +77,6 @@ public class WorkoutRequest {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public String getDuration() {

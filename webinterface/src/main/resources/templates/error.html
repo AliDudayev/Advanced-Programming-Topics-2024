@@ -5,7 +5,12 @@
     <title>Error: no token</title>
 </head>
 <body>
-<h1>Please add a token on the homepage before trying to delete something.</h1>
+<h1>Did you add a token on the homepage?</h1>
+<h2>Any other error that happened:</h2>
+<div>
+    <h3>Error message: </h3>
+    <h3 th:text="${message}"></h3>
+</div>
 <a href="/"><button>Back to the homepage</button></a>
 </body>
 </html>

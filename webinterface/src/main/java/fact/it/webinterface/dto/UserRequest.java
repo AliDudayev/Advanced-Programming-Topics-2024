@@ -4,7 +4,7 @@ public class UserRequest {
     private String id;
     private String userCode;
     private String name;
-    private String age;
+    private int age;
     private String height;
     private String weight;
     private String fitnessGoals;
@@ -13,7 +13,7 @@ public class UserRequest {
 
     public UserRequest() {
     }
-    public UserRequest(String id, String userCode, String name, String age, Boolean male, String height, String weight, String fitnessGoals, String email) {
+    public UserRequest(String id, String userCode, String name, int age, Boolean male, String height, String weight, String fitnessGoals, String email) {
         this.id = id;
         this.userCode = userCode;
         this.name = name;
@@ -66,11 +66,11 @@ public class UserRequest {
         this.name = name;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 

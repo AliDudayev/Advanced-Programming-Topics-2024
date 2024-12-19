@@ -14,7 +14,7 @@ import java.util.List;
 public class UserService {
 
     private final RestTemplate restTemplate;
-    private final TokenService tokenService; // Needed only for delete
+    private final TokenService tokenService; // Needed for POST, PUT, and DELETE
     private static final String BASE_PATH = "/user";
 
     @Value("${api.gateway.url}")
@@ -59,7 +59,13 @@ public class UserService {
     // Create a new user
     public boolean createUser(UserRequest userRequest) {
         String url = apiGatewayUrl + BASE_PATH;
-        HttpEntity<UserRequest> requestEntity = new HttpEntity<>(userRequest);
+
+        // Add token to the header
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(tokenService.getToken());  // Add Bearer token
+
+        // Create the HttpEntity with the user data and headers
+        HttpEntity<UserRequest> requestEntity = new HttpEntity<>(userRequest, headers);
         ResponseEntity<Void> response = restTemplate.exchange(
                 url, HttpMethod.POST, requestEntity, Void.class
         );
@@ -76,7 +82,13 @@ public class UserService {
     public boolean updateUser(UserRequest userRequest) {
         String userCode = userRequest.getUserCode();
         String url = apiGatewayUrl + BASE_PATH + "?userCode=" + userCode;
-        HttpEntity<UserRequest> requestEntity = new HttpEntity<>(userRequest);
+
+        // Add token to the header
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(tokenService.getToken());  // Add Bearer token
+
+        // Create the HttpEntity with the user data and headers
+        HttpEntity<UserRequest> requestEntity = new HttpEntity<>(userRequest, headers);
         ResponseEntity<Void> response = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Void.class);
 
         // Print the response status code for debugging
@@ -91,8 +103,11 @@ public class UserService {
     public boolean deleteUser(String userCode) {
         String url = apiGatewayUrl + BASE_PATH + "?userCode=" + userCode;
 
+        // Add token to the header
         HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(tokenService.getToken());
+        headers.setBearerAuth(tokenService.getToken());  // Add Bearer token
+
+        // Create HttpEntity with the header
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
         ResponseEntity<Void> response = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class);

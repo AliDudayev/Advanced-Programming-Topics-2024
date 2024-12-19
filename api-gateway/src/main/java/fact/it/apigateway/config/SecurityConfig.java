@@ -17,21 +17,27 @@ public class SecurityConfig {
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity serverHttpSecurity) {
         serverHttpSecurity
                 .authorizeExchange(exchange ->
+                        // Allow GET requests for all resources without token
                         exchange.pathMatchers(HttpMethod.GET, "/user/**", "/workout/**", "/record/**", "/health/**")
-                                .permitAll()  // Allow GET requests for all resources without token
+                                .permitAll()
+
+                                // Require authentication for POST, PUT, and DELETE requests
                                 .pathMatchers(HttpMethod.POST, "/user/**", "/workout/**", "/record/**", "/health/**")
-                                .permitAll()  // Allow POST requests for all resources without token
+                                .authenticated()  // Requires token for POST
+
                                 .pathMatchers(HttpMethod.PUT, "/user/**", "/workout/**", "/record/**", "/health/**")
-                                .permitAll()  // Allow PUT requests for all resources without token
+                                .authenticated()  // Requires token for PUT
+
                                 .pathMatchers(HttpMethod.DELETE, "/user/**", "/workout/**", "/record/**", "/health/**")
-                                .authenticated()  // Require token for DELETE requests
+                                .authenticated()  // Requires token for DELETE
+
+                                // Default: Authenticate all other requests
                                 .anyExchange()
-                                .authenticated()  // Default: Authenticate all other requests
+                                .authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(withDefaults())
+                        .jwt(withDefaults())  // JWT authentication for token validation
                 );
         return serverHttpSecurity.build();
     }
-
 }

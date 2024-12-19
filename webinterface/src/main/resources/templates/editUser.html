@@ -9,35 +9,55 @@
 <h1>Edit User</h1>
 
 <form action="/users/update" method="post">
-<!--    <div>-->
-<!--        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
-<!--    </div>-->
+    <!-- Hidden field for CSRF token, uncomment if needed -->
+    <!-- <div>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    </div> -->
+
+    <!-- Hidden field for userCode -->
     <div>
         <input type="hidden" name="userCode" th:value="${user.userCode}">
     </div>
+
     <div>
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" th:value="${user.name}" required />
     </div>
+
     <div>
         <label for="age">Age:</label>
-        <input type="text" id="age" name="age" th:value="${user.age}" required />
+        <input type="number" id="age" name="age" th:value="${user.age}" required />
     </div>
+
     <div>
         <label for="height">Height:</label>
         <input type="text" id="height" name="height" th:value="${user.height}" required />
     </div>
+
     <div>
         <label for="weight">Weight:</label>
         <input type="text" id="weight" name="weight" th:value="${user.weight}" required />
     </div>
+
     <div>
         <label for="fitnessGoals">Fitness Goals:</label>
         <input type="text" id="fitnessGoals" name="fitnessGoals" th:value="${user.fitnessGoals}" required />
     </div>
+
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" th:value="${user.email}" required />
+    </div>
+
+    <div>
+        <label for="male">Male:</label>
+        <input type="hidden" name="male" value="false"> <!-- Default value if checkbox is not checked -->
+        <input type="checkbox" id="male" name="male" th:checked="${user.male}" value="true" />
+    </div>
+
     <button type="submit">Update User</button>
 </form>
 
-<a href="/users"><button>Cancel</button></a>
+<a href="/users"><button type="button">Cancel</button></a>
 </body>
 </html>
