@@ -19,14 +19,16 @@ public class HealthService {
 
     // add these to the builder below
     public void createHealth(HealthRequest healthRequest){
-        Health health = Health.builder()
-                .workoutCode(healthRequest.getWorkoutCode())
-                .recoveryHeartRate(healthRequest.getRecoveryHeartRate())
-                .bloodPressure(healthRequest.getBloodPressure())
-                .caloriesBurned(healthRequest.getCaloriesBurned())
-                .oxygenSaturation(healthRequest.getOxygenSaturation())
-                .build();
-        healthRepository.save(health);
+        if (healthRepository.findByWorkoutCode(healthRequest.getWorkoutCode()) == null) {
+            Health health = Health.builder()
+                    .workoutCode(healthRequest.getWorkoutCode())
+                    .recoveryHeartRate(healthRequest.getRecoveryHeartRate())
+                    .bloodPressure(healthRequest.getBloodPressure())
+                    .caloriesBurned(healthRequest.getCaloriesBurned())
+                    .oxygenSaturation(healthRequest.getOxygenSaturation())
+                    .build();
+            healthRepository.save(health);
+        }
     }
     public List<HealthResponse> getAllHealths() {
         List<Health> health = healthRepository.findAll();
