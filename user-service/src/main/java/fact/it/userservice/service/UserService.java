@@ -185,6 +185,7 @@ public class UserService {
         return UserResponse.builder()
                 .id(user.getId())
                 .name(user.getName())
+                .age(user.getAge())
                 .userCode(user.getUserCode())
                 .height(user.getHeight())
                 .weight(user.getWeight())
