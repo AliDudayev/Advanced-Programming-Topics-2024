@@ -50,9 +50,9 @@
     </div>
 
     <div>
-        <label for="male">Male:</label>
-        <input type="hidden" name="male" value="false"> <!-- Default value if checkbox is not checked -->
-        <input type="checkbox" id="male" name="male" th:checked="${user.male}" value="true" />
+        <label>Male:</label>
+        <input type="radio" id="male" name="male" th:value="true" th:checked="${user.male == true}" /> Yes
+        <input type="radio" id="noMale" name="male" th:value="false" th:checked="${user.male == false}" /> No
     </div>
 
     <button type="submit">Update User</button>
