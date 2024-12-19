@@ -24,8 +24,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final WebClient webClient;
 
-//    private final UUIDGenerator uuidGenerator;
-
     @Value("${recordService.baseurl}")
     private String recordServiceUrl;
 
@@ -61,7 +59,6 @@ public class UserService {
         createRecord(user.getUserCode(), recordResponse);
     }
 
-    // Get user by code --> Klaar
     public UserResponse getUserByCode(String userCode) {
         if(userRepository.findByUserCode(userCode) != null) {
             User user = userRepository.findByUserCode(userCode);
@@ -70,7 +67,6 @@ public class UserService {
         return null;
     }
 
-    // Get all users --> Klaar
     public List<UserResponse> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream()
@@ -78,7 +74,6 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    // Save the updated user --> Klaar
     public void updateUser(String userCode, UserRequest userRequest) {
         if(userRepository.findByUserCode(userCode) != null)
         {
@@ -97,7 +92,6 @@ public class UserService {
         }
     }
 
-    // Delete user by code --> Klaar
     public UserResponse deleteUser(String userCode) {
         if (userRepository.findByUserCode(userCode) != null) {
             User user = userRepository.findByUserCode(userCode);
@@ -109,13 +103,10 @@ public class UserService {
         return null;
     }
 
-    // get record of specific user --> Klaar
     public RecordResponse getRecordOfUser(String userCode) {
 
         RecordResponse recordResponse = webClient.get()
                 .uri(recordServiceUrl + "/api/record?userCode=" + userCode)
-//                .uri(recordServiceUrl + "/api/record",
-//                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
                 .retrieve()
                 .bodyToMono(RecordResponse.class)
                 .block();
@@ -123,7 +114,6 @@ public class UserService {
         return recordResponse;
     }
 
-    // get all records --> Klaar
     public List<RecordResponse> getAllRecords() {
         return webClient.get()
                 .uri(recordServiceUrl + "/api/record/all")
@@ -133,49 +123,37 @@ public class UserService {
                 .block();
     }
 
-    // Change a record of a specific user --> Klaar
     public void updateRecord(String userCode, RecordResponse recordResponse) {
 
         webClient.put()
                 .uri(recordServiceUrl + "/api/record?userCode=" + userCode)
-//                .uri(recordServiceUrl + "/api/record",
-//                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
                 .bodyValue(recordResponse)
                 .retrieve()
                 .bodyToMono(Void.class)
                 .block();
     }
 
-    // create a record for a specific user
     public void createRecord(String userCode, RecordResponse recordResponse) {
         webClient.post()
                 .uri(recordServiceUrl + "/api/record?userCode=" + userCode)
-//                .uri(recordServiceUrl + "/api/record",
-//                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
                 .bodyValue(recordResponse)
                 .retrieve()
                 .bodyToMono(Void.class)
                 .block();
     }
 
-    // delete a record of a specific user
     public void deleteRecord(String userCode) {
 
         webClient.delete()
                 .uri(recordServiceUrl + "/api/record?userCode=" + userCode)
-//                .uri(recordServiceUrl + "/api/record",
-//                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
                 .retrieve()
                 .bodyToMono(Void.class)
                 .block();
     }
 
-    // get all workouts
     public List<WorkoutResponse> getAllWorkoutsFromUser(String userCode) {
         return webClient.get()
-                .uri(recordServiceUrl + "/api/record?userCode=" + userCode)
-//                .uri(workoutServiceUrl + "/api/workout/user",
-//                        uriBuilder -> uriBuilder.queryParam("userCode", userCode).build())
+                .uri(workoutServiceUrl + "/api/workout/user?userCode=" + userCode)
                 .retrieve()
                 .bodyToFlux(WorkoutResponse.class)
                 .collectList()
