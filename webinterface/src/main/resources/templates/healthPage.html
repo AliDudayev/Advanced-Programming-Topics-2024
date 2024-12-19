@@ -10,8 +10,14 @@
 <!-- Add Health Record Form -->
 <h2>Add New Health Record</h2>
 <form th:action="@{/health/add}" method="post">
-    <label for="workoutCodeForm">Workout Code:</label>
-    <input type="text" id="workoutCodeForm" name="workoutCode" required><br>
+    <label for="workoutCode">workoutCode:</label>
+    <select name="workoutCode" id="workoutCode" required>
+        <option value="">Select your workout</option>
+        <option th:each="workout : ${workouts}"
+                th:text="${workout.getName()}"
+                th:value="${workout.getWorkoutCode()}">
+        </option>
+    </select><br>
     <label for="recoveryHeartRate">Recovery Heart Rate:</label>
     <input type="text" id="recoveryHeartRate" name="recoveryHeartRate"><br>
     <label for="bloodPressure">Blood Pressure:</label>
@@ -46,7 +52,7 @@
         <td th:text="${health.caloriesBurned}"></td>
         <td th:text="${health.oxygenSaturation}"></td>
         <td>
-            <a th:href="@{/health/update(workoutCode=${health.workoutCode})}">
+            <a th:href="@{/health/edit(workoutCode=${health.workoutCode})}">
                 <button>Edit</button>
             </a>
         </td>

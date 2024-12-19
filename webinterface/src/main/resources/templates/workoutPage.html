@@ -10,7 +10,7 @@
 <!-- Filter Workouts by User -->
 <h2>Filter Workouts by User Code</h2>
 <form th:action="@{/workouts/user{userCode}(userCode=${userCode})}" method="get">
-    <label for="userCode">User Code:</label>
+    <label for="userCode">User Code: (type "*" to get everything)</label>
     <input type="text" id="userCode" name="userCode" required><br>
     <button type="submit">Filter Workouts</button>
 </form>
@@ -22,7 +22,6 @@
     <tr>
         <th>Workout Code</th>
         <th>Name</th>
-        <th>Date</th>
         <th>Duration</th>
         <th>Sets</th>
         <th>Reps</th>
@@ -38,7 +37,6 @@
     <tr th:each="workout : ${workouts}">
         <td th:text="${workout.workoutCode}"></td>
         <td th:text="${workout.name}"></td>
-        <td th:text="${workout.date}"></td>
         <td th:text="${workout.duration}"></td>
         <td th:text="${workout.sets}"></td>
         <td th:text="${workout.reps}"></td>
@@ -55,12 +53,16 @@
 <!-- Add Workout Form -->
 <h2>Add New Workout</h2>
 <form th:action="@{/workouts/add}" method="post">
-    <label for="userCodeAdd">User Code:</label>
-    <input type="text" id="userCodeAdd" name="userCodeAdd" required><br>
+    <label for="userCode">User Code:</label>
+    <select name="userCode" required>
+        <option value="">Select your profile</option>
+        <option th:each="user : ${users}"
+                th:text="${user.getUserCode()}"
+                th:value="${user.getUserCode()}">
+        </option>
+    </select><br>
     <label for="name">Name:</label>
     <input type="text" id="name" name="name"><br>
-    <label for="date">Date:</label>
-    <input type="text" id="date" name="date"><br>
     <label for="duration">Duration:</label>
     <input type="text" id="duration" name="duration"><br>
     <label for="sets">Sets:</label>

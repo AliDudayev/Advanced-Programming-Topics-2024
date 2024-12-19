@@ -41,10 +41,10 @@ public class WorkoutService {
 
     // Get a specific workout by userCode
     public List<WorkoutRequest> getWorkoutByUserCode(String userCode) {
-        String url = apiGatewayUrl + BASE_PATH + "?userCode=" + userCode;
+        String url = apiGatewayUrl + BASE_PATH + "/user?userCode=" + userCode;
+        System.out.println(url);
         List<?> response = restTemplate.getForObject(url, List.class);
 
-        System.out.println(url);
         System.out.println(response);
 
         // Use ObjectMapper to convert the response into a UserRequest object
@@ -70,6 +70,7 @@ public class WorkoutService {
         // Print the response status code for debugging
         System.out.println(url);
         System.out.println(response.getStatusCode());
+        System.out.println(response.getBody());
 
         // Check for HttpStatus.OK (200)
         return response.getStatusCode() == HttpStatus.OK;

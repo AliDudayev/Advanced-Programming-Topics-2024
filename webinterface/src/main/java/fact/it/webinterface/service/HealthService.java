@@ -38,21 +38,31 @@ public class HealthService {
     }
 
     // Create a new health
-    public Object createHealth(Object healthRequest) {
+    public boolean createHealth(HealthRequest healthRequest) {
         String url = apiGatewayUrl + BASE_PATH;
-        HttpEntity<Object> requestEntity = new HttpEntity<>(healthRequest);
-        ResponseEntity<Object> response = restTemplate.exchange(
-                url, HttpMethod.POST, requestEntity, Object.class
+        System.out.println(url);
+        HttpEntity<HealthRequest> requestEntity = new HttpEntity<>(healthRequest);
+        ResponseEntity<Void> response = restTemplate.exchange(
+                url, HttpMethod.POST, requestEntity, Void.class
         );
-        return response.getBody();
+        System.out.println(response.getBody());
+        System.out.println(response.getStatusCode());
+        return response.getStatusCode() == HttpStatus.OK;
     }
 
     // Update a health
-    public void updateHealth(Object healthRequest) {
-        String workoutCode = ((HealthRequest) healthRequest).getWorkoutCode();
+    public boolean updateHealth(HealthRequest healthRequest) {
+        String workoutCode = healthRequest.getWorkoutCode();
         String url = apiGatewayUrl + BASE_PATH + "?workoutCode=" + workoutCode;
-        HttpEntity<Object> requestEntity = new HttpEntity<>(healthRequest);
-        restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Void.class);
+        System.out.println(url);
+        HttpEntity<HealthRequest> requestEntity = new HttpEntity<>(healthRequest);
+        ResponseEntity<Void> response = restTemplate.exchange(
+                url, HttpMethod.PUT, requestEntity, Void.class
+        );
+        System.out.println(response.getBody());
+        System.out.println(response.getStatusCode());
+
+        return response.getStatusCode() == HttpStatus.OK;
     }
 
 }

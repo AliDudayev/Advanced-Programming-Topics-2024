@@ -40,7 +40,7 @@ public class UserController {
             @RequestParam String email) {
 
         String id = String.valueOf(System.currentTimeMillis());
-        String userCode = "U" + id;
+        String userCode = name; // will be changed in backend
         UserRequest userRequest = new UserRequest(id, userCode, name, age, male, height, weight, fitnessGoals, email);
         userService.createUser(userRequest);
 

@@ -5,28 +5,9 @@
     <title>Records</title>
 </head>
 <body>
-<h1>Records</h1>
-
-<!-- Add Record Form -->
-<h2>Add New Record</h2>
-<form th:action="@{/records/add}" method="post">
-    <label for="userCode">User Code:</label>
-    <input type="text" id="userCode" name="userCode" required><br>
-    <label for="fastestTime">Fastest Time:</label>
-    <input type="text" id="fastestTime" name="fastestTime"><br>
-    <label for="longestDistance">Longest Distance:</label>
-    <input type="text" id="longestDistance" name="longestDistance"><br>
-    <label for="maxWeightLifted">Max Weight Lifted:</label>
-    <input type="text" id="maxWeightLifted" name="maxWeightLifted"><br>
-    <label for="longestWorkoutDuration">Longest Workout Duration:</label>
-    <input type="text" id="longestWorkoutDuration" name="longestWorkoutDuration"><br>
-    <label for="mostCaloriesBurned">Most Calories Burned:</label>
-    <input type="text" id="mostCaloriesBurned" name="mostCaloriesBurned"><br>
-    <button type="submit">Add Record</button>
-</form>
-
-<!-- Records Table -->
-<h2>All Records</h2>
+<h1>All Records</h1>
+<p>Records are auto created when a new user is added and auto updated when a new workout is added to make sure your personal records are up to date.</p>
+<p>When a user is deleted, his/here records are also deleted.</p>
 <table>
     <thead>
     <tr>
@@ -36,7 +17,6 @@
         <th>Max Weight Lifted</th>
         <th>Longest Workout Duration</th>
         <th>Most Calories Burned</th>
-        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -47,14 +27,6 @@
         <td th:text="${record.maxWeightLifted}"></td>
         <td th:text="${record.longestWorkoutDuration}"></td>
         <td th:text="${record.mostCaloriesBurned}"></td>
-        <td>
-            <a th:href="@{/records/update(userCode=${record.userCode})}">
-                <button>Edit</button>
-            </a>
-            <form th:action="@{/records/delete(userCode=${record.userCode})}" method="post" style="display: inline;">
-                <button type="submit">Delete</button>
-            </form>
-        </td>
     </tr>
     </tbody>
 </table>

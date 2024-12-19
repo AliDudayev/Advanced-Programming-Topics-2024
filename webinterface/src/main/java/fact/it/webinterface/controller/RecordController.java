@@ -13,12 +13,10 @@ import org.springframework.web.bind.annotation.*;
 public class RecordController {
 
     private final RecordService recordService;
-    private final TokenService tokenService;
 
     @Autowired
-    public RecordController(RecordService recordService, TokenService tokenService) {
+    public RecordController(RecordService recordService) {
         this.recordService = recordService;
-        this.tokenService = tokenService;
     }
 
     // Get all records
@@ -26,42 +24,5 @@ public class RecordController {
     public String getAllRecords(Model model) {
         model.addAttribute("records", recordService.getAllRecords());
         return "recordPage";
-    }
-
-    // Get records by user
-    @GetMapping("/user")
-    public String getRecordsByUser(@RequestParam("userCode") String userCode, Model model) {
-        model.addAttribute("records", recordService.getRecord(userCode));
-        return "recordPage";
-    }
-
-    // Add a new record
-    @PostMapping("/add")
-    public String addRecord(@RequestBody RecordRequest recordRequest, Model model) {
-        recordService.createRecord(recordRequest);
-        model.addAttribute("message", "Record created successfully!");
-        return "redirect:/records";
-    }
-
-    // Update an existing record
-    @PostMapping("/update")
-    public String updateRecord(@RequestBody RecordRequest recordRequest, Model model) {
-        recordService.updateRecord(recordRequest);
-        model.addAttribute("message", "Record updated successfully!");
-        return "redirect:/records";
-    }
-
-    // Delete a record
-    @PostMapping("/delete/{userCode}")
-    public String deleteRecord(@PathVariable String userCode, Model model) {
-        String token = tokenService.getToken();
-        if (token == null) {
-            return "redirect:/error";
-        }
-        else {
-            recordService.deleteRecord(userCode);
-            model.addAttribute("message", "Record deleted successfully!");
-            return "redirect:/records";
-        }
     }
 }
