@@ -24,9 +24,6 @@ public class Workout {
     @Column(nullable = false)  // 'name' is a required field
     private String name;
 
-    @Column(nullable = true)  // Optional 'date' field
-    private LocalDate date;
-
     @Column(nullable = true)  // Optional 'duration' field
     private String duration;
 

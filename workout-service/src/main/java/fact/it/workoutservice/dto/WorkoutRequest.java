@@ -14,7 +14,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class WorkoutRequest {
     private String name;
-    private LocalDate date;
     private String duration;
     private String sets;
     private String reps;

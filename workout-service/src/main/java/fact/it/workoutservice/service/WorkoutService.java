@@ -69,10 +69,7 @@ public class WorkoutService {
 
         String workoutCode;
 
-        do {
-            workoutCode = workoutRequest.getWorkoutCode() + "-" + UUID.randomUUID().toString().substring(0, 5);
-        } while (workoutRepository.findByWorkoutCode(workoutCode) != null);
-
+        workoutCode = workoutRequest.getWorkoutCode() + "-" + UUID.randomUUID().toString().substring(0, 5);
 
         Workout workout = Workout.builder()
                 .name(workoutRequest.getName())

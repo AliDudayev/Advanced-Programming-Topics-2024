@@ -15,7 +15,6 @@ import java.util.Date;
 public class WorkoutResponse {
     private String id;
     private String name;
-    private LocalDate date;
     private String duration;
     private String sets;
     private String reps;

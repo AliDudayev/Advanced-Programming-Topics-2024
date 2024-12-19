@@ -1,5 +1,6 @@
 package fact.it.userservice.service;
 
+import fact.it.userservice.WebClient.WebClientService;
 import fact.it.userservice.dto.RecordResponse;
 import fact.it.userservice.dto.UserRequest;
 import fact.it.userservice.dto.UserResponse;
@@ -23,6 +24,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final WebClient webClient;
+    private final WebClientService webClientService;  // Inject WebClientService
 
 //    private final UUIDGenerator uuidGenerator;
 
@@ -58,7 +60,8 @@ public class UserService {
                 .mostCaloriesBurned(0.0)
                 .build();
 
-        createRecord(user.getUserCode(), recordResponse);
+//        createRecord(user.getUserCode(), recordResponse);
+        webClientService.createRecord(user.getUserCode(), recordResponse);
     }
 
     // Get user by code --> Klaar
