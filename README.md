@@ -49,7 +49,7 @@ The system's deployment diagram illustrates the integration of various microserv
 
 ## Services and Endpoints
 
-### **All Endpoints (some are not in the gateway as they function internally)**
+### **All Endpoints**
 
 #### Health Service
 - **GET** `/health/all` -> Get all health records
