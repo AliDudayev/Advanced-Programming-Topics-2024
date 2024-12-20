@@ -36,8 +36,6 @@ public class WorkoutService {
 
         return webClient.get()
                 .uri(healthServiceBaseUrl + "/api/health?workoutCode=" + workoutCode)
-//                .uri("http://" + healthServiceBaseUrl + "/api/health",
-//                        uriBuilder -> uriBuilder.queryParam("workoutCode", workoutCode).build())
                 .retrieve()
                 .bodyToMono(HealthResponse.class)
                 .block();
@@ -69,8 +67,6 @@ public class WorkoutService {
 
         RecordResponse recordResponse = webClient.get()
                 .uri(recordServiceBaseUrl + "/api/record?userCode=" + workoutRequest.getUserCode())
-//                .uri( recordServiceBaseUrl + "/api/record",
-//                        uriBuilder -> uriBuilder.queryParam("userCode", workoutRequest.getUserCode()).build())
                 .retrieve()
                 .bodyToMono(RecordResponse.class)
                 .block();
@@ -81,8 +77,8 @@ public class WorkoutService {
         Double longestWorkoutDuration = recordResponse.getLongestWorkoutDuration();
         Double mostCaloriesBurned = recordResponse.getMostCaloriesBurned();
 
-        double newFastestTime = 0;
-        double newCaloriesBurned = 0;
+        double newFastestTime;
+        double newCaloriesBurned;
 
         if(workout.getDistance() != null && workout.getSpeed() != null )
         {
@@ -113,8 +109,6 @@ public class WorkoutService {
         {
             UserResponse userResponse = webClient.get()
                     .uri(userServiceBaseUrl + "/api/user?userCode=" + workout.getUserCode())
-//                        .uri(userServiceBaseUrl + "/api/user",
-//                                uriBuilder -> uriBuilder.queryParam("userCode", workout.getUserCode()).build())
                     .retrieve()
                     .bodyToMono(UserResponse.class)
                     .block();
@@ -159,8 +153,6 @@ public class WorkoutService {
 
         webClient.put()
                 .uri(recordServiceBaseUrl + "/api/record?userCode=" + workout.getUserCode())
-//                    .uri( recordServiceBaseUrl + "/api/record",
-//                            uriBuilder -> uriBuilder.queryParam("userCode", workout.getUserCode()).build())
                 .bodyValue(newRecordResponse)
                 .retrieve()
                 .bodyToMono(Void.class)
