@@ -1,6 +1,6 @@
 # Advanced-Programming-Topics-2024
 
-This project allows users to track their fitness journey by logging personal progress and viewing detailed statistics over time. The system provides users with an easy way to monitor their health-related activities, track goals, and visualize their achievements.
+This project allows users to track their fitness journey by logging personal progress and viewing detailed statistics over time. The system provides users with an easy way to monitor their health-related activities, track workouts, and visualize their personal records.
 
 ## Contributors
 - **Magomed-Ali Dudayev**: [AliDudayev](https://github.com/AliDudayev)
