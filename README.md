@@ -121,7 +121,7 @@ In the image below, you can see how our docker compose file is structured to bui
    Navigate to `http://localhost:8086` in your web browser.
    Note, not all endpoints are available in the webbrowser. Only the ones that support the goal of our webinterface are integrated, all others can be reached via Postman though.
 
-5. **Getting a valid token for authentication**
+5. **Getting a valid token for authentication:**
    Open Postman an make a new request, in the `authorization tab` select `OAuth 2.0`.
    
    ![afbeelding](https://github.com/user-attachments/assets/76de8dc8-cf6c-4b49-957c-6ceefc71590a)
