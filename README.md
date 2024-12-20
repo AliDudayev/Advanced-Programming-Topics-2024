@@ -75,7 +75,7 @@ The system's deployment diagram illustrates the integration of various microserv
 - **OAuth2**: Used for secure authentication and authorization.
 
 ### Frontend
-- **Web Interface**: A Spring Boot framework with Thymeleaf for user interaction.
+- **Web Interface**: A Spring Web framework with Thymeleaf for user interaction.
 
 ### Databases
 - **MySQL**: Used for the `health-service` and `workout-service`.
