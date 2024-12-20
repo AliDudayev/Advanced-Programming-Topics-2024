@@ -90,7 +90,7 @@ The system's deployment diagram illustrates the integration of various microserv
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-username/Advanced-Programming-Topics-2024.git
+   git clone https://github.com/AliDudayev/Advanced-Programming-Topics-2024.git
    cd Advanced-Programming-Topics-2024
    ```
 
