@@ -58,8 +58,8 @@ The system's deployment diagram illustrates the integration of various microserv
 - **PUT** `/health` -> Update a health record
 
 #### Record Service
-- **GET** `api/record/all` -> Get all records
-- **GET** `api/record` -> Get a record
+- **GET** `/record/all` -> Get all records
+- **GET** `/record` -> Get a record
 - **POST** `/record` -> Save a record
 - **PUT** `/record` -> Update a record
 - **DELETE** `/record` -> Delete a record
