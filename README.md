@@ -89,7 +89,7 @@ The system's deployment diagram illustrates the integration of various microserv
 
 In the image below, you can see how our docker compose file is structured to build the entire setup.
 
-![Docker Compose]()
+![Deployment Diagram](Docker_Compose.drawio.png)
 
 ---
 
