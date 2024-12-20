@@ -63,7 +63,7 @@ public class RecordService {
 
             return;
         }
-
+ 
         record.setFastestTime(recordRequest.getFastestTime());
         record.setLongestDistance(recordRequest.getLongestDistance());
         record.setMaxWeightLifted(recordRequest.getMaxWeightLifted());
