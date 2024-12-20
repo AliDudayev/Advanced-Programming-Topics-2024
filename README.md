@@ -115,7 +115,17 @@ The system's deployment diagram illustrates the integration of various microserv
    Note, not all endpoints are available in the webbrowser. Only the ones that support the goal of our webinterface are integrated, all others can be reached via Postman though.
 
 5. **Getting a valid token for authentication**
+   Open Postman an make a new request, in the `authorization tab` select `OAuth 2.0`.
+   ![afbeelding](https://github.com/user-attachments/assets/76de8dc8-cf6c-4b49-957c-6ceefc71590a)
+
+   After this scroll down to `configure new token` and fill in the following URLs and credentials. Note, you will need to first setup OAuth2 in your Google project to get these URLs and credentials.
+   ![afbeelding](https://github.com/user-attachments/assets/229f95ed-90d6-432d-a9d6-ca32b59273ab)
+
+   Finally press on the `Get new access token` button at the bottom to get your token.
+   ![afbeelding](https://github.com/user-attachments/assets/e7929e96-9757-47c8-ab39-609971ca8ab3)
+
    
+
 
 ---
 
