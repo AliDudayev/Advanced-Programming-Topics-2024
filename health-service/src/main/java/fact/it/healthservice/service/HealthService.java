@@ -55,6 +55,9 @@ public class HealthService {
     }
 
     public void updateHealth(String workoutCode, HealthRequest healthRequest) {
+        if(healthRepository.findByWorkoutCode(workoutCode) == null){
+            return;
+        }
         Health health = healthRepository.findByWorkoutCode(workoutCode);
         health.setRecoveryHeartRate(healthRequest.getRecoveryHeartRate());
         health.setBloodPressure(healthRequest.getBloodPressure());
