@@ -10,12 +10,9 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 
@@ -170,5 +166,25 @@ class HealthServiceApplicationTests {
         assertEquals("130/90", oldHealth.getBloodPressure());
         assertEquals("600", oldHealth.getCaloriesBurned());
         assertEquals("99", oldHealth.getOxygenSaturation());
+    }
+
+    @Test
+    @Order(6)
+    void updateHealth_NotExistingHealthRecord_DoesNotUpdate() {
+        // Arrange
+        HealthRequest health = HealthRequest.builder()
+                .recoveryHeartRate("70")
+                .bloodPressure("130/90")
+                .caloriesBurned("600")
+                .oxygenSaturation("99")
+                .build();
+
+        when(healthRepository.findByWorkoutCode("TestWorkout128")).thenReturn(null);
+
+        // Act
+        healthService.updateHealth("TestWorkout128", health);
+
+        // Assert
+        verify(healthRepository, times(0)).save(any());
     }
 }

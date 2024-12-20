@@ -39,21 +39,6 @@ public class WorkoutService {
     private final WorkoutRepository workoutRepository;
     private final WebClient webClient;
 
-//    public HealthResponse getHealthData(String workoutCode) {
-//
-//                HealthResponse[] healthResponseArray = webClient.get()
-//                .uri("http://" + healthServiceBaseUrl + "/api/health",
-//                        uriBuilder -> uriBuilder.queryParam("workoutCode", workoutCode).build())
-//                .retrieve()
-//                .bodyToMono(HealthResponse[].class)
-//                .block();
-//                assert healthResponseArray != null;
-//                if (healthResponseArray.length == 0) {
-//                    return null;
-//                }
-//                return healthResponseArray[0];
-//    }
-
     public HealthResponse getHealthData(String workoutCode) {
 
         return webClient.get()
@@ -118,7 +103,7 @@ public class WorkoutService {
 
 //        if (recordResponse != null) {
 
-            if(workout.getDistance() != null || workout.getSpeed() != null)
+            if(workout.getDistance() != null && workout.getSpeed() != null)
             {
 
                 newFastestTime = Double.parseDouble(workout.getDistance()) / Double.parseDouble(workout.getSpeed());
@@ -143,7 +128,7 @@ public class WorkoutService {
                 longestWorkoutDuration = Double.parseDouble(workout.getDuration());
             }
 
-            if(workout.getDistance() != null && workout.getSpeed() != null)
+            if(workout.getDistance() != null && workout.getSpeed() != null && workout.getDuration() != null)
             {
                 UserResponse userResponse = webClient.get()
                         .uri(userServiceBaseUrl + "/api/user?userCode=" + workout.getUserCode())
