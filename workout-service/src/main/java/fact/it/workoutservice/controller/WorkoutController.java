@@ -18,7 +18,7 @@ public class WorkoutController {
 
     private final WorkoutService workoutService;
 
-    @PostMapping
+    @PostMapping    
     @ResponseStatus(HttpStatus.OK)
     public void createWorkout
             (@RequestBody WorkoutRequest workoutRequest) {
