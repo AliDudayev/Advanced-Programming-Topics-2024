@@ -47,23 +47,23 @@ The system's deployment diagram illustrates the integration of various microserv
 
 #### User Service
 - **GET** `/user/all` -> Get all users
-- **GET** `/user` -> Get user details
-- **POST** `/user` -> Save user details
-- **PUT** `/user` -> Update user details
-- **DELETE** `/user` -> Delete user
-- **GET** `/user/record` -> Get a user record
-- **GET** `/user/record/all` -> Get all user records
-- **POST** `/user/record` -> Save a user record
-- **PUT** `/user/record` -> Update a user record
-- **DELETE** `/user/record` -> Delete a user record
-- **GET** `/user/workout` -> Get user workouts
+- **GET** `/user` -> Get a user
+- **POST** `/user` -> Save a user
+- **PUT** `/user` -> Update a user
+- **DELETE** `/user` -> Delete a user
+- **GET** `/user/record` -> Get the record of a user (from record-service)
+- **GET** `/user/record/all` -> Get all records (from record-service)
+- **POST** `/user/record` -> Save a record of a user (in record-service)
+- **PUT** `/user/record` -> Update a record of a user (in record-service)
+- **DELETE** `/user/record` -> Delete a record of a user (in record-service)
+- **GET** `/user/workout` -> Get all workouts from a user (from workout-service)
 
 #### Workout Service
 - **GET** `/workout/all` -> Get all workouts
-- **GET** `/workout` -> Get workout details
-- **POST** `/workout` -> Save workout details
+- **GET** `/workout` -> Get a workout
+- **POST** `/workout` -> Save a workout
 - **GET** `/workout/user` -> Get workouts by user
-- **GET** `/workout/health` -> Get workouts related to health
+- **GET** `/workout/health` -> Get health record of a workout (from health-service)
 
 ---
 
