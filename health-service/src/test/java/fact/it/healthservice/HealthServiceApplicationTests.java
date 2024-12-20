@@ -1,6 +1,7 @@
 package fact.it.healthservice;
 
 import fact.it.healthservice.dto.HealthRequest;
+import fact.it.healthservice.dto.HealthResponse;
 import fact.it.healthservice.repository.HealthRepository;
 import fact.it.healthservice.service.HealthService;
 import fact.it.healthservice.model.Health;
@@ -8,27 +9,38 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
+import java.util.List;
 
-@SpringBootTest
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
+
+@ExtendWith(MockitoExtension.class)
 @TestMethodOrder(OrderAnnotation.class)
 class HealthServiceApplicationTests {
 
-    @Autowired
+    @InjectMocks
     private HealthService healthService;
-    @Autowired
+
+    @Mock
     private HealthRepository healthRepository;
 
     @Test
-    void contextLoads() {
-    }
-
-    @Test
     @Order(1)
-    public void testCreateHealth() {
+    void createHealth_NewHealth_SavesSuccessfully() {
+        // Arrange
         HealthRequest healthRequest = HealthRequest.builder()
                 .workoutCode("TestWorkout126")
                 .recoveryHeartRate("60")
@@ -36,72 +48,127 @@ class HealthServiceApplicationTests {
                 .caloriesBurned("500")
                 .oxygenSaturation("98")
                 .build();
+
+        when(healthRepository.findByWorkoutCode(anyString())).thenReturn(null);
+
+        // Act
         healthService.createHealth(healthRequest);
 
-        Health health = healthRepository.findByWorkoutCode("TestWorkout126");
-
-        assertEquals("TestWorkout126", health.getWorkoutCode());
-        assertEquals("60", health.getRecoveryHeartRate());
-        assertEquals("120/80", health.getBloodPressure());
-        assertEquals("500", health.getCaloriesBurned());
-        assertEquals("98", health.getOxygenSaturation());
+        // Assert
+        verify(healthRepository, times(1)).save(any(Health.class));
     }
 
     @Test
     @Order(2)
-    public void testGetHealthByWorkoutCode() {
+    void createHealth_HealthAlreadyExists_DoesNotSaveAgain() {
+        // Arrange
         HealthRequest healthRequest = HealthRequest.builder()
-                .workoutCode("TestWorkout127")
+                .workoutCode("TestWorkout126")
                 .recoveryHeartRate("60")
                 .bloodPressure("120/80")
                 .caloriesBurned("500")
                 .oxygenSaturation("98")
                 .build();
+
+        Health health = Health.builder()
+                .workoutCode("TestWorkout126")
+                .recoveryHeartRate("80")
+                .bloodPressure("130/85")
+                .caloriesBurned("600")
+                .oxygenSaturation("100")
+                .build();
+
+        when(healthRepository.findByWorkoutCode(anyString())).thenReturn(health);
+
+        // Act
         healthService.createHealth(healthRequest);
 
-        assertEquals("TestWorkout127", healthService.getHealthByWorkoutCode("TestWorkout127").getWorkoutCode());
-        assertEquals("60", healthService.getHealthByWorkoutCode("TestWorkout127").getRecoveryHeartRate());
-        assertEquals("120/80", healthService.getHealthByWorkoutCode("TestWorkout127").getBloodPressure());
-        assertEquals("500", healthService.getHealthByWorkoutCode("TestWorkout127").getCaloriesBurned());
-        assertEquals("98", healthService.getHealthByWorkoutCode("TestWorkout127").getOxygenSaturation());
-        assertNull(healthService.getHealthByWorkoutCode("FakeWorkout"));
+        // Assert
+        verify(healthRepository, never()).save(any(Health.class));
     }
 
     @Test
     @Order(3)
-    public void testUpdateHealth() {
-        HealthRequest healthRequest = HealthRequest.builder()
+    void getAllHealths_ReturnsListOfHealthRecords() {
+        // Arrange
+        Health health1 = Health.builder().workoutCode("TestWorkout126")
+                .recoveryHeartRate("60")
+                .bloodPressure("120/80")
+                .caloriesBurned("500")
+                .oxygenSaturation("98")
+                .build();
+        Health health2 = Health.builder().workoutCode("TestWorkout456")
+                .recoveryHeartRate("60")
+                .bloodPressure("120/80")
+                .caloriesBurned("500")
+                .oxygenSaturation("98")
+                .build();
+
+        when(healthRepository.findAll()).thenReturn(Arrays.asList(health1, health2));
+
+        // Act
+        List<HealthResponse> result = healthService.getAllHealths();
+
+        // Assert
+        assertEquals(2, result.size());
+        assertEquals("TestWorkout126", result.get(0).getWorkoutCode());
+        assertEquals("TestWorkout456", result.get(1).getWorkoutCode());
+    }
+
+    @Test
+    @Order(4)
+    void getHealthByWorkoutCode_ExistingCode_ReturnsHealthResponse() {
+        // Arrange
+        Health health = Health.builder()
+                .workoutCode("TestWorkout126")
+                .recoveryHeartRate("60")
+                .bloodPressure("120/80")
+                .caloriesBurned("500")
+                .oxygenSaturation("98")
+                .build();
+
+        when(healthRepository.findByWorkoutCode("TestWorkout126")).thenReturn(health);
+
+        // Act
+        HealthResponse result = healthService.getHealthByWorkoutCode("TestWorkout126");
+
+        // Assert
+        assertNotNull(result);
+        assertEquals("TestWorkout126", result.getWorkoutCode());
+        assertEquals("60", result.getRecoveryHeartRate());
+        assertEquals("120/80", result.getBloodPressure());
+        assertEquals("500", result.getCaloriesBurned());
+        assertEquals("98", result.getOxygenSaturation());
+    }
+
+    @Test
+    @Order(5)
+    void updateHealth_ExistingHealthRecord_UpdatesSuccessfully() {
+        // Arrange
+        Health oldHealth = Health.builder()
                 .workoutCode("TestWorkout128")
                 .recoveryHeartRate("60")
                 .bloodPressure("120/80")
                 .caloriesBurned("500")
                 .oxygenSaturation("98")
                 .build();
-        healthService.createHealth(healthRequest);
-
-        healthRequest = HealthRequest.builder()
-                .workoutCode("TestWorkout128")
+        HealthRequest newHealthRequest = HealthRequest.builder()
                 .recoveryHeartRate("70")
                 .bloodPressure("130/90")
                 .caloriesBurned("600")
                 .oxygenSaturation("99")
                 .build();
-        healthService.updateHealth("TestWorkout128", healthRequest);
 
-        assertEquals("TestWorkout128", healthService.getHealthByWorkoutCode("TestWorkout128").getWorkoutCode());
-        assertEquals("70", healthService.getHealthByWorkoutCode("TestWorkout128").getRecoveryHeartRate());
-        assertEquals("130/90", healthService.getHealthByWorkoutCode("TestWorkout128").getBloodPressure());
-        assertEquals("600", healthService.getHealthByWorkoutCode("TestWorkout128").getCaloriesBurned());
-        assertEquals("99", healthService.getHealthByWorkoutCode("TestWorkout128").getOxygenSaturation());
+        when(healthRepository.findByWorkoutCode("TestWorkout128")).thenReturn(oldHealth);
+
+        // Act
+        healthService.updateHealth("TestWorkout128", newHealthRequest);
+
+        // Assert
+        verify(healthRepository, times(1)).save(oldHealth);
+        assertEquals("70", oldHealth.getRecoveryHeartRate());
+        assertEquals("130/90", oldHealth.getBloodPressure());
+        assertEquals("600", oldHealth.getCaloriesBurned());
+        assertEquals("99", oldHealth.getOxygenSaturation());
     }
-
-    @Test
-    @Order(4)
-    public void testGetAllHealths() {
-        assertEquals("TestWorkout126", healthService.getAllHealths().get(0).getWorkoutCode());
-        assertEquals("TestWorkout127", healthService.getAllHealths().get(1).getWorkoutCode());
-        assertEquals("TestWorkout128", healthService.getAllHealths().get(2).getWorkoutCode());
-    }
-
-
 }
