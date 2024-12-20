@@ -49,7 +49,7 @@ The system's deployment diagram illustrates the integration of various microserv
 
 ## Services and Endpoints
 
-### **All Endpoints (some are not in the gateway as they function internally**
+### **All Endpoints (some are not in the gateway as they function internally)**
 
 #### Health Service
 - **GET** `/health/all` -> Get all health records
@@ -58,8 +58,8 @@ The system's deployment diagram illustrates the integration of various microserv
 - **PUT** `/health` -> Update a health record
 
 #### Record Service
-- **GET** `/record/all` -> Get all records
-- **GET** `/record` -> Get a record
+- **GET** `api/record/all` -> Get all records
+- **GET** `api/record` -> Get a record
 - **POST** `/record` -> Save a record
 - **PUT** `/record` -> Update a record
 - **DELETE** `/record` -> Delete a record
@@ -83,7 +83,6 @@ The system's deployment diagram illustrates the integration of various microserv
 - **POST** `/workout` -> Save a workout
 - **GET** `/workout/user` -> Get workouts by user
 - **GET** `/workout/health` -> Get health record of a workout (from health-service)
-- **GET** `/workout/record` -> Get the record or a workout (from record-service)
 
 ---
 ## Docker Compose structure
