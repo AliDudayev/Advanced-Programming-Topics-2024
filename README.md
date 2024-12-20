@@ -20,6 +20,25 @@ The application consists of a microservices architecture built with Docker Compo
 
 ---
 
+## Technologies Used
+
+### Backend
+- **Spring Boot**: Framework for microservices implementation.
+- **Spring Cloud Gateway**: Handles API Gateway routing and filters.
+- **OAuth2**: Used for secure authentication and authorization.
+
+### Frontend
+- **Web Interface**: A Spring Web framework with Thymeleaf for user interaction.
+
+### Databases
+- **MySQL**: Used for the `health-service` and `workout-service`.
+- **MongoDB**: Used for the `user-service` and `record-service`.
+
+### Deployment
+- **Docker Compose**: Orchestrates multi-container Docker applications for local deployment.
+
+---
+
 ## Architecture Diagram
 
 The system's deployment diagram illustrates the integration of various microservices, their databases, and how they are connected via the API Gateway. Below is a visual representation of the architecture:
@@ -66,23 +85,11 @@ The system's deployment diagram illustrates the integration of various microserv
 - **GET** `/workout/health` -> Get health record of a workout (from health-service)
 
 ---
+## Docker Compose structure
 
-## Technologies Used
+In the image below, you can see how our docker compose file is structured to build the entire setup.
 
-### Backend
-- **Spring Boot**: Framework for microservices implementation.
-- **Spring Cloud Gateway**: Handles API Gateway routing and filters.
-- **OAuth2**: Used for secure authentication and authorization.
-
-### Frontend
-- **Web Interface**: A Spring Web framework with Thymeleaf for user interaction.
-
-### Databases
-- **MySQL**: Used for the `health-service` and `workout-service`.
-- **MongoDB**: Used for the `user-service` and `record-service`.
-
-### Deployment
-- **Docker Compose**: Orchestrates multi-container Docker applications for local deployment.
+![Docker Compose]()
 
 ---
 
