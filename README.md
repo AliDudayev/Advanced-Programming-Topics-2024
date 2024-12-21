@@ -153,13 +153,19 @@ In the image below, you can see how our docker compose file is structured to bui
 
 **User**
 GET /user/all
-(image-1.png)
+![image](https://github.com/user-attachments/assets/75d8ab3d-f962-44ea-9bd0-34cf3e2a7365)
+
 GET /user
-![image](https://github.com/user-attachments/assets/38451884-d158-4296-bdd6-2975053f58ce)
+![image](https://github.com/user-attachments/assets/9315d074-5f9d-4d3d-a72c-26e0d3931976)
+
 POST /user
-(image.png)
+![image](https://github.com/user-attachments/assets/2af1383b-7bf1-4797-bef4-cc8dcfd9621f)
+
 PUT /user
+![image](https://github.com/user-attachments/assets/8df96396-b3cc-42eb-8d03-e9c60de08bd7)
+
 DELETE /user
+![image](https://github.com/user-attachments/assets/4ea1726e-37cf-4701-b72c-7a2d280ea35a)
 
 GET /user/record/all
 GET /user/record
