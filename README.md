@@ -168,12 +168,22 @@ DELETE /user
 ![image](https://github.com/user-attachments/assets/4ea1726e-37cf-4701-b72c-7a2d280ea35a)
 
 GET /user/record/all
+![image](https://github.com/user-attachments/assets/0b695e2c-3d80-4f4e-9977-d3f5730826a8)
+
 GET /user/record
+![image](https://github.com/user-attachments/assets/5e9dc356-6232-492f-ae2b-dfbc76365dc5)
+
 POST /user/record
+![image](https://github.com/user-attachments/assets/a510994d-4aad-48a1-9817-5f55e0545b2d)
+
 PUT /user/record
+![image](https://github.com/user-attachments/assets/faaf0215-dc6f-44cc-be99-c05c43bc37b8)
+
 DELETE /user/record
+![image](https://github.com/user-attachments/assets/fbd9a5fd-329e-4ea3-9f7a-f0f403718fda)
 
 GET /user/workout
+![image](https://github.com/user-attachments/assets/18e87697-488b-4278-b1c5-cb5d3f58b5af)
 
 **Record**
 GET /record/all
@@ -186,6 +196,8 @@ DELETE /record
 GET /workout/all
 GET /workout
 POST /workout
+![image](https://github.com/user-attachments/assets/d8861959-19ad-417d-8e13-e34a0d83d14f)
+
 GET /workout/user
 GET /workout/health
 
