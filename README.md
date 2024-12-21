@@ -20,6 +20,19 @@ The application consists of a microservices architecture built with Docker Compo
 
 ---
 
+## Implemented items from assignement
+
+### Basics:
+- 4 microservices with 2x MongoDB and 2x MySQL
+- API gateway with OAuth2 secured/unsecured endpoints
+- Docker Compose deployment with Github Actions
+- Unit tests for all service classes
+
+### Extra:
+- (2.1 => 15%) Frontend in seperate container that can use the microservices via the API gateway
+
+---
+
 ## Technologies Used
 
 ### Backend
@@ -135,7 +148,4 @@ In the image below, you can see how our docker compose file is structured to bui
    ![afbeelding](https://github.com/user-attachments/assets/e7929e96-9757-47c8-ab39-609971ca8ab3)
 
 ---
-
-## Frontend
-
 
