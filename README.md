@@ -201,23 +201,35 @@ PUT /record
 ![image](https://github.com/user-attachments/assets/e490fa90-d5d7-400e-a15e-f53f2d0edc9c)
 
 DELETE /record
-![Uploading image.png…]()
+![image](https://github.com/user-attachments/assets/3e329e00-ed33-453d-9c1c-9f338d944693)
 
 **Workout**
 
 GET /workout/all
+![image](https://github.com/user-attachments/assets/d113457d-6d7f-44ea-9358-af6744543045)
+
 GET /workout
+![image](https://github.com/user-attachments/assets/776adc09-43ae-4e02-b16a-821721874b28)
+
 POST /workout
-![image](https://github.com/user-attachments/assets/d8861959-19ad-417d-8e13-e34a0d83d14f)
+![image](https://github.com/user-attachments/assets/2443ada0-a4a9-4382-a8c7-75ea1eeb59c3)
 
 GET /workout/user
-![image](https://github.com/user-attachments/assets/d33321e3-d598-4e6d-85f1-fa93e1c5eaf8)
+![image](https://github.com/user-attachments/assets/aad0fdfa-bc02-4fe9-8b9b-166684575069)
 
 GET /workout/health
 
 **Health**
 
 GET /health/all
+![image](https://github.com/user-attachments/assets/4df91bcf-13b4-495e-9dea-752f6ddceef8)
+
 GET /health
+![image](https://github.com/user-attachments/assets/c0defa27-09b8-4e76-86c1-c41b82152838)
+
 POST /health
+![image](https://github.com/user-attachments/assets/1ceadc80-5098-4695-b256-0f34b683111c)
+
 PUT /health
+![image](https://github.com/user-attachments/assets/a2c7a04e-ce8c-40e4-a348-59b65315782a)
+
