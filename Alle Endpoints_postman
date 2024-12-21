@@ -1,0 +1,999 @@
+{
+	"info": {
+		"_postman_id": "3be9b9f3-030f-4d8a-b87f-7baf3ff6f6db",
+		"name": "HealthApp Alle Endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33928541",
+		"_collection_link": "https://advanced-programming-topics.postman.co/workspace/Advanced-Programming-Topics-Wor~af6bce70-4a58-4529-b724-9d51e4b67727/collection/33928541-3be9b9f3-030f-4d8a-b87f-7baf3ff6f6db?action=share&source=collection_link&creator=33928541"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Record",
+					"item": [
+						{
+							"name": "Change record",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n        \"fastestTime\": 55.0,\r\n        \"longestDistance\": 66.0,\r\n        \"maxWeightLifted\": 77.0,\r\n        \"longestWorkoutDuration\": 88.0,\r\n        \"mostCaloriesBurned\": 11.0\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8085/user/record?userCode=Marnick The Commander-ab3d4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"user",
+										"record"
+									],
+									"query": [
+										{
+											"key": "userCode",
+											"value": "Marnick The Commander-ab3d4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get record",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8085/user/record?userCode=Marnick The Commander-ab3d4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"user",
+										"record"
+									],
+									"query": [
+										{
+											"key": "userCode",
+											"value": "Marnick The Commander-ab3d4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all records",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8085/user/record/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"user",
+										"record",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add record",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n        \"userCode\": \"30\",\r\n        \"fastestTime\": 69,\r\n        \"longestDistance\": 69,\r\n        \"maxWeightLifted\": 69,\r\n        \"longestWorkoutDuration\": 69,\r\n        \"mostCaloriesBurned\": 69\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8085/user/record?userCode=Marnick The Commander-ab3d4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"user",
+										"record"
+									],
+									"query": [
+										{
+											"key": "userCode",
+											"value": "Marnick The Commander-ab3d4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Record",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8085/user/record?userCode=Marnick The Commander-ab3d4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"user",
+										"record"
+									],
+									"query": [
+										{
+											"key": "userCode",
+											"value": "Marnick The Commander-ab3d4"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Workout",
+					"item": [
+						{
+							"name": "Get workouts",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8085/user/workout?userCode=Marnick The Commander-ab3d4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"user",
+										"workout"
+									],
+									"query": [
+										{
+											"key": "userCode",
+											"value": "Marnick The Commander-ab3d4"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get all users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/user/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"user",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n             \"userCode\": \"user17\",\r\n             \"name\": \"Newer John Doe\",\r\n             \"age\": 100,\r\n             \"height\": 100,\r\n             \"weight\": 100,\r\n             \"email\": \"test@100\",\r\n             \"phoneNr\": \"100\",\r\n             \"isMale\": true,\r\n             \"fitnessGoals\": \"100\"\r\n         }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/user?userCode=Marnick The Commander-f9a33",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"user"
+							],
+							"query": [
+								{
+									"key": "userCode",
+									"value": "Marnick The Commander-f9a33"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n             \"name\": \"Ali\",\r\n             \"age\": 25,\r\n             \"userCode\": \"Ali\",\r\n             \"height\": 1.80,\r\n             \"weight\": 80.0,\r\n             \"email\": \"test@email\",\r\n             \"phoneNr\": \"001122\",\r\n             \"male\": true\r\n         }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/user/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n             \"name\": \"New Ali\",\r\n             \"age\": 100,\r\n             \"height\": 100,\r\n             \"weight\": 100,\r\n             \"email\": \"NEwtest@100\",\r\n             \"phoneNr\": \"0479645882\",\r\n             \"male\": true,\r\n             \"fitnessGoals\": \"Titan\"\r\n         }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/user?userCode=Marnick The Commander-f9a33",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "userCode",
+									"value": "Marnick The Commander-f9a33"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n             \"userCode\": \"user17\",\r\n             \"name\": \"Newer John Doe\",\r\n             \"age\": 100,\r\n             \"height\": 100,\r\n             \"weight\": 100,\r\n             \"email\": \"test@100\",\r\n             \"phoneNr\": \"100\",\r\n             \"isMale\": true,\r\n             \"fitnessGoals\": \"100\"\r\n         }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/user?userCode=Marnick The Commander-f9a33",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "userCode",
+									"value": "Marnick The Commander-f9a33"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Records",
+			"item": [
+				{
+					"name": "New record",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"userCode\": \"user1\",\r\n        \"fastestTime\": 100000.0,\r\n        \"longestDistance\": 100000.0,\r\n        \"maxWeightLifted\": 100000.0,\r\n        \"longestWorkoutDuration\": 100000.0,\r\n        \"mostCaloriesBurned\": 100000.0\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/api/record",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"record"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all records",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/record/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"record",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get record",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/record?userCode=AliTest",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"record"
+							],
+							"query": [
+								{
+									"key": "userCode",
+									"value": "AliTest"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update record",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"fastestTime\": 1.0,\r\n        \"longestDistance\": 1.0,\r\n        \"maxWeightLifted\": 1.0,\r\n        \"longestWorkoutDuration\": 1.0,\r\n        \"mostCaloriesBurned\": 1.0\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/record?userCode=AliTest",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"record"
+							],
+							"query": [
+								{
+									"key": "userCode",
+									"value": "AliTest"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete record",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"fastestTime\": 999.0,\r\n        \"longestDistance\": 999.0,\r\n        \"maxWeightLifted\": 999.0,\r\n        \"longestWorkoutDuration\": 999.0,\r\n        \"mostCaloriesBurned\": 999.0\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/record?userCode=null-e81f0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"record"
+							],
+							"query": [
+								{
+									"key": "userCode",
+									"value": "null-e81f0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Workouts",
+			"item": [
+				{
+					"name": "Health",
+					"item": [
+						{
+							"name": "Get Health",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8085/workout/health?workoutCode=Gym-e8041",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"workout",
+										"health"
+									],
+									"query": [
+										{
+											"key": "workoutCode",
+											"value": "Gym-e8041"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get all Workouts of a user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/workout/user?userCode=Marnick The Commander-ab3d4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"workout",
+								"user"
+							],
+							"query": [
+								{
+									"key": "userCode",
+									"value": "Marnick The Commander-ab3d4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add workout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n             \"userCode\": \"Marnick The Commander-ab3d4\",\r\n             \"workoutCode\": \"Gym\",\r\n             \"name\": \"aaaaa\",\r\n             \"weight\": \"150\",\r\n             \"reps\": \"20\",\r\n             \"distance\": \"105\",\r\n             \"speed\": \"2\",\r\n             \"duration\": \"500\",\r\n             \"description\": \"Gym\"\r\n         }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/workout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"workout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a workout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/workout?workoutCode=Gym-e8041",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"workout"
+							],
+							"query": [
+								{
+									"key": "workoutCode",
+									"value": "Gym-e8041"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Workouts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/workout/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"workout",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health",
+			"item": [
+				{
+					"name": "Get Health All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/health/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"health",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Health",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/health?workoutCode=Gym-e8041",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"health"
+							],
+							"query": [
+								{
+									"key": "workoutCode",
+									"value": "Gym-e8041"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Health",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"workoutCode\":\"Gym-e8041\",\r\n    \"recoveryHearthRate\":\"fast\",\r\n    \"bloodPressure\":\"180/50\",\r\n    \"caloriesBurned\":\"1500\",\r\n    \"oxygenSaturation\":\"100\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/health/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"health",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Health",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMxYjhmY2NiMmU1MjI1M2IxMzMxMzhhY2YwZTU2NjMyZjA5OTU3ZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDk2NTM1NDE2NDg4LWxycWtwZDlhMzNmdWM2bDJpc29obHV0ZGM2cmR0YXBjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA5NjUzNTQxNjQ4OC1scnFrcGQ5YTMzZnVjNmwyaXNvaGx1dGRjNnJkdGFwYy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMzQ5ODgxODIzMTc4Mzc2NjczMSIsImVtYWlsIjoibmV4ZXNwcmltZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxUQUhNRmVVZ1U5Nm14NEY0bW5fU1EiLCJuYW1lIjoiTmV4ZXMgUHJpbWUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVcybWtuMlJLaFVnaUkzcGVxNXpqTVhNcE9WVXltY3hhRzVIX24xYm9wVklITW4yelU9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmV4ZXMiLCJmYW1pbHlfbmFtZSI6IlByaW1lIiwiaWF0IjoxNzM0NzEwNjI4LCJleHAiOjE3MzQ3MTQyMjh9.T1BR7bv0YIQ0pJAAULkWR7sorFpNdi4alO-EHCh5czU1e_LxIKOsiWWqA_eVYMLfL80--TeIJFlfO0YD4QfW4A2EQ5zj7DUwtN5MGAL6ME8HvMEgnoMYCHcI3SVG81oEU3W6bfRqZ8AuNz3fzYtGEH93rBS2ESVGbnX-YpASUSxQxSAVWM9SuSaaSQOv2nO_JwVm3abvuwWnH4huFoJ-h9WReV60FV4wANZHbZFRc2HcVN8PorFTmPXJYAQjesvRr2-ob6TPjskLU1qjtO8XV_Tjb1zOO6DtD76KPqm5GTqiSkfC3rpqxq67z4xPNCVqS4pBF2matZrI6hYck5ouwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"workoutCode\":\"AliTest1\",\r\n    \"recoveryHeartRate\":\"fastupdated\",\r\n    \"bloodPressure\":\"180/20\",\r\n    \"caloriesBurned\":\"1400\",\r\n    \"oxygenSaturation\":\"85\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/health?workoutCode=Gym-e8041",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"health"
+							],
+							"query": [
+								{
+									"key": "workoutCode",
+									"value": "Gym-e8041"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
