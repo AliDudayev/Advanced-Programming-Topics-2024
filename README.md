@@ -155,6 +155,7 @@ In the image below, you can see how our docker compose file is structured to bui
 GET /user/all
 (image-1.png)
 GET /user
+![image](https://github.com/user-attachments/assets/38451884-d158-4296-bdd6-2975053f58ce)
 POST /user
 (image.png)
 PUT /user
