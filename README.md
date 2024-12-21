@@ -218,6 +218,7 @@ GET /workout/user
 ![image](https://github.com/user-attachments/assets/aad0fdfa-bc02-4fe9-8b9b-166684575069)
 
 GET /workout/health
+![image](https://github.com/user-attachments/assets/c183e1f5-86ef-475b-acb2-39542bc2e0de)
 
 **Health**
 
