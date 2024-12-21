@@ -1,4 +1,4 @@
-# Advanced-Programming-Topics-2024
+![image](https://github.com/user-attachments/assets/ca1694ef-f1ac-4711-83b4-8fb530da660a)# Advanced-Programming-Topics-2024
 
 This project allows users to track their fitness journey by logging personal progress and viewing detailed statistics over time. The system provides users with an easy way to monitor their health-related activities, track workouts, and visualize their personal records.
 
@@ -152,6 +152,7 @@ In the image below, you can see how our docker compose file is structured to bui
 ## Postman screenshots
 
 **User**
+
 GET /user/all
 ![image](https://github.com/user-attachments/assets/75d8ab3d-f962-44ea-9bd0-34cf3e2a7365)
 
@@ -186,22 +187,36 @@ GET /user/workout
 ![image](https://github.com/user-attachments/assets/18e87697-488b-4278-b1c5-cb5d3f58b5af)
 
 **Record**
+
 GET /record/all
+![image](https://github.com/user-attachments/assets/13eb747c-0984-4560-9a60-6d4d233e4c0c)
+
 GET /record
+![image](https://github.com/user-attachments/assets/5b9f118e-57c2-489e-a1b4-4ea6ef99c446)
+
 POST /record
+![image](https://github.com/user-attachments/assets/168c299b-82ef-4513-9086-6ad9be50dc3a)
+
 PUT /record
+![image](https://github.com/user-attachments/assets/e490fa90-d5d7-400e-a15e-f53f2d0edc9c)
+
 DELETE /record
+![Uploading image.png…]()
 
 **Workout**
+
 GET /workout/all
 GET /workout
 POST /workout
 ![image](https://github.com/user-attachments/assets/d8861959-19ad-417d-8e13-e34a0d83d14f)
 
 GET /workout/user
+![image](https://github.com/user-attachments/assets/d33321e3-d598-4e6d-85f1-fa93e1c5eaf8)
+
 GET /workout/health
 
 **Health**
+
 GET /health/all
 GET /health
 POST /health
