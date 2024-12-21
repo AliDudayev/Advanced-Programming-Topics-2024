@@ -149,3 +149,41 @@ In the image below, you can see how our docker compose file is structured to bui
 
 ---
 
+## Postman screenshots
+
+**User**
+GET /user/all
+(image-1.png)
+GET /user
+POST /user
+(image.png)
+PUT /user
+DELETE /user
+
+GET /user/record/all
+GET /user/record
+POST /user/record
+PUT /user/record
+DELETE /user/record
+
+GET /user/workout
+
+**Record**
+GET /record/all
+GET /record
+POST /record
+PUT /record
+DELETE /record
+
+**Workout**
+GET /workout/all
+GET /workout
+POST /workout
+GET /workout/user
+GET /workout/health
+
+**Health**
+GET /health/all
+GET /health
+POST /health
+PUT /health
